@@ -1,9 +1,11 @@
 .root {
-  @apply sticky top-0 bg-primary z-40 transition-all duration-150;
+  /* @apply sticky top-0 bg-primary z-40 transition-all duration-150; */
+  background-color: #012E58;
 }
 
 .link {
-  @apply inline-flex items-center text-primary leading-6 font-medium transition ease-in-out duration-75 cursor-pointer text-accents-6;
+  @apply inline-flex items-center text-primary leading-6 transition ease-in-out duration-75 cursor-pointer text-accents-6;
+  color: #ffffff;
 }
 
 .link:hover {
@@ -21,4 +23,39 @@
     @apply shadow-md;
     transform: scale(1.05);
   }
+}
+
+.navItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 14px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-right: 1px solid #204c79;
+  margin: 0 !important;
+}
+
+.navIcon {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
+
+.iconPlus {
+  background-color: #fff;
+  border-radius: 3px;
+}
+
+.iconPlus path {
+  stroke: #000;
+}
+
+.iconUser {
+  stroke: #fff;
+}
+
+.iconPhone {
+  fill: #fff;
 }
