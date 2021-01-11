@@ -30,7 +30,7 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  font-size: 14px;
+  /* font-size: 14px; */
   padding-left: 10px;
   padding-right: 10px;
   border-right: 1px solid #204c79;
@@ -38,8 +38,8 @@
 }
 
 .navIcon {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   margin-right: 4px;
 }
 

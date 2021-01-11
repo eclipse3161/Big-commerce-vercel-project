@@ -29,14 +29,14 @@ const Navbar: FC = () => {
   return (
     <div className={cn(s.root, { 'shadow-magical': hasScrolled })}>
       <Container>
-        <div className="relative flex flex-row justify-between py-2 align-center">
+        <div className="relative flex flex-row justify-between py-3 align-center">
           <div className="flex items-center flex-1">
             {/* <Link href="/">
               <a className={s.logo} aria-label="Logo">
                 <Logo />
               </a>
             </Link> */}
-            <nav className="hidden ml-6 space-x-4 lg:flex font-xs flex-1">
+            <nav className="hidden ml-6 space-x-4 lg:flex font-sm2 flex-1">
               <Link href="/search">
                 <div className={s.navItem}>
                   <UserIcon className={cn(s.navIcon, s.iconUser)} />

@@ -10,14 +10,20 @@ interface Props {
 
 const Container: FC<Props> = ({ children, className, el = 'div', clean }) => {
   const rootClassName = cn(className, {
-    'mx-auto max-w-7xl px-6': !clean,
+    'mx-auto max-w-9xl': !clean,
   })
 
-  let Component: React.ComponentType<React.HTMLAttributes<
-    HTMLDivElement
-  >> = el as any
+  let Component: React.ComponentType<
+    React.HTMLAttributes<HTMLDivElement>
+  > = el as any
 
-  return <Component className={rootClassName}>{children}</Component>
+  return (
+    <Component className={rootClassName} 
+    // style={{ maxWidth: '85rem' }}
+    >
+      {children}
+    </Component>
+  )
 }
 
 export default Container

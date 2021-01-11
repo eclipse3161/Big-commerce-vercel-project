@@ -12,7 +12,10 @@ module.exports = {
   theme: {
     extend: {
       maxWidth: {
-        '8xl': '1920px',
+        '9xl': '85rem'
+      },
+      fontSize: {
+       'sm2': '1.05rem',
       },
       colors: {
         primary: 'var(--primary)',
