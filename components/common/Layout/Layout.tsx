@@ -11,6 +11,7 @@ import { CartSidebarView } from '@components/cart'
 
 import { CommerceProvider } from '@framework'
 import type { Page } from '@framework/api/operations/get-all-pages'
+import NavSearch from '../NavSearch'
 
 const Loading = () => (
   <div className="w-80 h-80 flex items-center text-center justify-center p-3">
@@ -60,6 +61,7 @@ const Layout: FC<Props> = ({ children, pageProps }) => {
     <CommerceProvider locale={locale}>
       <div className={cn(s.root)}>
         <Navbar />
+        <NavSearch/>
         <main className="fit">{children}</main>
         <Footer pages={pageProps.pages} />
 

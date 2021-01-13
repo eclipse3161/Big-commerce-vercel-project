@@ -10,12 +10,24 @@ module.exports = {
     ],
   },
   theme: {
+    rotate: {
+      '-180': '-180deg',
+      '-90': '-90deg',
+      '-45': '-45deg',
+      0: '0',
+      45: '45deg',
+      90: '90deg',
+      135: '135deg',
+      180: '180deg',
+      260: '260deg',
+      270: '270deg',
+    },
     extend: {
       maxWidth: {
-        '9xl': '85rem'
+        '9xl': '85rem',
       },
       fontSize: {
-       'sm2': '1.05rem',
+        sm2: '1.05rem',
       },
       colors: {
         primary: 'var(--primary)',
