@@ -1,6 +1,7 @@
 .root {
   @apply relative w-full h-full;
   overflow-y: hidden;
+  background: bg-white;
 }
 
 .leftControl,
@@ -45,6 +46,14 @@
 }
 
 .positionIndicatorsContainer {
+  display: block;
+  position: relative !important;
+  width: fit-content!important;
+  margin: auto;
+  transform: initial !important;
+  left: initial !important;
+  bottom: initial !important;
+
   @apply hidden;
 
   @screen sm {
@@ -74,9 +83,9 @@
 }
 
 .positionIndicatorActive .dot {
-  @apply bg-white;
+  @apply bg-black;
 }
 
 .positionIndicatorActive:hover .dot {
-  @apply bg-white;
+  @apply bg-black;
 }

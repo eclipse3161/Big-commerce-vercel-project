@@ -1,0 +1,30 @@
+.root {
+    margin-top: 40px;
+}
+
+.heading {
+  text-align: left;
+  background: #022e55;
+  color: #fff;
+  margin: 0;
+  padding: 5px 25px 5px 10px;
+  display: flex;
+  align-items: center;
+  max-width: fit-content;
+}
+
+.headingIcon {
+  fill: #f7921c;
+  background: #fff;
+  /* overflow: hidden;
+  height: 22px;
+  width: 22px; */
+  border-radius: 100%;
+  font-size: 12px;
+  text-align: center;
+  padding: 3px 8px;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  margin-right: 10px;
+}

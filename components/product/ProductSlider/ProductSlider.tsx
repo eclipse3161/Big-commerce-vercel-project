@@ -1,17 +1,26 @@
 import { useKeenSlider } from 'keen-slider/react'
-import React, { Children, FC, isValidElement, useState, useRef, useEffect } from 'react'
+import React, {
+  Children,
+  FC,
+  isValidElement,
+  useState,
+  useRef,
+  useEffect,
+} from 'react'
 import cn from 'classnames'
 
 import s from './ProductSlider.module.css'
+import ProductItem from '@components/common/ProductItem/ProductItem'
 
-const ProductSlider: FC = ({ children }) => {
+const ProductSlider: FC = ({ products }) => {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isMounted, setIsMounted] = useState(false)
-  const sliderContainerRef = useRef<HTMLDivElement>(null)
+
+  const slidesPerView = 4
 
   const [ref, slider] = useKeenSlider<HTMLDivElement>({
-    loop: true,
-    slidesPerView: 1,
+    loop: false,
+    slidesPerView,
     mounted: () => setIsMounted(true),
     slideChanged(s) {
       setCurrentSlide(s.details().relativeSlide)
@@ -25,7 +34,7 @@ const ProductSlider: FC = ({ children }) => {
       const touchXPosition = event.touches[0].pageX
       // Size of the touch area
       const touchXRadius = event.touches[0].radiusX || 0
-      
+
       // We set a threshold (10px) on both sizes of the screen,
       // if the touch area overlaps with the screen edges
       // it's likely to trigger the navigation. We prevent the
@@ -33,20 +42,13 @@ const ProductSlider: FC = ({ children }) => {
       if (
         touchXPosition - touchXRadius < 10 ||
         touchXPosition + touchXRadius > window.innerWidth - 10
-      ) event.preventDefault()
-    }
-
-    sliderContainerRef.current!
-      .addEventListener('touchstart', preventNavigation)
-
-    return () => {
-      sliderContainerRef.current!
-      .removeEventListener('touchstart', preventNavigation)
+      )
+        event.preventDefault()
     }
   }, [])
 
   return (
-    <div className={s.root} ref={sliderContainerRef}>
+    <div className={s.root}>
       <button
         className={cn(s.leftControl, s.control)}
         onClick={slider?.prev}
@@ -62,25 +64,19 @@ const ProductSlider: FC = ({ children }) => {
         className="keen-slider h-full transition-opacity duration-150"
         style={{ opacity: isMounted ? 1 : 0 }}
       >
-        {Children.map(children, (child) => {
-          // Add the keen-slider__slide className to children
-          if (isValidElement(child)) {
-            return {
-              ...child,
-              props: {
-                ...child.props,
-                className: `${
-                  child.props.className ? `${child.props.className} ` : ''
-                }keen-slider__slide`,
-              },
-            }
-          }
-          return child
-        })}
+        {products.map((product, idx) => (
+          <div className="keen-slider__slide">
+            <ProductItem product={product} key={idx} />
+          </div>
+        ))}
       </div>
       {slider && (
         <div className={cn(s.positionIndicatorsContainer)}>
-          {[...Array(slider.details().size).keys()].map((idx) => {
+          {[
+            ...Array(
+              Math.ceil(slider.details().size / slidesPerView)
+            ).keys(),
+          ].map((idx) => {
             return (
               <button
                 aria-label="Position indicator"

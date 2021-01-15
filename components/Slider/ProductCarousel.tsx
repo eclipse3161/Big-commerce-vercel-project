@@ -31,7 +31,7 @@ function ArrowRight(props: any) {
 
 const images = ['./banner1.jpg', './banner1.jpg', './banner2.jpg']
 
-export default function Slider() {
+export default function ProductCarousel(products: [Product]) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const timer: MutableRefObject<undefined> = useRef(undefined)
   const [pause, setPause] = useState(false)
@@ -68,8 +68,14 @@ export default function Slider() {
         </div>
         {slider && (
           <>
-            <ArrowLeft onClick={(e) => e.stopPropagation() || slider.prev()} />
-            <ArrowRight onClick={(e) => e.stopPropagation() || slider.next()} />
+            <ArrowLeft
+              onClick={(e) => e.stopPropagation() || slider.prev()}
+              disabled={currentSlide === 0}
+            />
+            <ArrowRight
+              onClick={(e) => e.stopPropagation() || slider.next()}
+              disabled={currentSlide === slider.details().size - 1}
+            />
           </>
         )}
       </div>
