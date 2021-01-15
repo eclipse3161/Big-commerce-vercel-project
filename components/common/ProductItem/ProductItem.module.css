@@ -1,0 +1,12 @@
+.root {}
+
+.image {
+    height: 280px;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.image img {
+    height: 100%;
+    margin: auto;
+}
