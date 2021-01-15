@@ -1,23 +1,22 @@
 import { FC } from 'react'
-import Link from 'next/link'
-import s from './NavSearch.module.css'
+import s from './NavWrapper.module.css'
 import { Container } from '@components/ui'
 import cn from 'classnames'
 import NavTop from '../NavTop/NavTop'
 import NavMid from '../NavMid/NavMid'
 import NavBottom from '../NavBottom/NavBottom'
 
-const NavSearch: FC = () => {
+const NavWrapper: FC = () => {
   return (
     <div className={cn(s.root)}>
       <Container>
         <NavTop/>
         <NavMid/>
         <NavBottom/>
-        <hr/>
       </Container>
+      <hr />
     </div>
   )
 }
 
-export default NavSearch
+export default NavWrapper

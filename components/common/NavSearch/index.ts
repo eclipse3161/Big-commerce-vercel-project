@@ -1,1 +1,1 @@
-export { default } from './NavSearch'
+export { default } from './NavWrapper'
