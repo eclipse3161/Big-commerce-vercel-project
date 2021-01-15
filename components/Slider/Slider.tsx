@@ -33,7 +33,7 @@ const images = ['./banner1.jpg', './banner1.jpg', './banner2.jpg']
 
 export default function Slider() {
   const [currentSlide, setCurrentSlide] = useState(0)
-  const timer: MutableRefObject<undefined> = useRef(undefined)
+  const timer = useRef<any>(undefined)
   const [pause, setPause] = useState(false)
   const [sliderRef, slider] = useKeenSlider({
     initial: 0,
@@ -56,10 +56,20 @@ export default function Slider() {
     }
   }, [pause, slider])
 
+  const prev = (e: Event) => {
+    e.stopPropagation();
+    slider.prev();
+  }
+
+  const next = (e: Event) => {
+    e.stopPropagation();
+    slider.next();
+  }
+
   return (
     <>
       <div className="navigation-wrapper">
-        <div ref={sliderRef} className="keen-slider">
+        <div ref={sliderRef as React.RefObject<HTMLDivElement>} className="keen-slider">
           {images.map((src, idx) => (
             <div key={idx} className="keen-slider__slide number-slide1">
               <img src={src} />
@@ -68,8 +78,8 @@ export default function Slider() {
         </div>
         {slider && (
           <>
-            <ArrowLeft onClick={(e) => e.stopPropagation() || slider.prev()} />
-            <ArrowRight onClick={(e) => e.stopPropagation() || slider.next()} />
+            <ArrowLeft onClick={prev} />
+            <ArrowRight onClick={next} />
           </>
         )}
       </div>

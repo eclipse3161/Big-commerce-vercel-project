@@ -12,7 +12,17 @@ import cn from 'classnames'
 import s from './ProductSlider.module.css'
 import ProductItem from '@components/common/ProductItem/ProductItem'
 
-const ProductSlider: FC = ({ products }) => {
+type Product = {
+  image: string
+  title: string
+  price: string
+}
+
+interface ProductSliderProps {
+  products: Array<Product>
+}
+
+const ProductSlider: FC<ProductSliderProps> = ({ products }) => {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isMounted, setIsMounted] = useState(false)
 
@@ -73,9 +83,7 @@ const ProductSlider: FC = ({ products }) => {
       {slider && (
         <div className={cn(s.positionIndicatorsContainer)}>
           {[
-            ...Array(
-              Math.ceil(slider.details().size / slidesPerView)
-            ).keys(),
+            ...Array(Math.ceil(slider.details().size / slidesPerView)).keys(),
           ].map((idx) => {
             return (
               <button

@@ -86,7 +86,7 @@ const ProductView: FC<Props> = ({ product }) => {
           </div>
 
           <div className={s.sliderContainer}>
-            <ProductSlider key={product.entityId}>
+            {/* <ProductSlider key={product.entityId}>
               {product.images.edges?.map((image, i) => (
                 <div key={image?.node.urlOriginal} className={s.imageContainer}>
                   <Image
@@ -100,7 +100,7 @@ const ProductView: FC<Props> = ({ product }) => {
                   />
                 </div>
               ))}
-            </ProductSlider>
+            </ProductSlider> */}
           </div>
         </div>
 
