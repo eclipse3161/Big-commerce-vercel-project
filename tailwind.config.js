@@ -10,6 +10,9 @@ module.exports = {
     ],
   },
   theme: {
+    borerColor: theme => ({
+      'primary': '#012E58'
+    }),
     rotate: {
       '-180': '-180deg',
       '-90': '-90deg',
@@ -25,9 +28,10 @@ module.exports = {
     extend: {
       maxWidth: {
         '9xl': '85rem',
+        '8xl': '70rem',
       },
       fontSize: {
-        sm2: '1.05rem',
+        sm: '0.9rem',
       },
       colors: {
         primary: 'var(--primary)',

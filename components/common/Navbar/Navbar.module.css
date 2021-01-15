@@ -8,10 +8,6 @@
   color: #ffffff;
 }
 
-.link:hover {
-  @apply text-accents-9;
-}
-
 .link:focus {
   @apply outline-none text-accents-8;
 }
@@ -35,11 +31,20 @@
   padding-right: 10px;
   border-right: 1px solid #204c79;
   margin: 0 !important;
+  font-size: 0.9rem;
+}
+
+.navItem:first-child {
+  padding-left: 0;
+}
+
+.link:hover {
+  color: #fff;
 }
 
 .navIcon {
-  width: 18px;
-  height: 18px;
+  width: 0.9rem;
+  height: 0.9rem;
   margin-right: 4px;
 }
 

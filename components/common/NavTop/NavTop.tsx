@@ -10,7 +10,7 @@ const NavTop: FC = () => {
   return (
     <div className={cn(s.root)}>
       {/* <Container> */}
-        <div className="flex justify-around items-center">
+        <div className="flex justify-between items-center">
           <div><img src="/phones-logo.png" alt=""/></div> 
           <Searchbar/> 
           <div className="text-center">

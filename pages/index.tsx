@@ -1,7 +1,8 @@
+import { useState } from 'react'
 import rangeMap from '@lib/range-map'
 import { Layout } from '@components/common'
 import { ProductCard } from '@components/product'
-import { Grid, Marquee, Hero } from '@components/ui'
+import { Grid, Marquee, Hero, Container } from '@components/ui'
 import HomeAllProductsGrid from '@components/common/HomeAllProductsGrid'
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 
@@ -9,6 +10,7 @@ import { getConfig } from '@framework/api'
 import getAllProducts from '@framework/api/operations/get-all-products'
 import getSiteInfo from '@framework/api/operations/get-site-info'
 import getAllPages from '@framework/api/operations/get-all-pages'
+import Slider from '@components/Slider/Slider'
 
 export async function getStaticProps({
   preview,
@@ -84,7 +86,9 @@ export default function Home({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div>
-      {/* <Grid>
+      <Container>
+        <Slider />
+        {/* <Grid>
         {featured.slice(0, 3).map(({ node }, i) => (
           <ProductCard
             key={node.path}
@@ -96,7 +100,7 @@ export default function Home({
           />
         ))}
       </Grid> */}
-      {/* <Marquee variant="secondary">
+        {/* <Marquee variant="secondary">
         {bestSelling.slice(3, 6).map(({ node }) => (
           <ProductCard
             key={node.path}
@@ -108,7 +112,7 @@ export default function Home({
           />
         ))}
       </Marquee> */}
-      {/* <Hero
+        {/* <Hero
         headline="Release Details: The Yeezy BOOST 350 V2 ‘Natural'"
         description="
         The Yeezy BOOST 350 V2 lineup continues to grow. We recently had the
@@ -118,7 +122,7 @@ export default function Home({
         Hebrew. It’s now undergone a name change, and will be referred to as
         ‘Natural’."
       /> */}
-      {/* <Grid layout="B">
+        {/* <Grid layout="B">
         {featured.slice(3, 6).map(({ node }, i) => (
           <ProductCard
             key={node.path}
@@ -128,7 +132,7 @@ export default function Home({
           />
         ))}
       </Grid> */}
-      {/* <Marquee>
+        {/* <Marquee>
         {bestSelling.slice(0, 3).map(({ node }) => (
           <ProductCard
             key={node.path}
@@ -140,11 +144,12 @@ export default function Home({
           />
         ))}
       </Marquee> */}
-      {/* <HomeAllProductsGrid
+        {/* <HomeAllProductsGrid
         categories={categories}
         brands={brands}
         newestProducts={newestProducts}
       /> */}
+      </Container>
     </div>
   )
 }

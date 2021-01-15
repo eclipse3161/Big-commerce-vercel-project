@@ -5,9 +5,9 @@ import { Logo, Container } from '@components/ui'
 import { Searchbar, UserNav, ViewCart } from '@components/common'
 import cn from 'classnames'
 import throttle from 'lodash.throttle'
-import UserIcon from "../../icons/User"
-import PlusIcon from "../../icons/Plus"
-import PhoneIcon from "../../icons/Phone"
+import UserIcon from '../../icons/User'
+import PlusIcon from '../../icons/Plus'
+import PhoneIcon from '../../icons/Phone'
 
 const Navbar: FC = () => {
   const [hasScrolled, setHasScrolled] = useState(false)
@@ -36,23 +36,28 @@ const Navbar: FC = () => {
                 <Logo />
               </a>
             </Link> */}
-            <nav className="hidden ml-6 space-x-4 lg:flex font-sm2 flex-1">
+            <nav className="hidden space-x-4 lg:flex font-sm flex-1">
               <Link href="/search">
                 <div className={s.navItem}>
-                  <UserIcon className={cn(s.navIcon, s.iconUser)} />
-                  <a className={s.link}>Login</a>
+                  <a className={s.link}>
+                    <UserIcon className={cn(s.navIcon, s.iconUser)} /> Login
+                  </a>
                 </div>
               </Link>
               <Link href="/search?q=clothes">
                 <div className={s.navItem}>
-                  <PlusIcon className={cn(s.navIcon, s.iconPlus)} />
-                  <a className={s.link}>Create An Account</a>
+                  <a className={s.link}>
+                    <PlusIcon className={cn(s.navIcon, s.iconPlus)} /> Create An
+                    Account
+                  </a>
                 </div>
               </Link>
               <Link href="/search?q=accessories">
                 <div className={s.navItem}>
-                  <PhoneIcon className={cn(s.navIcon, s.iconPhone)} />
-                  <a className={s.link}>Call 9257273036</a>
+                  <a className={s.link}>
+                    <PhoneIcon className={cn(s.navIcon, s.iconPhone)} /> Call
+                    9257273036
+                  </a>
                 </div>
               </Link>
               <Link href="/search?q=accessories">

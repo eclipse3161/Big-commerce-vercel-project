@@ -4,4 +4,7 @@
 @tailwind components;
 @import './components.css';
 
+@tailwind slider;
+@import "./slider.css";
+
 @tailwind utilities;
