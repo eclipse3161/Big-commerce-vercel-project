@@ -8,18 +8,21 @@ import Phone from '@components/icons/Phone'
 import ChevronDown from '@components/icons/ChevronDown'
 
 interface Props {
-  isOpen: Boolean[]
-  x: Number
+  isOpen: Boolean
+  items: String[]
 }
 
-const NavMidDropdown: FC<Props> = ({ isOpen, x }) => {
+const NavMidDropdown: FC<Props> = ({ isOpen, items }) => {
   return (
     <div className={s.dropdown}>
       {/* <Container> */}
-      {isOpen[x] && (
+      {isOpen && (
         <>
-          <div className={s.dropdownitem}>Google</div>
-          <div className={s.dropdownitem}>Apple</div>
+          {items.map((item, idx) => (
+            <div className={s.dropdownitem} key={idx}>
+              {item}
+            </div>
+          ))}
         </>
       )}
 
