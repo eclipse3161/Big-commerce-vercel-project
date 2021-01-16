@@ -1,0 +1,12 @@
+.root {
+  display: flex;
+  align-items: center;
+}
+
+.left {
+  width: 50%;
+}
+
+.right {
+  width: 50%;
+}
