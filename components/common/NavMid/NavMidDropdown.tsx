@@ -9,7 +9,7 @@ import ChevronDown from '@components/icons/ChevronDown'
 
 interface Props {
   isOpen: Boolean[]
-  x: Number
+  x: number
 }
 
 const NavMidDropdown: FC<Props> = ({ isOpen, x }) => {
