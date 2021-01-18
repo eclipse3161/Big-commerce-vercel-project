@@ -10,3 +10,40 @@
 .right {
   width: 50%;
 }
+
+.counter {
+  display: flex;
+  justify-content: space-between;
+  width: 6rem;
+  margin-top: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.addBtn {
+  background-color: #012e58;
+  width: 167px;
+  height: 44px;
+  color: white;
+}
+
+.wishBtn {
+  border: 2px solid #012e58;
+  width: 226px;
+  height: 44px;
+  margin-left: 1rem;
+}
+
+.paymentContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.paymentLeft {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.paymentRight {
+  width: 50%;
+}
