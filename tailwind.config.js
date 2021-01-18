@@ -10,8 +10,12 @@ module.exports = {
     ],
   },
   theme: {
-    borerColor: theme => ({
-      'primary': '#012E58'
+    backgroundColor: (theme) => ({
+      ...theme('colors'),
+      silver: "#e5e5e5"
+    }),
+    borerColor: (theme) => ({
+      primary: '#012E58',
     }),
     rotate: {
       '-180': '-180deg',

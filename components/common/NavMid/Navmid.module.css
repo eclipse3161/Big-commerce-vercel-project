@@ -16,8 +16,16 @@
   text-align: left;
   position: absolute;
   background-color: #012e58;
+  color: #fff;
   top: 3rem;
   width: 300px;
+  z-index: 1;
+  margin-left: -16px;
+}
+
+.active {
+  color: #000;
+  background-color: #e5e5e5;
 }
 
 .dropdownitem {

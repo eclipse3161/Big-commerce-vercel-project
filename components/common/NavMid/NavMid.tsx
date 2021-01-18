@@ -8,6 +8,96 @@ import Phone from '@components/icons/Phone'
 import ChevronDown from '@components/icons/ChevronDown'
 import NavMidDropdown from './NavMidDropdown'
 
+const cellphoneItems = [
+  'All Cell Phone',
+  'Basic Phones',
+  'Brand',
+  'Apple',
+  'ASUS',
+  'Blackberry',
+  'Google',
+  'HTC',
+  'Huawei',
+  'LG',
+  'Motorola',
+  'Nokia',
+  'OnePlus',
+  'Oppo',
+  'Razer',
+  'Samsung',
+  'Sony',
+  'Xiaomi',
+]
+
+const smartphoneItems = [
+  'All Smartphones',
+  'Apple',
+  'CAT',
+  'Oppo',
+  'Razer',
+  'Realme',
+  'Xiaomi',
+  'Samsung',
+  'Oneplus',
+  'Blackberry',
+  'Motorola',
+  'HTC',
+  'Huawei',
+  'LG',
+  'Sony',
+  'Google',
+]
+
+const tabletItems = ['All Tablet', 'Accessories', 'Brand', 'Apple', 'Samsung']
+
+const accessoriesItems = [
+  'All Accessories',
+  'Batteries',
+  'Bluetooth',
+  'Cases, Covers & Holsters',
+  'Chargers and Docks',
+  'iPad accessories',
+  'SIM Starter Kit',
+  'Cases, Covers and Holsters',
+  'Portable Speaker',
+  'Display Protection',
+  'Memory Cards',
+  'Mounts',
+  'Smart accessories',
+  'USB and HDMI Cables',
+  'Wired Headsets',
+]
+
+const wearableItems = ['All Wearables', 'Apple', 'Samsung', 'Fitbit']
+
+interface DropdownSectionProps {
+  title: String
+  isOpen: Boolean
+  updateOpen: Function
+  items: String[]
+}
+
+const DropdownSection: FC<DropdownSectionProps> = ({
+  title,
+  isOpen,
+  updateOpen,
+  items,
+}) => (
+  <span
+    className={cn(
+      'focus:outline-none py-3 px-4 cursor-pointer hover:bg-silver hover:text-black',
+      isOpen && s.active
+    )}
+    onClick={() => updateOpen()}
+  >
+    {title}{' '}
+    <div className="w-3 inline-block">
+      <ChevronDown />
+    </div>{' '}
+    <NavMidDropdown isOpen={isOpen} items={items} />
+  </span>
+)
+
 const NavMid: FC = () => {
   const [isOpen, setIsOpen] = useState<Boolean[]>([
     false,
@@ -25,56 +115,40 @@ const NavMid: FC = () => {
     <div className={s.root}>
       {/* <Container> */}
 
-      <span
-        className="focus:outline-none mr-10 cursor-pointer"
-        onClick={() => updateOpen(0)}
-      >
-        CELL PHONE{' '}
-        <div className="w-3 inline-block">
-          <ChevronDown />
-        </div>{' '}
-        <NavMidDropdown isOpen={isOpen} x={0} />
-      </span>
-      <span
-        className="focus:outline-none mr-10 cursor-pointer"
-        onClick={() => updateOpen(1)}
-      >
-        SMARTPHONES{' '}
-        <div className="w-3 inline-block">
-          <ChevronDown />
-        </div>
-        <NavMidDropdown isOpen={isOpen} x={1} />
-      </span>
-      <span
-        className="focus:outline-none mr-10 cursor-pointer"
-        onClick={() => updateOpen(2)}
-      >
-        TABLET{' '}
-        <div className="w-3 inline-block">
-          <ChevronDown />
-        </div>
-        <NavMidDropdown isOpen={isOpen} x={2} />
-      </span>
-      <span
-        className="focus:outline-none mr-10 cursor-pointer"
-        onClick={() => updateOpen(3)}
-      >
-        ACCESSORIES{' '}
-        <div className="w-3 inline-block">
-          <ChevronDown />
-        </div>
-        <NavMidDropdown isOpen={isOpen} x={3} />
-      </span>
-      <span
-        className="focus:outline-none mr-10 cursor-pointer"
-        onClick={() => updateOpen(4)}
-      >
-        WEARABLES{' '}
-        <div className="w-3 inline-block">
-          <ChevronDown />
-        </div>
-        <NavMidDropdown isOpen={isOpen} x={4} />
-      </span>
+      <DropdownSection
+        title="CELL PHONE"
+        updateOpen={() => updateOpen(0)}
+        isOpen={isOpen[0]}
+        items={cellphoneItems}
+      />
+
+      <DropdownSection
+        title="SMARTPHONES"
+        updateOpen={() => updateOpen(1)}
+        isOpen={isOpen[1]}
+        items={smartphoneItems}
+      />
+
+      <DropdownSection
+        title="TABLET"
+        updateOpen={() => updateOpen(2)}
+        isOpen={isOpen[2]}
+        items={tabletItems}
+      />
+
+      <DropdownSection
+        title="ACCESSORIES"
+        updateOpen={() => updateOpen(3)}
+        isOpen={isOpen[3]}
+        items={accessoriesItems}
+      />
+
+      <DropdownSection
+        title="WEARABLES"
+        updateOpen={() => updateOpen(4)}
+        isOpen={isOpen[4]}
+        items={wearableItems}
+      />
 
       {/* </Container> */}
     </div>
