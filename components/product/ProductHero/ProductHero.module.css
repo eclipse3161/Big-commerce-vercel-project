@@ -7,6 +7,30 @@
   width: 50%;
 }
 
+.paymentLeft {
+  display: flex;
+  flex-direction: column;
+}
+
+.paymentRight {
+  margin-top: 4rem;
+}
+
+.product {
+  margin-right: 2rem;
+  width: 90%;
+  border: 1px solid #e5e5e5;
+  padding: 4px;
+  box-sizing: content-box;
+}
+
+.social {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  width: 7rem;
+}
+
 .right {
   width: 50%;
 }
@@ -36,14 +60,4 @@
 .paymentContainer {
   display: flex;
   justify-content: center;
-}
-
-.paymentLeft {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-}
-
-.paymentRight {
-  width: 50%;
 }

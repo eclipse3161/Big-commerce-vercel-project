@@ -1,6 +1,7 @@
 import ProductItem from '@components/common/ProductItem/ProductItem'
 import { RightArrow } from '@components/icons'
 import cn from 'classnames'
+import { ProductSlider } from '@components/product'
 import s from './FeaturedProducts.module.css'
 
 const products = [
@@ -34,11 +35,21 @@ const FeaturedProducts: React.FC = ({}) => {
         Featured Products
       </h2>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="sm:block md:hidden">
+        <ProductSlider slides={2} products={products} />
+      </div>
+      <div className="hidden md:block lg:hidden">
+        <ProductSlider slides={3} products={products} />
+      </div>
+      <div className="hidden lg:block">
+        <ProductSlider slides={4} products={products} />
+      </div>
+
+      {/* <div className="grid grid-cols-4 gap-4">
         {products.map((product, idx) => (
           <ProductItem product={product} key={idx} />
         ))}
-      </div>
+      </div> */}
     </div>
   )
 }

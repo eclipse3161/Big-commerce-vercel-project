@@ -37,14 +37,14 @@ const Navbar: FC = () => {
               </a>
             </Link> */}
             <nav className="hidden space-x-4 lg:flex font-sm flex-1">
-              <Link href="/search">
+              <Link href="/login">
                 <div className={s.navItem}>
                   <a className={s.link}>
                     <UserIcon className={cn(s.navIcon, s.iconUser)} /> Login
                   </a>
                 </div>
               </Link>
-              <Link href="/search?q=clothes">
+              <Link href="/login?action=create_account">
                 <div className={s.navItem}>
                   <a className={s.link}>
                     <PlusIcon className={cn(s.navIcon, s.iconPlus)} /> Create An
@@ -52,7 +52,7 @@ const Navbar: FC = () => {
                   </a>
                 </div>
               </Link>
-              <Link href="/search?q=accessories">
+              <Link href="/#">
                 <div className={s.navItem}>
                   <a className={s.link}>
                     <PhoneIcon className={cn(s.navIcon, s.iconPhone)} /> Call
@@ -60,7 +60,7 @@ const Navbar: FC = () => {
                   </a>
                 </div>
               </Link>
-              <Link href="/search?q=accessories">
+              <Link href="#">
                 <div className={s.navItem}>
                   <a className={s.link}>All Prices In: EURO</a>
                 </div>

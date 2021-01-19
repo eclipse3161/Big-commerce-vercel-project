@@ -2,7 +2,7 @@ import ProductItem from '@components/common/ProductItem/ProductItem'
 import { RightArrow } from '@components/icons'
 import { ProductSlider } from '@components/product'
 import cn from 'classnames'
-import s from './NewProducts.module.css'
+import s from './CustomersViewed.module.css'
 
 const products = [
   {
@@ -33,34 +33,24 @@ const products = [
   },
 ]
 
-const NewProducts: React.FC = ({}) => {
+const CustomersViewed: React.FC = ({}) => {
   return (
     <div className={s.root}>
       <h2 className={cn(s.heading, 'text-2xl')}>
         <RightArrow className={s.headingIcon} />
-        New Products
+        CUSTOMERS ALSO VIEWED
       </h2>
-      <div className="sm:block md:hidden">
-        <ProductSlider slides={2} products={products} />
+      <div className="hidden lg:block">
+        <ProductSlider slides={6} products={products} />
       </div>
       <div className="hidden md:block lg:hidden">
         <ProductSlider slides={3} products={products} />
       </div>
-      <div className="hidden lg:block">
-        <ProductSlider slides={4} products={products} />
+      <div className="md:hidden sm:block">
+        <ProductSlider slides={2} products={products} />
       </div>
-      {/* <h2 className={cn(s.heading, 'text-2xl')}>
-        <RightArrow className={s.headingIcon} />
-        New Products
-      </h2>
-
-      <div className="grid grid-cols-4 gap-4">
-        {products.map((product, idx) => (
-          <ProductItem product={product} key={idx} />
-        ))}
-      </div> */}
     </div>
   )
 }
 
-export default NewProducts
+export default CustomersViewed

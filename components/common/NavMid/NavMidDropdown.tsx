@@ -16,6 +16,7 @@ const NavMidDropdown: FC<Props> = ({ isOpen, items }) => {
   return (
     <div className={s.dropdown}>
       {/* <Container> */}
+
       {isOpen && (
         <>
           {items.map((item, idx) => (

@@ -57,19 +57,22 @@ export default function Slider() {
   }, [pause, slider])
 
   const prev = (e: Event) => {
-    e.stopPropagation();
-    slider.prev();
+    e.stopPropagation()
+    slider.prev()
   }
 
   const next = (e: Event) => {
-    e.stopPropagation();
-    slider.next();
+    e.stopPropagation()
+    slider.next()
   }
 
   return (
     <>
-      <div className="navigation-wrapper">
-        <div ref={sliderRef as React.RefObject<HTMLDivElement>} className="keen-slider">
+      <div>
+        <div
+          ref={sliderRef as React.RefObject<HTMLDivElement>}
+          className="keen-slider"
+        >
           {images.map((src, idx) => (
             <div key={idx} className="keen-slider__slide number-slide1">
               <img src={src} />

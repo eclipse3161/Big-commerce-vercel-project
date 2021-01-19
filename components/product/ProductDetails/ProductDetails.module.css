@@ -1,0 +1,52 @@
+.row {
+  background-color: #e6f2fe;
+  padding-left: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 2px;
+  display: flex;
+  justify-content: start;
+}
+
+.descriptionBtn {
+  border: 1px solid #e5e5e5;
+  width: 121.25px;
+  height: 43px;
+}
+
+.descriptionBtn:focus {
+  color: white;
+  font-weight: 600;
+  background-color: #012e58;
+  width: 121.25px;
+  height: 43px;
+}
+
+.specBtn {
+  border: 1px solid #e5e5e5;
+  width: 121.25px;
+  height: 43px;
+}
+
+.specBtn:focus {
+  color: white;
+  font-weight: 600;
+  background-color: #012e58;
+  width: 121.25px;
+  height: 43px;
+}
+
+.left {
+  width: 25%;
+  font-weight: 600;
+}
+
+.right {
+  width: 75%;
+}
+
+.container {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}

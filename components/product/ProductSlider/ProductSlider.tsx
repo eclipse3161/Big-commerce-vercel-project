@@ -20,13 +20,14 @@ type Product = {
 
 interface ProductSliderProps {
   products: Array<Product>
+  slides: number
 }
 
-const ProductSlider: FC<ProductSliderProps> = ({ products }) => {
+const ProductSlider: FC<ProductSliderProps> = ({ products, slides }) => {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isMounted, setIsMounted] = useState(false)
 
-  const slidesPerView = 4
+  const slidesPerView = slides
 
   const [ref, slider] = useKeenSlider<HTMLDivElement>({
     loop: false,

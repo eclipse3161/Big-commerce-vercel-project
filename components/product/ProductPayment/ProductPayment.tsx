@@ -7,7 +7,7 @@ import s from './ProductPayment.module.css'
 const ProductPayment: FC = () => {
   return (
     <div className={s.paymentContainer}>
-      <div className={s.paymentLeft}>
+      {/* <div className={s.paymentLeft}>
         <div className="flex justify-between">
           <div className={s.product}>
             <img src="/phone1.jpg" alt="" />
@@ -33,8 +33,8 @@ const ProductPayment: FC = () => {
           <img src="/twitter-brands.svg" className="mr-3 w-6" alt="" />
           <img src="/pinterest-brands.svg" className="mr-3 w-6" alt="" />
         </div>
-      </div>
-      <div className={s.paymentRight}>
+      </div> */}
+      {/* <div className={s.paymentRight}>
         <img src="/safe.webp" alt="" />
         <h1 className="mt-8 text-2xl mb-3">4 Great reasons to buy from us:</h1>
         <div className="flex justify-between">
@@ -55,7 +55,7 @@ const ProductPayment: FC = () => {
             <p className="text-center">Easy Returns</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

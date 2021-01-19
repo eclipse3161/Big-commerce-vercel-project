@@ -10,9 +10,9 @@ const NavWrapper: FC = () => {
   return (
     <div className={cn(s.root)}>
       <Container>
-        <NavTop/>
-        <NavMid/>
-        <NavBottom/>
+        <NavTop />
+        <NavMid />
+        <NavBottom />
       </Container>
       <hr />
     </div>

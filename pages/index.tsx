@@ -88,7 +88,7 @@ export default function Home({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <div>
-      <Container>
+      <Container className="navigation-wrapper sm:w-11/12 sm:m-auto md:w-full">
         <Slider />
         <FeaturedProducts />
         <NewProducts />
