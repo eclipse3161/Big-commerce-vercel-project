@@ -29,7 +29,7 @@ const ProductDetails: FC = () => {
   )
 
   return (
-    <div className="mt-7">
+    <div>
       <h1 className="text-3xl">{productName}</h1>
       <div className="text-red text-xl">{productPrice}</div>
       <div className="mb-1">

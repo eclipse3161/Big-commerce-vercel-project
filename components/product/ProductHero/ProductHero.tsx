@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Container } from '@components/ui'
 import cn from 'classnames'
@@ -7,6 +7,11 @@ import ProductDetails from './ProductDetails'
 
 const ProductHero: FC = () => {
   const [productImage, setProductImage] = useState('/phone1.jpg')
+  const [backgroundPosition, setbackgroundPosition] = useState('0% 0%')
+  // const [state, setState] = useState({
+  //   backgroundImage: productImage,
+  //   backgroundPosition: '0% 0%',
+  // })
   const [productName, setProductName] = useState()
   const [productPrice, setProductPrice] = useState()
   const [productSKU, setProductSKU] = useState()
@@ -14,10 +19,35 @@ const ProductHero: FC = () => {
   const [productAvailability, setProductAvailability] = useState()
   const [productHighlights, setProductHighlights] = useState()
 
+  const handleMouseMove = (e) => {
+    const { left, top, width, height } = e.target.getBoundingClientRect()
+    console.log(e.pageX)
+    console.log(e.pageY)
+    console.log(e.target.getBoundingClientRect())
+    const x = ((e.pageX - left) / width) * 100
+    const y = ((e.pageY - height * 0.5 - top) / height) * 100
+    console.log(x, y)
+    setbackgroundPosition(`${x}% ${y}%`)
+    //setState(state.backgroundPosition: `${x}% ${y}%`)
+  }
+
+  useEffect(() => {
+    console.log(backgroundPosition)
+  }, [backgroundPosition])
+
   return (
-    <div className="flex flex-col-reverse md:flex-row md:items-center">
+    <div className={s.root}>
       <div className={s.left}>
-        <img src={productImage} alt="" />
+        <figure
+          className={s.figure}
+          onMouseMove={(e) => handleMouseMove(e)}
+          style={{
+            backgroundImage: 'url("/phone1.jpg")',
+            backgroundPosition: backgroundPosition,
+          }}
+        >
+          <img className={cn(s.img, ' w-9/12')} src={productImage} alt="" />
+        </figure>
 
         <div className={s.paymentLeft}>
           <div className="flex justify-between w-full">
@@ -54,7 +84,7 @@ const ProductHero: FC = () => {
 
       <div className={s.right}>
         <ProductDetails />
-        <div className={s.paymentRight}>
+        {/* <div className={s.paymentRight}>
           <img src="/safe.webp" alt="" />
           <h1 className="mt-8 text-2xl mb-3">
             4 Great reasons to buy from us:
@@ -77,7 +107,7 @@ const ProductHero: FC = () => {
               <p className="text-center">Easy Returns</p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )

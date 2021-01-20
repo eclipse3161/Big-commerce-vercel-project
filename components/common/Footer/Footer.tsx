@@ -35,33 +35,42 @@ const Footer: FC<Props> = ({ className, pages }) => {
         <div
           className={cn(
             s.footerRoot,
-            'flex justify-between text-xs uppercase tracking-wide text-gray-500 my-6 leading-6'
+            'md:flex md:justify-between md:items-start md:flex-row text-xs uppercase tracking-wide text-gray-500 my-6 leading-6 flex flex-col items-center'
           )}
         >
-          <ul>
+          <h1 className="md:hidden text-xl mb-8 mt-4">COMPANY INFO</h1>
+          <ul className="text-center md:text-left">
             <li>About us</li>
             <li>My Wishlist</li>
             <li>Track My Order</li>
             <li>Help</li>
           </ul>
-          <ul>
+          <h1 className="md:hidden text-xl mb-8 mt-4">INFORMATION</h1>
+          <ul className="text-center md:text-left">
             <li>Privacy Policy</li>
             <li>Terms &amp; Conditions</li>
             <li>Shipping &amp; Delivery</li>
             <li>Sitemap</li>
           </ul>
-          <ul>
+          <h1 className="md:hidden text-xl mb-8 mt-4">SHOP WITH US</h1>
+          <ul className="text-center md:text-left">
             <li>My Account</li>
             <li>Login</li>
             <li>View Cart</li>
             <li>Checkout</li>
             <li>Blog</li>
           </ul>
-          <ul>
+          <h1 className="md:hidden text-xl mb-8 mt-4">CUSTOMER SERVICE</h1>
+          <ul className="text-center md:text-left">
             <li>Contact us</li>
           </ul>
+          <h1 className="md:hidden text-xl mb-8 mt-4">
+            Subscribe to our newsletter
+          </h1>
           <div className="max-w-xs">
-            <p>Get the latest updates on new products and upcoming sales</p>
+            <p className="text-center md:text-left">
+              Get the latest updates on new products and upcoming sales
+            </p>
             <div className={cn(s.footerInput, 'mt-5')}>
               <input
                 type="text"

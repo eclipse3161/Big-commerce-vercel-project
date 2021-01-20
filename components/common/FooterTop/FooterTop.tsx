@@ -8,16 +8,18 @@ import Phone from '@components/icons/Phone'
 
 const FooterTop: FC = () => {
   return (
-    <div className={s.root}>
-      <Container>
-        <div className={cn(s.inner, "flex justify-between")}>
-          <span>COMPANY INFO</span>
-          <span>INFORMATION</span>
-          <span>SHOP WITH US</span>
-          <span>CUSTOMER SERVICE</span>
-          <span>SUBSCRIBE TO OUR NEWSLETTER</span>
-        </div>
-      </Container>
+    <div className="hidden md:block">
+      <div className={s.root}>
+        <Container>
+          <div className={cn(s.inner, 'flex justify-between')}>
+            <span>COMPANY INFO</span>
+            <span>INFORMATION</span>
+            <span>SHOP WITH US</span>
+            <span>CUSTOMER SERVICE</span>
+            <span>SUBSCRIBE TO OUR NEWSLETTER</span>
+          </div>
+        </Container>
+      </div>
     </div>
   )
 }
