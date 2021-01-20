@@ -1,12 +1,28 @@
-.root {}
+.root {
+}
+
+.overlay {
+  opacity: 0;
+  display: flex;
+  position: absolute;
+  width: 90%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay:hover {
+  opacity: 1;
+}
 
 .image {
-    height: 280px;
-    padding: 15px;
-    cursor: pointer;
+  height: 280px;
+  padding: 15px;
+  cursor: pointer;
 }
 
 .image img {
-    height: 100%;
-    margin: auto;
+  height: 100%;
+  margin: auto;
 }

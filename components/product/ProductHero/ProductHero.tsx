@@ -21,19 +21,13 @@ const ProductHero: FC = () => {
 
   const handleMouseMove = (e) => {
     const { left, top, width, height } = e.target.getBoundingClientRect()
-    console.log(e.pageX)
-    console.log(e.pageY)
-    console.log(e.target.getBoundingClientRect())
     const x = ((e.pageX - left) / width) * 100
     const y = ((e.pageY - height * 0.5 - top) / height) * 100
-    console.log(x, y)
     setbackgroundPosition(`${x}% ${y}%`)
     //setState(state.backgroundPosition: `${x}% ${y}%`)
   }
 
-  useEffect(() => {
-    console.log(backgroundPosition)
-  }, [backgroundPosition])
+  useEffect(() => {}, [backgroundPosition])
 
   return (
     <div className={s.root}>
