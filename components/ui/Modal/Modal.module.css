@@ -5,6 +5,9 @@
 
 .modal {
   @apply bg-primary p-12 border border-accents-2;
+  max-height: 90vh;
+  max-width: 90vw;
+  overflow-y: scroll;
 }
 
 .modal:focus {

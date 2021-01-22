@@ -12,6 +12,8 @@ import { CartSidebarView } from '@components/cart'
 import { CommerceProvider } from '@framework'
 import type { Page } from '@framework/api/operations/get-all-pages'
 import NavSearch from '../NavSearch'
+import ProductPreview from '@components/product/ProductPreview/ProductPreview'
+// import { ProductModalProvider } from "../../product/ProductModalContext/ProductModalContext"
 
 const Loading = () => (
   <div className="w-80 h-80 flex items-center text-center justify-center p-3">
@@ -61,7 +63,7 @@ const Layout: FC<Props> = ({ children, pageProps }) => {
     <CommerceProvider locale={locale}>
       <div className={cn(s.root)}>
         <Navbar />
-        <NavSearch/>
+        <NavSearch />
         <main className="fit">{children}</main>
         <Footer pages={pageProps.pages} />
 
@@ -73,6 +75,7 @@ const Layout: FC<Props> = ({ children, pageProps }) => {
           {modalView === 'LOGIN_VIEW' && <LoginView />}
           {modalView === 'SIGNUP_VIEW' && <SignUpView />}
           {modalView === 'FORGOT_VIEW' && <ForgotPassword />}
+          {modalView === 'PRODUCT_PREVIEW' && <ProductPreview />}
         </Modal>
 
         <FeatureBar

@@ -40,7 +40,7 @@ const Footer: FC<Props> = ({ className, pages }) => {
         >
           <h1 className="md:hidden text-xl mb-8 mt-4">COMPANY INFO</h1>
           <ul className="text-center md:text-left">
-            <li><Link href="about-us">About us</Link></li>
+            <li><Link href="/about-us">About us</Link></li>
             <li>My Wishlist</li>
             <li>Track My Order</li>
             <li>Help</li>

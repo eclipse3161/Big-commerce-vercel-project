@@ -35,21 +35,16 @@ const ProductPageModal: FC<Props> = ({ modalIsOpen, setModalIsOpen }) => {
   }
 
   return (
-    <div>
-      {/* <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-        <ProductPage />
-      </Modal> */}
-      {/* {modalIsOpen && (
-        <>
-          <h1>Hello</h1>
-          <button onClick={() => setModalIsOpen(false)}>x</button>
-        </>
-      )} */}
+    <div
+    // isOpen={modalIsOpen}
+    // onRequestClose={closeModal}
+    // style={customStyles.content}
+    // contentLabel="Example Modal"
+    >
+      <div className="absolute inset-1/2 bg-white p-12">
+        <h1>Hello</h1>
+        <button onClick={() => setModalIsOpen(false)}>x</button>
+      </div>
     </div>
   )
 }

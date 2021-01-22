@@ -1,7 +1,8 @@
 import ProductPageModal from '@components/product/ProductPageModal'
 import cn from 'classnames'
 import { useEffect, useState } from 'react'
-import Modal from 'react-modal'
+import { useUI } from '@components/ui/context'
+// import Modal from 'react-modal'
 import s from './ProductItem.module.css'
 
 type Product = {
@@ -29,15 +30,20 @@ const customStyles = {
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [hover, setHover] = useState(false)
+  const { openModal, setModalView, closeModal } = useUI()
 
-  useEffect(() => {
-    console.log(hover)
-  }, [hover])
+  // useEffect(() => {
+  //   console.log(hover)
+  // }, [hover])
+  const openProductPreview = () => {
+    setModalView("PRODUCT_PREVIEW");
+    openModal();
+  }
 
   return (
     <div className={s.root}>
       <div
-        onClick={() => setModalIsOpen(true)}
+        onClick={openProductPreview}
         className={cn(s.image, 'relative')}
       >
         <div className={s.overlay}>
@@ -66,10 +72,6 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
           src={product.image}
           alt="product"
         />
-        {/* <ProductPageModal
-          modalIsOpen={modalIsOpen}
-          setModalIsOpen={setModalIsOpen}
-        /> */}
       </div>
       <h2 className="text-sm text-center tracking-wide text-gray-500">
         {product.title}
