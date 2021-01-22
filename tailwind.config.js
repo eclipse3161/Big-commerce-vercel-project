@@ -10,6 +10,9 @@ module.exports = {
     ],
   },
   theme: {
+    fontFamily: {
+      'body': ['var(--font-body)'],
+     },
     backgroundColor: (theme) => ({
       ...theme('colors'),
       silver: "#e5e5e5"
@@ -67,6 +70,8 @@ module.exports = {
         base: 'var(--text-base)',
         primary: 'var(--text-primary)',
         secondary: 'var(--text-secondary)',
+        gray: 'var(--text-gray)',
+        lightgray: 'var(--text-light-gray)'
       },
       boxShadow: {
         'outline-2': '0 0 0 2px var(--accents-2)',

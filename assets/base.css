@@ -1,3 +1,19 @@
+@font-face {
+  font-family: "Karla";
+  src: url("/fonts/Karla-VariableFont_wght.ttf");
+  font-style: medium;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/Montserrat-Regular.ttf");
+  font-style: medium;
+  font-weight: 500;
+  font-display: swap;
+}
+
 :root {
   --primary-blue: #012E58;
   --primary: #ffffff;
@@ -10,6 +26,8 @@
   --text-base: #000000;
   --text-primary: #000000;
   --text-secondary: white;
+  --text-gray: #444444;
+  --text-light-gray: #757575;
 
   --hover: rgba(0, 0, 0, 0.075);
   --hover-1: rgba(0, 0, 0, 0.15);
@@ -36,8 +54,8 @@
   --accents-7: #495057;
   --accents-8: #343a40;
   --accents-9: #212529;
-  --font-sans: -apple-system, system-ui, BlinkMacSystemFont, 'Helvetica Neue',
-    'Helvetica', sans-serif;
+  --font-sans: 'Karla', Arial, Helvetica, sans-serif;
+  --font-body: 'Montserrat', Arial, Helvetica, sans-serif;
 }
 
 [data-theme='dark'] {

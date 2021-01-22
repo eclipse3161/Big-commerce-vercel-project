@@ -8,7 +8,7 @@ import NavBottom from '../NavBottom/NavBottom'
 
 const NavWrapper: FC = () => {
   return (
-    <div className={cn(s.root)}>
+    <div className="mb-6">
       <Container>
         <NavTop />
         <NavMid />

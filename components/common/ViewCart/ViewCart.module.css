@@ -7,7 +7,6 @@
     top: 4px;
     /* top: 3px; */
     cursor: pointer;
-    font-weight: bold;
 }
 
 .viewCart:before {
@@ -44,6 +43,5 @@
 .viewCartLabel {
     color: #012e58;
     text-transform: capitalize;
-    font-weight: 600;
     font-size: 14px;
 }

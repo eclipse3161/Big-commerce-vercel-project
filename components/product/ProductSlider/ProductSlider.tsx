@@ -76,7 +76,7 @@ const ProductSlider: FC<ProductSliderProps> = ({ products, slides }) => {
         style={{ opacity: isMounted ? 1 : 0 }}
       >
         {products.map((product, idx) => (
-          <div className="keen-slider__slide">
+          <div className="keen-slider__slide" key={idx}>
             <ProductItem product={product} key={idx} />
           </div>
         ))}
