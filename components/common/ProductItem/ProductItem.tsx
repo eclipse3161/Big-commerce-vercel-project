@@ -2,7 +2,7 @@ import ProductPageModal from '@components/product/ProductPageModal'
 import cn from 'classnames'
 import { useEffect, useState } from 'react'
 import { useUI } from '@components/ui/context'
-// import Modal from 'react-modal'
+import Link from 'next/link'
 import s from './ProductItem.module.css'
 
 type Product = {
@@ -28,42 +28,42 @@ const customStyles = {
 }
 
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
-  const [modalIsOpen, setModalIsOpen] = useState(false)
   const [hover, setHover] = useState(false)
-  const { openModal, setModalView, closeModal } = useUI()
+  const { openModal, setModalView, displayModal } = useUI()
 
   // useEffect(() => {
   //   console.log(hover)
   // }, [hover])
-  const openProductPreview = () => {
-    setModalView("PRODUCT_PREVIEW");
-    openModal();
+  const openProductPreview = (e) => {
+    e.stopPropagation()
+    setModalView('PRODUCT_PREVIEW')
+    openModal()
   }
 
   return (
     <div className={s.root}>
-      <div
-        onClick={openProductPreview}
-        className={cn(s.image, 'relative')}
-      >
-        <div className={s.overlay}>
-          <div
-            className={cn(
-              s.overlayItem,
-              'text-center bg-white w-36 rounded mb-2'
-            )}
-          >
-            Quick View
+      <div className={cn(s.image, 'relative')}>
+        <Link href="/product">
+          <div className={s.overlay}>
+            <div
+              className={cn(
+                s.overlayItem,
+                'text-center bg-white w-36 rounded mb-2'
+              )}
+              onClick={openProductPreview}
+            >
+              Quick View
+            </div>
+            <div
+              className={cn(
+                s.overlayItem,
+                'text-center bg-white w-36 rounded mb-2'
+              )}
+            >
+              Choose Options
+            </div>
           </div>
-          <div
-            className={cn(
-              s.overlayItem,
-              'text-center bg-white w-36 rounded mb-2'
-            )}
-          >
-            Choose Options
-          </div>
-        </div>
+        </Link>
 
         <img
           onMouseOver={() => setHover(true)}
