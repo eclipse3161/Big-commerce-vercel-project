@@ -1,8 +1,9 @@
 .root {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
   margin-bottom: 5rem;
+  margin-top: 4rem;
 }
 
 .figure {
@@ -23,11 +24,11 @@
 }
 
 .left {
-  width: 48%;
+  width: 46%;
   overflow: hidden;
-  padding-top: 8rem;
+  padding-top: 2rem;
   display: flex;
-  //justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   flex-direction: column;
 }
@@ -58,7 +59,7 @@
 }
 
 .right {
-  width: 48%;
+  width: 50%;
 }
 
 .counter {
@@ -86,4 +87,12 @@
 .paymentContainer {
   display: flex;
   justify-content: center;
+}
+
+.colorBtn:active, .colorBtn:focus {
+  border: none !important;
+}
+
+.colorBtn:focus {
+  outline: 0 !important;
 }

@@ -19,6 +19,7 @@ module.exports = {
     }),
     borerColor: (theme) => ({
       primary: '#012E58',
+      lightgray: 'var(--text-light-gray)'
     }),
     rotate: {
       '-180': '-180deg',

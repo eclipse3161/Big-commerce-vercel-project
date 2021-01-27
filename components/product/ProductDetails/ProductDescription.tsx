@@ -111,18 +111,18 @@ const ProductDescription: FC = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold">{title}</h1>
-      <h1 className="mt-8 text-2xl font-bold">Overview</h1>
+      <h1 className="text-3xl font-bold font-body">{title}</h1>
+      <h1 className="mt-8 text-2xl font-black font-body">Overview</h1>
       {overview}
-      <h1 className="mt-8 text-2xl font-bold">Cameras</h1>
+      <h1 className="mt-8 text-2xl font-bold font-body">Cameras</h1>
       {cameras}
-      <h1 className="mt-8 text-2xl font-bold">Display</h1>
+      <h1 className="mt-8 text-2xl font-bold font-body">Display</h1>
       {display}
-      <h1 className="mt-8 text-2xl font-bold">Performance</h1>
+      <h1 className="mt-8 text-2xl font-bold font-body">Performance</h1>
       {performance}
-      <h1 className="mt-8 text-2xl font-bold">Key Features</h1>
+      <h1 className="mt-8 text-2xl font-bold font-body">Key Features</h1>
       {keyFeatures}
-      <h1 className="mt-8 text-2xl font-bold">Box Contents</h1>
+      <h1 className="mt-8 text-2xl font-bold font-body">Box Contents</h1>
       {boxContents}
     </div>
   )

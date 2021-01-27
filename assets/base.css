@@ -2,7 +2,6 @@
   font-family: "Karla";
   src: url("/fonts/Karla-VariableFont_wght.ttf");
   font-style: medium;
-  font-weight: 500;
   font-display: swap;
 }
 
@@ -11,6 +10,14 @@
   src: url("/fonts/Montserrat-Regular.ttf");
   font-style: medium;
   font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/Montserrat-Bold.ttf");
+  font-style: medium;
+  font-weight: 800;
   font-display: swap;
 }
 

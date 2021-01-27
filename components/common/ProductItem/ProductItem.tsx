@@ -1,4 +1,3 @@
-import ProductPageModal from '@components/product/ProductPageModal'
 import cn from 'classnames'
 import { useEffect, useState } from 'react'
 import { useUI } from '@components/ui/context'
@@ -34,7 +33,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   // useEffect(() => {
   //   console.log(hover)
   // }, [hover])
-  const openProductPreview = (e) => {
+  const openProductPreview = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation()
     setModalView('PRODUCT_PREVIEW')
     openModal()

@@ -33,11 +33,11 @@ const ProductDetails: FC = () => {
       <button
         onClick={() => setstate(true)}
         style={state ? activeStyles : inactiveStyles}
-        className={s.descriptionBtn}
+        className={cn(s.descriptionBtn, "text-lightgray")}
       >
         Description
       </button>
-      <button onClick={() => setstate(false)} className={s.specBtn}>
+      <button onClick={() => setstate(false)} className={cn(s.specBtn, "text-lightgray")}>
         Specification
       </button>
       <hr className="mb-5" />
