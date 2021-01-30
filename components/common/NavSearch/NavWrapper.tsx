@@ -6,12 +6,17 @@ import NavTop from '../NavTop/NavTop'
 import NavMid from '../NavMid/NavMid'
 import NavBottom from '../NavBottom/NavBottom'
 
-const NavWrapper: FC = () => {
+interface Props {
+  categories: Object[]
+}
+
+const NavWrapper: FC<Props> = ({ categories }) => {
+  console.log("WRAPPER CATS: ", categories)
   return (
     <div className="mb-6">
       <Container>
         <NavTop />
-        <NavMid />
+        <NavMid categories={categories} />
         <NavBottom />
       </Container>
       <hr />

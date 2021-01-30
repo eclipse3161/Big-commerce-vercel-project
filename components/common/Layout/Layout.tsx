@@ -2,7 +2,7 @@ import cn from 'classnames'
 import dynamic from 'next/dynamic'
 import s from './Layout.module.css'
 import { useRouter } from 'next/router'
-import React, { FC } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import { useUI } from '@components/ui/context'
 import { Navbar, Footer } from '@components/common'
 import { useAcceptCookies } from '@lib/hooks/useAcceptCookies'
@@ -58,13 +58,19 @@ const Layout: FC<Props> = ({ children, pageProps }) => {
   } = useUI()
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
   const { locale = 'en-US' } = useRouter()
+  const [categories, setCategories] = useState([]);
+
+  const childrenWithExtraProp = React.Children.map(children, child =>
+    /* @ts-ignore */
+    React.cloneElement(child, { setCategories })
+  );
 
   return (
     <CommerceProvider locale={locale}>
       <div className={cn(s.root)}>
         <Navbar />
-        <NavSearch />
-        <main className="fit">{children}</main>
+        <NavSearch categories={categories} />
+        <main className="fit">{childrenWithExtraProp}</main>
         <Footer pages={pageProps.pages} />
 
         <Sidebar open={displaySidebar} onClose={closeSidebar}>

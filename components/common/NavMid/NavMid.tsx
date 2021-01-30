@@ -1,80 +1,21 @@
-import { FC, useState } from 'react'
-import Link from 'next/link'
-import { Container } from '@components/ui'
+import { FC, useState, useEffect } from 'react'
 import s from './Navmid.module.css'
 import cn from 'classnames'
-import Searchbar from '../Searchbar'
-import Phone from '@components/icons/Phone'
 import ChevronDown from '@components/icons/ChevronDown'
 import NavMidDropdown from './NavMidDropdown'
-
-const cellphoneItems = [
-  'All Cell Phone',
-  'Basic Phones',
-  'Brand',
-  'Apple',
-  'ASUS',
-  'Blackberry',
-  'Google',
-  'HTC',
-  'Huawei',
-  'LG',
-  'Motorola',
-  'Nokia',
-  'OnePlus',
-  'Oppo',
-  'Razer',
-  'Samsung',
-  'Sony',
-  'Xiaomi',
-]
-
-const smartphoneItems = [
-  'All Smartphones',
-  'Apple',
-  'CAT',
-  'Oppo',
-  'Razer',
-  'Realme',
-  'Xiaomi',
-  'Samsung',
-  'Oneplus',
-  'Blackberry',
-  'Motorola',
-  'HTC',
-  'Huawei',
-  'LG',
-  'Sony',
-  'Google',
-]
-
-const tabletItems = ['All Tablet', 'Accessories', 'Brand', 'Apple', 'Samsung']
-
-const accessoriesItems = [
-  'All Accessories',
-  'Batteries',
-  'Bluetooth',
-  'Cases, Covers & Holsters',
-  'Chargers and Docks',
-  'iPad accessories',
-  'SIM Starter Kit',
-  'Cases, Covers and Holsters',
-  'Portable Speaker',
-  'Display Protection',
-  'Memory Cards',
-  'Mounts',
-  'Smart accessories',
-  'USB and HDMI Cables',
-  'Wired Headsets',
-]
-
-const wearableItems = ['All Wearables', 'Apple', 'Samsung', 'Fitbit']
-
 interface DropdownSectionProps {
   title: String
   isOpen: Boolean
   updateOpen: Function
   items: String[]
+}
+interface Category {
+  children: Object[]
+  description: string
+  entityId: number
+  name: string
+  path: string
+  productCount: Number
 }
 
 const DropdownSection: FC<DropdownSectionProps> = ({
@@ -98,59 +39,53 @@ const DropdownSection: FC<DropdownSectionProps> = ({
   </span>
 )
 
-const NavMid: FC = () => {
-  const [isOpen, setIsOpen] = useState<Boolean[]>([
-    false,
-    false,
-    false,
-    false,
-    false,
-  ])
+interface Props {
+  categories: Object[]
+}
 
-  const updateOpen = (index: Number) => {
-    setIsOpen(isOpen.map((item: Boolean, i: Number) => i === index && !item))
+interface booleanObj {
+  [key: number]: boolean
+}
+
+const NavMid: FC<Props> = ({ categories }) => {
+  const [isOpen, setIsOpen] = useState<booleanObj>({})
+
+  const updateOpen = (index: number) => {
+    const newObj: any = { ...isOpen }
+    Object.keys(newObj).forEach((io: string) => {
+      newObj[io] = io === index.toString() ? !newObj[io] : false
+    })
+    setIsOpen(newObj)
   }
+
+  console.log('NAVMID CATS: ', categories)
+
+  useEffect(() => {
+    if (categories && categories.length > 0) {
+      let obj: any = {}
+
+      categories.forEach((v: any) => {
+        obj = { ...obj, [v.entityId]: false }
+      })
+      setIsOpen(obj)
+    }
+  }, [categories])
 
   return (
     <div className={s.root}>
-      {/* <Container> */}
-
-      <DropdownSection
-        title="CELL PHONE"
-        updateOpen={() => updateOpen(0)}
-        isOpen={isOpen[0]}
-        items={cellphoneItems}
-      />
-
-      <DropdownSection
-        title="SMARTPHONES"
-        updateOpen={() => updateOpen(1)}
-        isOpen={isOpen[1]}
-        items={smartphoneItems}
-      />
-
-      <DropdownSection
-        title="TABLET"
-        updateOpen={() => updateOpen(2)}
-        isOpen={isOpen[2]}
-        items={tabletItems}
-      />
-
-      <DropdownSection
-        title="ACCESSORIES"
-        updateOpen={() => updateOpen(3)}
-        isOpen={isOpen[3]}
-        items={accessoriesItems}
-      />
-
-      <DropdownSection
-        title="WEARABLES"
-        updateOpen={() => updateOpen(4)}
-        isOpen={isOpen[4]}
-        items={wearableItems}
-      />
-
-      {/* </Container> */}
+      {categories &&
+        categories.length > 0 &&
+        categories.map((category: any) => {
+          return (
+            <DropdownSection
+              key={category.entityId}
+              title={category.name}
+              updateOpen={() => updateOpen(category.entityId)}
+              isOpen={isOpen[category.entityId]}
+              items={category.children}
+            />
+          )
+        })}
     </div>
   )
 }

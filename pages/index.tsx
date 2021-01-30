@@ -85,7 +85,17 @@ export default function Home({
   brands,
   categories,
   newestProducts,
+  ...props
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+
+  // console.log("FEATURED: ", featured);
+  // console.log("BEST SELLING: ", bestSelling);
+  // console.log("BRANDS: ", brands);
+  // console.log("CATEGORIES: ", categories);
+  // console.log("NEWEST PRODUCTS: ", newestProducts);
+  /* @ts-ignore */
+  props.setCategories(categories);
+
   return (
     <div>
       <Container className="navigation-wrapper sm:w-11/12 sm:m-auto md:w-full">
