@@ -18,7 +18,7 @@ const ProductPage: FC = () => {
       <ProductPayment />
       <ProductDetails />
       <ProductVideos />
-      <CustomersViewed />
+      {/* <CustomersViewed /> */}
     </div>
   )
 }

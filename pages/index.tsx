@@ -100,8 +100,9 @@ export default function Home({
     <div>
       <Container className="navigation-wrapper sm:w-11/12 sm:m-auto md:w-full">
         <Slider />
-        <FeaturedProducts />
-        <NewProducts />
+        <FeaturedProducts featured={featured} />
+        <NewProducts newestProducts={newestProducts} />
+
         {/* <Grid>
         {featured.slice(0, 3).map(({ node }, i) => (
           <ProductCard

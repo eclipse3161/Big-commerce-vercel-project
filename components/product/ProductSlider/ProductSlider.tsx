@@ -11,15 +11,8 @@ import cn from 'classnames'
 
 import s from './ProductSlider.module.css'
 import ProductItem from '@components/common/ProductItem/ProductItem'
-
-type Product = {
-  image: string
-  title: string
-  price: string
-}
-
 interface ProductSliderProps {
-  products: Array<Product>
+  products: Array<Object>
   slides: number
 }
 
@@ -58,6 +51,8 @@ const ProductSlider: FC<ProductSliderProps> = ({ products, slides }) => {
     }
   }, [])
 
+  console.log("inner products: ", products);
+
   return (
     <div className={s.root}>
       <button
@@ -75,9 +70,9 @@ const ProductSlider: FC<ProductSliderProps> = ({ products, slides }) => {
         className="keen-slider h-full transition-opacity duration-150"
         style={{ opacity: isMounted ? 1 : 0 }}
       >
-        {products.map((product, idx) => (
-          <div className="keen-slider__slide" key={idx}>
-            <ProductItem product={product} key={idx} />
+        {products.map((product: any) => (
+          <div className="keen-slider__slide" key={product.node.entityId}>
+            <ProductItem product={product.node} />
           </div>
         ))}
       </div>

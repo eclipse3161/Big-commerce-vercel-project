@@ -27,7 +27,13 @@ const products = [
   },
 ]
 
-const FeaturedProducts: React.FC = ({}) => {
+interface Props {
+  featured: Object[]
+}
+
+const FeaturedProducts: React.FC<Props> = ({ featured }) => {
+  console.log("FEATURED: ", featured);
+
   return (
     <div className={s.root}>
       <h2 className={cn(s.heading, 'text-2xl')}>
@@ -36,13 +42,13 @@ const FeaturedProducts: React.FC = ({}) => {
       </h2>
 
       <div className="sm:block md:hidden">
-        <ProductSlider slides={2} products={products} />
+        <ProductSlider slides={2} products={featured} />
       </div>
       <div className="hidden md:block lg:hidden">
-        <ProductSlider slides={3} products={products} />
+        <ProductSlider slides={3} products={featured} />
       </div>
       <div className="hidden lg:block">
-        <ProductSlider slides={4} products={products} />
+        <ProductSlider slides={4} products={featured} />
       </div>
 
       {/* <div className="grid grid-cols-4 gap-4">
