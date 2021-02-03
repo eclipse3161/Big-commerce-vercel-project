@@ -55,6 +55,10 @@ const ProductView: FC<Props> = ({ product }) => {
     }
   }
 
+  console.log('Product: ', product)
+
+  const image = product.images.edges ? product.images.edges[0] : null;
+
   return (
     <Container className="max-w-none w-full" clean>
       <NextSeo
@@ -86,7 +90,20 @@ const ProductView: FC<Props> = ({ product }) => {
           </div>
 
           <div className={s.sliderContainer}>
-            {/* <ProductSlider key={product.entityId}>
+            <div key={image?.node.urlOriginal} className={s.imageContainer}>
+              <Image
+                className={s.img}
+                src={image?.node.urlOriginal!}
+                alt={image?.node.altText || 'Product Image'}
+                width={1050}
+                height={1050}
+                priority={true}
+                quality="85"
+              />
+            </div>
+            
+            {/* @ts-ignore */}
+            {/* <ProductSlider key={product.entityId} slides={1} products={[product]}>
               {product.images.edges?.map((image, i) => (
                 <div key={image?.node.urlOriginal} className={s.imageContainer}>
                   <Image

@@ -100,7 +100,8 @@ async function getAllProducts({
   const variables: GetAllProductsQueryVariables = {
     ...vars,
     locale,
-    hasLocale: !!locale,
+    hasLocale: false,
+    // hasLocale: !!locale,
   }
 
   if (!FIELDS.includes(field)) {

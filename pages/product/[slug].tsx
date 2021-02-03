@@ -13,6 +13,8 @@ import { getConfig } from '@framework/api'
 import getProduct from '@framework/api/operations/get-product'
 import getAllPages from '@framework/api/operations/get-all-pages'
 import getAllProductPaths from '@framework/api/operations/get-all-product-paths'
+import getAllCategoryPaths from '@framework/api/operations/get-all-category-paths'
+import getSiteInfo from '@framework/api/operations/get-site-info'
 
 export async function getStaticProps({
   params,
@@ -27,19 +29,22 @@ export async function getStaticProps({
     config,
     preview,
   })
+  
+const { categories } = await getSiteInfo({ config, preview })
 
   if (!product) {
     throw new Error(`Product with slug '${params!.slug}' not found`)
   }
 
   return {
-    props: { pages, product },
+    props: { pages, product, categories },
     revalidate: 200,
   }
 }
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   const { products } = await getAllProductPaths()
+  const { categories } = await getAllCategoryPaths()
 
   return {
     paths: locales
@@ -54,11 +59,16 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
     fallback: 'blocking',
   }
 }
-
 export default function Slug({
   product,
+  categories,
+  ...props
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter()
+
+  console.log("Cat and stufF: ", categories, props)
+  // @ts-ignore
+  props.setCategories(categories)
 
   return router.isFallback ? (
     <h1>Loading...</h1> // TODO (BC) Add Skeleton Views

@@ -7,16 +7,13 @@ interface Props {
   items: Object[]
 }
 
-
 const NavMidDropdown: FC<Props> = ({ isOpen, items }) => {
   return (
     <div className={s.dropdown}>
       {isOpen &&
         items.map((item: any) => (
-          <Link href={item.path} key={item.entityId}>
-            <div className={s.dropdownitem}>
-              {item.name}
-            </div>
+          <Link href={`/category${item.path}`} key={item.entityId}>
+            <div className={s.dropdownitem}>{item.name}</div>
           </Link>
         ))}
     </div>

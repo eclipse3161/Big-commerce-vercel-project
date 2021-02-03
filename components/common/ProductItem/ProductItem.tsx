@@ -21,7 +21,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   return (
     <div className={s.root}>
       <div className={cn(s.image, 'relative')}>
-        <Link href={product.path}>
+        <Link href={`/product${product.path}`}>
           <div className={s.overlay}>
             <div
               className={cn(
@@ -47,15 +47,15 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
           onMouseOver={() => setHover(true)}
           onMouseOut={() => setHover(false)}
           //onMouseLeave={() => setHover(false)}
-          src={product.images.edges[0].node.urlOriginal}
-          alt={product.images.edges[0].node.altText}
+          src={product?.images?.edges[0].node.urlOriginal}
+          alt={product?.images?.edges[0].node.altText}
         />
       </div>
       <h2 className="text-sm text-center tracking-wide text-gray-500">
         {product.name}
       </h2>
       <h2 className="text-sm text-center text-red font-bold">
-        {product.prices.price.value}
+        {product?.prices?.price.value}
       </h2>
     </div>
   )
