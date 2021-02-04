@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC, useState, useEffect } from 'react'
 import cn from 'classnames'
 import Image from 'next/image'
@@ -24,7 +25,8 @@ import ProductItem from '@components/common/ProductItem/ProductItem'
 interface Props {
   className?: string
   children?: any
-  product: ProductNode
+  category?: any
+  categories?: any
 }
 
 const SearchView: FC<Props> = ({ category, categories }) => {
