@@ -5,22 +5,13 @@ import cn from 'classnames'
 import s from './ProductHero.module.css'
 import ProductDetails from './ProductDetails'
 
-const ProductHero: FC = () => {
-  const [productImage, setProductImage] = useState('/phone1.jpg')
+const ProductHero: FC = ({ product, highlights }) => {
   const [backgroundPosition, setbackgroundPosition] = useState('0% 0%')
-  // const [state, setState] = useState({
-  //   backgroundImage: productImage,
-  //   backgroundPosition: '0% 0%',
-  // })
-  const [productName, setProductName] = useState()
-  const [productPrice, setProductPrice] = useState()
-  const [productSKU, setProductSKU] = useState()
-  const [productCondition, setProductCondition] = useState()
-  const [productAvailability, setProductAvailability] = useState()
-  const [productHighlights, setProductHighlights] = useState()
+  const [defaultImage, setDefaultImage] = useState('')
+  const [hover, setHover] = useState(false)
 
   const handleMouseMove = (e: MouseEvent) => {
-    const node = e.target as HTMLElement;
+    const node = e.target as HTMLElement
     const { left, top, width, height } = node.getBoundingClientRect()
     const x = ((e.pageX - left) / width) * 100
     const y = ((e.pageY - height * 0.5 - top) / height) * 100
@@ -30,37 +21,46 @@ const ProductHero: FC = () => {
 
   useEffect(() => {}, [backgroundPosition])
 
+  useEffect(() => {
+    setDefaultImage(product?.images?.edges[0]?.node)
+  }, [product])
+
+  console.log('Product page: ', product)
+
   return (
     <div className={s.root}>
       <div className={s.left}>
         <figure
           className={s.figure}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
           onMouseMove={(e) => handleMouseMove(e)}
           style={{
-            backgroundImage: 'url("/phone1.jpg")',
+            backgroundImage: hover ? `url("${defaultImage?.urlOriginal}")` : "none",
             backgroundPosition: backgroundPosition,
           }}
         >
-          <img className={cn(s.img, ' w-9/12')} src={productImage} alt="" />
+          <img
+            className={cn(s.img, ' w-9/12')}
+            src={defaultImage?.urlOriginal}
+            alt={defaultImage?.altText || 'Product'}
+          />
         </figure>
 
         <div className={s.paymentLeft}>
           <div className="flex justify-between w-full">
-            <div className={s.product}>
-              <img src="/phone1.jpg" alt="" />
-            </div>
-            <div className={s.product}>
-              <img src="/phone2.jpg" alt="" />
-            </div>
-            <div className={s.product}>
-              <img src="/phone3.jpg" alt="" />
-            </div>
-            <div className={s.product}>
-              <img src="/phone4.jpg" alt="" />
-            </div>
-            <div className={s.product}>
-              <img src="/phone5.jpg" alt="" />
-            </div>
+            {product?.images?.edges.map((edge) => (
+              <div
+                className={s.product}
+                key={edge?.node?.urlOriginal}
+                onClick={() => setDefaultImage(edge?.node)}
+              >
+                <img
+                  src={edge?.node?.urlOriginal}
+                  alt={edge?.node?.altText || 'Product'}
+                />
+              </div>
+            ))}
           </div>
 
           {/* <div className={s.social}>
@@ -78,7 +78,7 @@ const ProductHero: FC = () => {
       </div>
 
       <div className={s.right}>
-        <ProductDetails />
+        <ProductDetails product={product} highlights={highlights} />
       </div>
     </div>
   )

@@ -17,6 +17,7 @@ const initialState = {
   modalView: 'LOGIN_VIEW',
   displayToast: false,
   toastText: '',
+  activeProduct: null
 }
 
 type Action =
@@ -52,6 +53,10 @@ type Action =
       type: 'SET_MODAL_VIEW'
       view: MODAL_VIEWS
     }
+  | {
+    type: 'SET_ACTIVE_PRODUCT'
+    product: any
+  }
 
 type MODAL_VIEWS = 'SIGNUP_VIEW' | 'LOGIN_VIEW' | 'FORGOT_VIEW'
 type ToastText = string
@@ -62,6 +67,12 @@ UIContext.displayName = 'UIContext'
 
 function uiReducer(state: State, action: Action) {
   switch (action.type) {
+    case 'SET_ACTIVE_PRODUCT': {
+      return {
+        ...state,
+        activeProduct: action.product
+      }
+    }
     case 'OPEN_SIDEBAR': {
       return {
         ...state,
@@ -96,6 +107,7 @@ function uiReducer(state: State, action: Action) {
       return {
         ...state,
         displayModal: false,
+        activeProduct: null
       }
     }
     case 'OPEN_TOAST': {
@@ -149,6 +161,8 @@ export const UIProvider: FC = (props) => {
   const setModalView = (view: MODAL_VIEWS) =>
     dispatch({ type: 'SET_MODAL_VIEW', view })
 
+  const setActiveProduct = (product: any) => dispatch({ type: 'SET_ACTIVE_PRODUCT', product })
+
   const value = useMemo(
     () => ({
       ...state,
@@ -163,6 +177,7 @@ export const UIProvider: FC = (props) => {
       setModalView,
       openToast,
       closeToast,
+      setActiveProduct
     }),
     [state]
   )

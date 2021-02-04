@@ -61,37 +61,7 @@ const SearchView: FC<Props> = ({ category, categories }) => {
     }
   }, [currentRootCat])
 
-  //   const addItem = useAddItem()
-  //   const { price } = usePrice({
-  //     amount: product.prices?.price?.value,
-  //     baseAmount: product.prices?.retailPrice?.value,
-  //     currencyCode: product.prices?.price?.currencyCode!,
-  //   })
-  //   const { openSidebar } = useUI()
-  //   const options = getProductOptions(product)
-  //   const [loading, setLoading] = useState(false)
-  //   const [choices, setChoices] = useState<SelectedOptions>({
-  //     size: null,
-  //     color: null,
-  //   })
-  //   const variant =
-  //     getCurrentVariant(product, choices) || product.variants.edges?.[0]
-
-  //   const addToCart = async () => {
-  //     setLoading(true)
-  //     try {
-  //       await addItem({
-  //         productId: product.entityId,
-  //         variantId: product.variants.edges?.[0]?.node.entityId!,
-  //       })
-  //       openSidebar()
-  //       setLoading(false)
-  //     } catch (err) {
-  //       setLoading(false)
-  //     }
-  //   }
-
-  console.log("CAT LSIT: ", categoriesList)
+  console.log('CAT LSIT: ', categoriesList)
 
   return (
     <Container>
@@ -107,11 +77,14 @@ const SearchView: FC<Props> = ({ category, categories }) => {
       <div className="w-full m-auto my-6 block text-center text-gray text-xs">
         <Link href="/">Home</Link> <span className="mx-2">/</span>{' '}
         {currentRootCat && (
-          <Link href={`/category${currentRootCat.path}`}>
-            {currentRootCat.name}
-          </Link>
+          <>
+            <Link href={`/category${currentRootCat.path}`}>
+              {currentRootCat.name}
+            </Link>
+            <span className="mx-2">/</span>
+          </>
         )}{' '}
-        <span className="mx-2">/</span> {category.name}
+        {category.name}
       </div>
 
       <h1 className="font-body text-center text-3xl mb-10 text-gray">

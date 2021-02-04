@@ -2,6 +2,7 @@ import cn from 'classnames'
 import { useEffect, useState } from 'react'
 import { useUI } from '@components/ui/context'
 import Link from 'next/link'
+import usePrice from '@framework/use-price'
 import s from './ProductItem.module.css'
 
 interface ProductItemProps {
@@ -10,12 +11,18 @@ interface ProductItemProps {
 
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   const [hover, setHover] = useState(false)
-  const { openModal, setModalView } = useUI()
+  const { openModal, setModalView,  setActiveProduct } = useUI()
+  const { price } = usePrice({
+    amount: product.prices?.price?.value,
+    baseAmount: product.prices?.retailPrice?.value,
+    currencyCode: product.prices?.price?.currencyCode!,
+  })
 
   const openProductPreview = (e: React.MouseEvent<HTMLElement>) => {
-    e.stopPropagation()
-    setModalView('PRODUCT_PREVIEW')
-    openModal()
+    e.stopPropagation();
+    setActiveProduct(product);
+    setModalView('PRODUCT_PREVIEW');
+    openModal();
   }
 
   return (
@@ -54,9 +61,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
       <h2 className="text-sm text-center tracking-wide text-gray-500">
         {product.name}
       </h2>
-      <h2 className="text-sm text-center text-red font-bold">
-        {product?.prices?.price.value}
-      </h2>
+      <h2 className="text-sm text-center text-red font-bold">{price}</h2>
     </div>
   )
 }

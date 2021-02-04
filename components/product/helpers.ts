@@ -12,7 +12,7 @@ export type ProductOption = {
 
 // Returns the available options of a product
 export function getProductOptions(product: ProductNode) {
-  const options = product.productOptions.edges?.reduce<ProductOption[]>(
+  const options = product.productOptions?.edges?.reduce<ProductOption[]>(
     (arr, edge) => {
       if (edge?.node.__typename === 'MultipleChoiceOption') {
         arr.push({
@@ -30,11 +30,11 @@ export function getProductOptions(product: ProductNode) {
 
 // Finds a variant in the product that matches the selected options
 export function getCurrentVariant(product: ProductNode, opts: SelectedOptions) {
-  const variant = product.variants.edges?.find((edge) => {
+  const variant = product.variants?.edges?.find((edge) => {
     const { node } = edge ?? {}
 
     return Object.entries(opts).every(([key, value]) =>
-      node?.productOptions.edges?.find((edge) => {
+      node?.productOptions?.edges?.find((edge) => {
         if (
           edge?.node.__typename === 'MultipleChoiceOption' &&
           edge.node.displayName.toLowerCase() === key

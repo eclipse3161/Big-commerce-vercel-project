@@ -70,7 +70,7 @@ const ProductSlider: FC<ProductSliderProps> = ({ products, slides }) => {
         className="keen-slider h-full transition-opacity duration-150"
         style={{ opacity: isMounted ? 1 : 0 }}
       >
-        {products.map((product: any, i) => (
+        {products?.map((product: any, i) => (
           <div className="keen-slider__slide" key={i}>
             <ProductItem product={product.node} />
           </div>

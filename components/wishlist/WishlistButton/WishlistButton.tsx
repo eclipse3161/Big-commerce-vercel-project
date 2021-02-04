@@ -67,7 +67,7 @@ const WishlistButton: FC<Props> = ({
       onClick={handleWishlistChange}
       {...props}
     >
-      <Heart fill={itemInWishlist ? 'var(--pink)' : 'none'} />
+      Add to Wishlist
     </button>
   )
 }

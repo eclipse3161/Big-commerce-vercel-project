@@ -8,6 +8,27 @@
   justify-content: start;
 }
 
+.description h2 span {
+  @apply text-3xl font-bold font-body !important;
+}
+
+.description h3 {
+  @apply mt-8;
+}
+
+.description h3 span {
+  @apply text-2xl font-black font-body !important;
+}
+
+.description p {
+  @apply mt-4 !important;
+}
+
+.description ul {
+  list-style: disc !important;
+  margin-left: 2rem !important;
+}
+
 .descriptionBtn {
   border: 1px solid #e5e5e5;
   width: 121.25px;

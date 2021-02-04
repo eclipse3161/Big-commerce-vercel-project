@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Container } from '@components/ui'
 import cn from 'classnames'
@@ -25,7 +25,7 @@ const inactiveStyles: CSS.Properties = {
   height: '43px',
 }
 
-const ProductDetails: FC = () => {
+const ProductDetails: FC = ({ product, specs }) => {
   const [state, setstate] = useState(true)
 
   return (
@@ -33,15 +33,26 @@ const ProductDetails: FC = () => {
       <button
         onClick={() => setstate(true)}
         style={state ? activeStyles : inactiveStyles}
-        className={cn(s.descriptionBtn, "text-lightgray")}
+        className={cn(s.descriptionBtn, 'text-lightgray')}
       >
         Description
       </button>
-      <button onClick={() => setstate(false)} className={cn(s.specBtn, "text-lightgray")}>
-        Specification
-      </button>
+      {specs?.length > 0 && (
+        <button
+          onClick={() => setstate(false)}
+          style={!state ? activeStyles : inactiveStyles}
+          className={cn(s.specBtn, 'text-lightgray')}
+        >
+          Specification
+        </button>
+      )}
+
       <hr className="mb-5" />
-      {state ? <ProductDescription /> : <ProductSpecification />}
+      {state ? (
+        <ProductDescription product={product} />
+      ) : (
+        <ProductSpecification specs={specs} />
+      )}
     </div>
   )
 }

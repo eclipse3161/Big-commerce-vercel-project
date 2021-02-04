@@ -18,6 +18,7 @@ export const getProductQuery = /* GraphQL */ `
             variants {
               edges {
                 node {
+                  sku
                   entityId
                   defaultImage {
                     urlOriginal

@@ -37,10 +37,11 @@ export const multipleChoiceOptionFragment = /* GraphQL */ `
   ${swatchOptionFragment}
 `
 
-export const productInfoFragment = /* GraphQL */ `
-  fragment productInfo on Product {
+export const rootProductFragment = `
+  fragment productInfoRoot on Product {
     entityId
     name
+    sku
     path
     brand {
       entityId
@@ -48,6 +49,17 @@ export const productInfoFragment = /* GraphQL */ `
     description
     prices {
       ...productPrices
+    }
+    availabilityV2 {
+      status
+    }
+    customFields {
+      edges {
+        node {
+          name
+          value
+        }
+      }
     }
     images {
       edges {
@@ -80,6 +92,20 @@ export const productInfoFragment = /* GraphQL */ `
         }
       }
     }
+    categories{
+      edges{
+        node {
+          breadcrumbs(depth:4) {
+            edges{
+              node {
+                name
+                entityId
+              }
+            }
+          }
+        }
+      }
+    }
     localeMeta: metafields(namespace: $locale, keys: ["name", "description"])
       @include(if: $hasLocale) {
       edges {
@@ -93,6 +119,21 @@ export const productInfoFragment = /* GraphQL */ `
 
   ${productPrices}
   ${multipleChoiceOptionFragment}
+`
+
+export const productInfoFragment = /* GraphQL */ `
+  fragment productInfo on Product {
+    ...productInfoRoot
+    relatedProducts {
+      edges {
+        node {
+          ...productInfoRoot
+        }
+      }
+    }
+  }
+
+  ${rootProductFragment}
 `
 
 export const productConnectionFragment = /* GraphQL */ `

@@ -15,6 +15,7 @@ import getAllPages from '@framework/api/operations/get-all-pages'
 import getAllProductPaths from '@framework/api/operations/get-all-product-paths'
 import getAllCategoryPaths from '@framework/api/operations/get-all-category-paths'
 import getSiteInfo from '@framework/api/operations/get-site-info'
+import ProductPage from '@components/product/ProductPage'
 
 export async function getStaticProps({
   params,
@@ -73,7 +74,8 @@ export default function Slug({
   return router.isFallback ? (
     <h1>Loading...</h1> // TODO (BC) Add Skeleton Views
   ) : (
-    <ProductView product={product} />
+    // <ProductView product={product} />
+    <ProductPage product={product} />
   )
 }
 
