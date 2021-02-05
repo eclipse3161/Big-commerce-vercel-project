@@ -17,11 +17,22 @@ import {
   getProductOptions,
   SelectedOptions,
 } from './helpers'
+import useProductVideo from '@framework/products/use-product-video'
 
 const ProductPage: FC = ({ product }) => {
   const [highlights, setHighlights] = useState<Array<any>>([])
   const [specs, setSpecs] = useState<Array<any>>([])
   const { activeProduct } = useUI()
+  // const { data } = useSearch({
+  //   search: typeof q === 'string' ? q : '',
+  //   categoryId: activeCategory?.entityId,
+  //   brandId: activeBrand?.entityId,
+  //   sort: typeof sort === 'string' ? sort : '',
+  // })
+
+  const { data: videos } = useProductVideo({
+    productId: product?.entityId,
+  })
 
   useEffect(() => {
     const tempDsc: Array<any> = []
@@ -77,7 +88,7 @@ const ProductPage: FC = ({ product }) => {
           <ProductHero product={product} highlights={highlights} />
           <ProductPayment />
           <ProductDetails product={product} specs={specs} />
-          {/* <ProductVideos /> */}
+          {videos?.length > 0 && <ProductVideos videos={videos} />}
           {!activeProduct && product?.relatedProducts?.edges?.length > 0 && (
             <CustomersViewed
               relatedProducts={product?.relatedProducts?.edges}
