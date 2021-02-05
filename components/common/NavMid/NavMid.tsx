@@ -58,8 +58,6 @@ const NavMid: FC<Props> = ({ categories }) => {
     setIsOpen(newObj)
   }
 
-  console.log('NAVMID CATS: ', categories)
-
   useEffect(() => {
     if (categories && categories.length > 0) {
       let obj: any = {}

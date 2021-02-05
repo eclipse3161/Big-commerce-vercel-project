@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC, useState } from 'react'
 import Link from 'next/link'
 import { Container } from '@components/ui'

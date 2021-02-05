@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC, useState, useEffect } from 'react'
 import Link from 'next/link'
 import CustomersViewed from './CustomersViewed/CustomersViewed'
@@ -8,6 +9,7 @@ import ProductVideos from './ProductVideos'
 import { NextSeo } from 'next-seo'
 import { Container } from '@components/ui'
 import usePrice from '@framework/use-price'
+import type { ProductNode } from '@framework/api/operations/get-product'
 import useAddItem from '@framework/cart/use-add-item'
 import { useUI } from '@components/ui/context'
 import {
@@ -24,6 +26,7 @@ const ProductPage: FC = ({ product }) => {
   useEffect(() => {
     const tempDsc: Array<any> = []
     const tempSpecs: Array<any> = []
+    // @ts-ignore
     product?.customFields?.edges?.map((edge) => {
       const node = edge?.node
       if (node?.name.includes('Highlights')) tempDsc.push(node)
@@ -69,12 +72,18 @@ const ProductPage: FC = ({ product }) => {
           {product.name}
         </div>
       )}
-      <ProductHero product={product} highlights={highlights} />
-      <ProductPayment />
-      <ProductDetails product={product} specs={specs} />
-      {/* <ProductVideos /> */}
-      {!activeProduct && product?.relatedProducts?.edges?.length > 0 && (
-        <CustomersViewed relatedProducts={product?.relatedProducts?.edges} />
+      {product && (
+        <>
+          <ProductHero product={product} highlights={highlights} />
+          <ProductPayment />
+          <ProductDetails product={product} specs={specs} />
+          {/* <ProductVideos /> */}
+          {!activeProduct && product?.relatedProducts?.edges?.length > 0 && (
+            <CustomersViewed
+              relatedProducts={product?.relatedProducts?.edges}
+            />
+          )}
+        </>
       )}
     </Container>
   )

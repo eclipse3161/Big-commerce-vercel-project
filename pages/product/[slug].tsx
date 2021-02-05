@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type {
   GetStaticPathsContext,
   GetStaticPropsContext,
@@ -30,8 +31,8 @@ export async function getStaticProps({
     config,
     preview,
   })
-  
-const { categories } = await getSiteInfo({ config, preview })
+
+  const { categories } = await getSiteInfo({ config, preview })
 
   if (!product) {
     throw new Error(`Product with slug '${params!.slug}' not found`)
@@ -67,7 +68,7 @@ export default function Slug({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter()
 
-  console.log("Cat and stufF: ", categories, props)
+  // console.log('Cat and stufF: ', categories, props)
   // @ts-ignore
   props.setCategories(categories)
 
@@ -75,7 +76,7 @@ export default function Slug({
     <h1>Loading...</h1> // TODO (BC) Add Skeleton Views
   ) : (
     // <ProductView product={product} />
-    <ProductPage product={product} />
+    product && <ProductPage product={product} />
   )
 }
 

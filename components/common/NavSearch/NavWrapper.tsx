@@ -11,7 +11,6 @@ interface Props {
 }
 
 const NavWrapper: FC<Props> = ({ categories }) => {
-  console.log("WRAPPER CATS: ", categories)
   return (
     <div className="mb-6">
       <Container>

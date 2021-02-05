@@ -1,3 +1,4 @@
+// @ts-nocheck
 import ProductItem from '@components/common/ProductItem/ProductItem'
 import { RightArrow } from '@components/icons'
 import { ProductSlider } from '@components/product'

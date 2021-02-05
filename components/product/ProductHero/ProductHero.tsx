@@ -1,9 +1,11 @@
+// @ts-nocheck
 import { FC, MouseEvent, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Container } from '@components/ui'
 import cn from 'classnames'
 import s from './ProductHero.module.css'
 import ProductDetails from './ProductDetails'
+import { ProductNode } from '@framework/api/operations/get-product'
 
 const ProductHero: FC = ({ product, highlights }) => {
   const [backgroundPosition, setbackgroundPosition] = useState('0% 0%')
