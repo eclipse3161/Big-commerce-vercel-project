@@ -33,9 +33,6 @@ const SearchView: FC<Props> = ({ category, categories }) => {
   const [currentRootCat, setCurrentRootCat] = useState()
   const [categoriesList, setCategoriesList] = useState([])
 
-  console.log('Got category: ', category)
-  console.log('Got categories: ', categories)
-
   useEffect(() => {
     categories.forEach((cat) => {
       const idx = categories.findIndex((cat) => {
@@ -60,8 +57,6 @@ const SearchView: FC<Props> = ({ category, categories }) => {
       setCategoriesList(catList)
     }
   }, [currentRootCat])
-
-  console.log('CAT LSIT: ', categoriesList)
 
   return (
     <Container>

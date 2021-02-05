@@ -77,9 +77,6 @@ export default function Slug({
   /* @ts-ignore */
   props.setCategories(categories)
 
-  console.log('CATEGORY: ', category)
-  console.log('CATEGORIES: ', categories)
-
   return router.isFallback ? (
     <h1>Loading...</h1> // TODO (BC) Add Skeleton Views
   ) : (

@@ -27,8 +27,6 @@ const ProductHero: FC = ({ product, highlights }) => {
     setDefaultImage(product?.images?.edges[0]?.node)
   }, [product])
 
-  console.log('Product page: ', product)
-
   return (
     <div className={s.root}>
       <div className={s.left}>

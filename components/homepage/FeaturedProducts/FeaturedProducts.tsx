@@ -32,8 +32,6 @@ interface Props {
 }
 
 const FeaturedProducts: React.FC<Props> = ({ featured }) => {
-  console.log("FEATURED: ", featured);
-
   return (
     <div className={s.root}>
       <h2 className={cn(s.heading, 'text-2xl')}>

@@ -55,8 +55,6 @@ const ProductView: FC<Props> = ({ product }) => {
     }
   }
 
-  console.log('Product: ', product)
-
   const image = product.images.edges ? product.images.edges[0] : null;
 
   return (

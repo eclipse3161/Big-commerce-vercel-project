@@ -51,8 +51,6 @@ const ProductSlider: FC<ProductSliderProps> = ({ products, slides }) => {
     }
   }, [])
 
-  console.log("inner products: ", products);
-
   return (
     <div className={s.root}>
       <button

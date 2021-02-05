@@ -10,14 +10,13 @@ const defaultOpts = {
   method: 'GET',
 }
 
-export type SearchProductsInput = {
-  search?: string
-  categoryId?: number
-  brandId?: number
-  sort?: string
+export type ProductVideoInput = {
+  productId?: number
 }
 
-export const fetcher: HookFetcher<SearchProductsData, SearchProductsInput> = (
+type ProductVideoData = Array<any>
+
+export const fetcher: HookFetcher<ProductVideoData, ProductVideoInput> = (
   options,
   { productId },
   fetch
@@ -25,7 +24,7 @@ export const fetcher: HookFetcher<SearchProductsData, SearchProductsInput> = (
   // Use a dummy base as we only care about the relative path
   const url = new URL(options?.url ?? defaultOpts.url, 'http://a')
 
-  if (productId) url.searchParams.set('productId', productId)
+  if (productId) url.searchParams.set('productId', `${productId}`)
 
   return fetch({
     url: url.pathname + url.search,
@@ -35,7 +34,7 @@ export const fetcher: HookFetcher<SearchProductsData, SearchProductsInput> = (
 
 export function extendHook(
   customFetcher: typeof fetcher,
-  swrOptions?: SwrOptions<SearchProductsData, SearchProductsInput>
+  swrOptions?: SwrOptions<ProductVideoData, ProductVideoInput>
 ) {
   const useProductVideo = (input: any = {}) => {
     const response = useData(

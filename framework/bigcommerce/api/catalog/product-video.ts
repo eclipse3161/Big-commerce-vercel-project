@@ -20,6 +20,7 @@ const productVideoApi: BigcommerceApiHandler<any> = async (
 
   try {
     const body = req.query
+    // @ts-ignore
     return await handlers['getProductVideo']({ req, res, config, body })
   } catch (error) {
     console.error(error)

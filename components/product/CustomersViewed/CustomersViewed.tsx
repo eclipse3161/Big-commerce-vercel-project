@@ -6,7 +6,6 @@ import cn from 'classnames'
 import s from './CustomersViewed.module.css'
 
 const CustomersViewed: React.FC = ({ relatedProducts }) => {
-  console.log("Related: ", relatedProducts)
   return (
     <div className={s.root}>
       <h2 className={cn(s.heading, 'text-2xl')}>

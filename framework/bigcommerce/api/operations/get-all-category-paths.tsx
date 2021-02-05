@@ -60,8 +60,6 @@ async function getAllCategoryPaths({
   // required in case there's a custom `query`
   const { data } = await config.fetch(query, { variables })
 
-  console.log('CATEGORY PATHS: ', data)
-
   const categories = data.site?.categoryTree
   //   const brands = data.site?.brands?.edges
 
