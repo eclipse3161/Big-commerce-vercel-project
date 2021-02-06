@@ -11,6 +11,7 @@ import ProductSpecification from './ProductSpecification'
 import ProductDescription from './ProductDescription'
 import { stat } from 'fs'
 import CSS from 'csstype'
+import ProductVideos from './ProductVideos'
 
 const activeStyles: CSS.Properties = {
   color: 'white',
@@ -26,34 +27,47 @@ const inactiveStyles: CSS.Properties = {
   height: '43px',
 }
 
-const ProductDetails: FC = ({ product, specs }) => {
-  const [state, setstate] = useState(true)
+const ProductDetails: FC = ({ description, specs, videos }) => {
+  const [state, setstate] = useState(0)
 
   return (
     <div>
       <button
-        onClick={() => setstate(true)}
-        style={state ? activeStyles : inactiveStyles}
+        onClick={() => setstate(0)}
+        style={state === 0 ? activeStyles : inactiveStyles}
         className={cn(s.descriptionBtn, 'text-lightgray')}
       >
         Description
       </button>
       {specs?.length > 0 && (
         <button
-          onClick={() => setstate(false)}
-          style={!state ? activeStyles : inactiveStyles}
+          onClick={() => setstate(1)}
+          style={state === 1 ? activeStyles : inactiveStyles}
           className={cn(s.specBtn, 'text-lightgray')}
         >
           Specification
         </button>
       )}
+      {videos?.length > 0 && (
+        <button
+          onClick={() => setstate(2)}
+          style={state === 2 ? activeStyles : inactiveStyles}
+          className={cn(s.specBtn, 'text-lightgray')}
+        >
+          Video{videos?.length > 1 && 's'}
+        </button>
+      )}
 
       <hr className="mb-5" />
-      {state ? (
-        <ProductDescription product={product} />
-      ) : (
+      <div style={{ display: state === 0 ? 'block' : 'none' }}>
+        <ProductDescription description={description} />
+      </div>
+      <div style={{ display: state === 1 ? 'block' : 'none' }}>
         <ProductSpecification specs={specs} />
-      )}
+      </div>
+      <div style={{ display: state === 2 ? 'block' : 'none' }}>
+        <ProductVideos videos={videos} />
+      </div>
     </div>
   )
 }

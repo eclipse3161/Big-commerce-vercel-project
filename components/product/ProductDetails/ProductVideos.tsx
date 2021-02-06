@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import s from './ProductDetails.module.css'
 
 type Videos = Array<any>
 interface ProductVideoProps {
@@ -14,8 +15,7 @@ const ProductVideos: FC<ProductVideoProps> = ({ videos }) => {
   }
 
   return (
-    <div className="mt-8">
-      <hr />
+    <div className={s.description}>
       <h1 className="mt-8 text-2xl mb-8">Videos</h1>
 
       {videos?.map((video) => {

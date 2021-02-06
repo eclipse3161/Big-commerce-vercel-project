@@ -9,10 +9,10 @@ import s from './ProductDetails.module.css'
 import ChevronUp from '@components/icons/ChevronUp'
 // import type { ProductNode } from '@framework/api/operations/get-product'
 
-const ProductDescription: FC = ({ product }) => {
+const ProductDescription: FC = ({ description }) => {
   return (
     <div className={s.description}>
-      <Text html={product.description} />
+      <Text html={description} />
     </div>
   )
 }
