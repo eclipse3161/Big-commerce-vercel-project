@@ -30,13 +30,13 @@ const Navbar: FC = () => {
     <div className={cn(s.root, { 'shadow-magical': hasScrolled })}>
       <Container>
         <div className="relative flex flex-row justify-between py-3 align-center">
-          <div className="flex items-center flex-1">
+          <div className="flex items-center flex-2">
             {/* <Link href="/">
               <a className={s.logo} aria-label="Logo">
                 <Logo />
               </a>
             </Link> */}
-            <nav className="hidden space-x-4 lg:flex font-sm flex-1">
+            <nav className="space-x-4 flex font-sm flex-1">
               <Link href="/login">
                 <div className={s.navItem}>
                   <a className={s.link}>
@@ -73,7 +73,6 @@ const Navbar: FC = () => {
           </div> */}
 
           <div className="flex justify-end flex-1 space-x-8">
-            {/* <UserNav /> */}
             <ViewCart />
           </div>
         </div>

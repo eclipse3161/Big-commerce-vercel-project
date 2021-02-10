@@ -14,6 +14,7 @@ import type { Page } from '@framework/api/operations/get-all-pages'
 import NavSearch from '../NavSearch'
 import ProductPreview from '@components/product/ProductPreview/ProductPreview'
 // import { ProductModalProvider } from "../../product/ProductModalContext/ProductModalContext"
+import NavMobile from '../navMobile/NavMobile'
 
 const Loading = () => (
   <div className="w-80 h-80 flex items-center text-center justify-center p-3">
@@ -58,18 +59,23 @@ const Layout: FC<Props> = ({ children, pageProps }) => {
   } = useUI()
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
   const { locale = 'en-US' } = useRouter()
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([])
 
-  const childrenWithExtraProp = React.Children.map(children, child =>
+  const childrenWithExtraProp = React.Children.map(children, (child) =>
     /* @ts-ignore */
     React.cloneElement(child, { setCategories })
-  );
+  )
 
   return (
     <CommerceProvider locale={locale}>
       <div className={cn(s.root)}>
-        <Navbar />
-        <NavSearch categories={categories} />
+        <div className="mobile:hidden laptop:block">
+          <Navbar />
+          <NavSearch categories={categories} />
+        </div>
+        
+        <NavMobile categories={categories} />
+        
         <main className="fit">{childrenWithExtraProp}</main>
         <Footer pages={pageProps.pages} />
 

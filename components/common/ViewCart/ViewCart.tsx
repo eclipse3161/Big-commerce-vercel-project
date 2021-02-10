@@ -28,7 +28,7 @@ const ViewCart: FC<Props> = ({ className }) => {
           top: 0,
         }}
       >
-        <div className={s.viewCart}>
+        <div className={cn(s.viewCart, "mobile:w-24 laptop:w-32")}>
           <div className={s.viewCartAction}>
             <span className={s.viewCartLabel}>View Cart</span>
           </div>
