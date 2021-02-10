@@ -54,7 +54,9 @@ const Dropdown: FC<DropdownProps> = ({ categories, open, toggleDropdown }) => {
     } else if (item.path) {
       return (
         <Link href={`/category${item.path}`}>
-          <span className={s.navLink}>{item.name}</span>
+          <span onClick={toggleDropdown} className={s.navLink}>
+            {item.name}
+          </span>
         </Link>
       )
     }

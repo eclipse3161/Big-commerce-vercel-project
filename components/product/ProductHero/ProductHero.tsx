@@ -28,24 +28,31 @@ const ProductHero: FC = ({ product, highlights }) => {
   }, [product])
 
   return (
-    <div className={s.root}>
-      <div className={s.left}>
+    <div className={cn(s.root, 'flex-col-reverse laptop:flex-row')}>
+      <div className={cn(s.left, "w-full laptop:w-5/12")}>
         <figure
-          className={s.figure}
+          className={cn(s.figure, "hidden laptop:block")}
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
           onMouseMove={(e) => handleMouseMove(e)}
           style={{
-            backgroundImage: hover ? `url("${defaultImage?.urlOriginal}")` : "none",
+            backgroundImage: hover
+              ? `url("${defaultImage?.urlOriginal}")`
+              : 'none',
             backgroundPosition: backgroundPosition,
           }}
         >
           <img
-            className={cn(s.img, ' w-9/12')}
+            className={cn(s.img, 'block w-9/12')}
             src={defaultImage?.urlOriginal}
             alt={defaultImage?.altText || 'Product'}
           />
         </figure>
+        <img
+            className={cn(s.img, 'block laptop:hidden w-full laptop:w-9/12')}
+            src={defaultImage?.urlOriginal}
+            alt={defaultImage?.altText || 'Product'}
+          />
 
         <div className={s.paymentLeft}>
           <div className="flex justify-between w-full">
@@ -77,7 +84,7 @@ const ProductHero: FC = ({ product, highlights }) => {
         </div>
       </div>
 
-      <div className={s.right}>
+      <div className="w-full laptop:w-2/4">
         <ProductDetails product={product} highlights={highlights} />
       </div>
     </div>

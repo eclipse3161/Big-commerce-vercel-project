@@ -64,7 +64,7 @@ const ProductPage: FC = ({ product }) => {
         }}
       />
       {!activeProduct && (
-        <div className="w-full m-auto my-6 block text-center text-gray text-xs">
+        <div className="hidden tablet:block w-full m-auto my-6 block text-center text-gray text-xs">
           <Link href="/">Home</Link> <span className="mx-2">/</span>{' '}
           {product?.categories?.edges[
             product?.categories?.edges.length - 1

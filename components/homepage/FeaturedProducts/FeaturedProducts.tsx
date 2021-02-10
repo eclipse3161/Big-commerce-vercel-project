@@ -39,7 +39,7 @@ const FeaturedProducts: React.FC<Props> = ({ featured }) => {
         Featured Products
       </h2>
 
-      <div className="sm:block md:hidden">
+      {/* <div className="sm:block md:hidden">
         <ProductSlider slides={2} products={featured} />
       </div>
       <div className="hidden md:block lg:hidden">
@@ -47,13 +47,16 @@ const FeaturedProducts: React.FC<Props> = ({ featured }) => {
       </div>
       <div className="hidden lg:block">
         <ProductSlider slides={4} products={featured} />
-      </div>
-
-      {/* <div className="grid grid-cols-4 gap-4">
-        {products.map((product, idx) => (
-          <ProductItem product={product} key={idx} />
-        ))}
       </div> */}
+
+      <div
+        className="grid gap-4"
+        style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(186px, 1fr))' }}
+      >
+        {featured.map((product: any) => (
+          <ProductItem key={product.entityId} product={product.node} />
+        ))}
+      </div>
     </div>
   )
 }

@@ -11,7 +11,7 @@ interface ProductItemProps {
 
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   const [hover, setHover] = useState(false)
-  const { openModal, setModalView,  setActiveProduct } = useUI()
+  const { openModal, setModalView, setActiveProduct } = useUI()
   const { price } = usePrice({
     amount: product.prices?.price?.value,
     baseAmount: product.prices?.retailPrice?.value,
@@ -19,14 +19,14 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   })
 
   const openProductPreview = (e: React.MouseEvent<HTMLElement>) => {
-    e.stopPropagation();
-    setActiveProduct(product);
-    setModalView('PRODUCT_PREVIEW');
-    openModal();
+    e.stopPropagation()
+    setActiveProduct(product)
+    setModalView('PRODUCT_PREVIEW')
+    openModal()
   }
 
   return (
-    <div className={s.root}>
+    <div className={s.root} key={product.entityId}>
       <div className={cn(s.image, 'relative')}>
         <Link href={`/product${product.path}`}>
           <div className={s.overlay}>

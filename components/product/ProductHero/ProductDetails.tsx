@@ -84,14 +84,9 @@ const ProductDetails: FC = ({ product, highlights }) => {
       <div className="mb-2">
         <span className="font-bold text-gray text-sm">PRODUCT HIGHLIGHTS</span>
       </div>
-
       <div className="break-words w-full max-w-xl">
         {highlights?.map((item, idx) => {
-          return (
-            <div key={idx}>
-              {item.value}
-            </div>
-          )
+          return <div key={idx}>{item.value}</div>
         })}
       </div>
       <hr className="mb-3" />
@@ -154,7 +149,6 @@ const ProductDetails: FC = ({ product, highlights }) => {
           </div>
         </div>
       ))}
-
       <div className="mt-4 font-body text-lightgray text-sm">Quantity:</div>
       <div className={s.counter}>
         <div
@@ -175,20 +169,27 @@ const ProductDetails: FC = ({ product, highlights }) => {
           </div>
         </div>
       </div>
-      <button
-        className={s.addBtn}
-        disabled={!variant}
-        onClick={addToCart}
-        aria-label="Add to Cart"
-      >
-        {loading ? 'Adding to cart...' : 'Add to Cart'}
-      </button>
-
-      <WishlistButton
-        className={s.wishBtn}
-        productId={product.entityId}
-        variant={product.variants?.edges?.[0]!}
-      />
+      <div className="flex mobile:flex-col tablet:flex-row">
+        <button
+          className={cn(
+            s.addBtn,
+            'w-full mb-2 tablet:w-1/2 laptop:w-44 tablet:mb-0'
+          )}
+          disabled={!variant}
+          onClick={addToCart}
+          aria-label="Add to Cart"
+        >
+          {loading ? 'Adding to cart...' : 'Add to Cart'}
+        </button>
+        <WishlistButton
+          className={cn(
+            s.wishBtn,
+            'w-full ml-0 laptop:w-44 tablet:w-1/2 tablet:ml-4'
+          )}
+          productId={product.entityId}
+          variant={product.variants?.edges?.[0]!}
+        />
+      </div>
     </div>
   )
 }

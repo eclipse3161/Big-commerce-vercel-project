@@ -82,23 +82,40 @@ const SearchView: FC<Props> = ({ category, categories }) => {
         {category.name}
       </div>
 
-      <h1 className="font-body text-center text-3xl mb-10 text-gray">
-        {category.name}
-      </h1>
+      <div className="mb-8">
+        <h1 className="font-body text-center text-3xl mb-10 text-gray">
+          {category.name}
+        </h1>
+        <p className={s.description}>
+          <Text html={category.description} />
+        </p>
+      </div>
 
-      <div className="flex">
-        <div className="flex-1">
-          <ul className="list-none m-0 p-0 text-left">
-            {categoriesList?.map((category) => (
+      <div className="flex flex-col laptop:flex-row">
+        <div className="flex-1 whitespace-nowrap">
+          <ul className="list-none m-0 p-0 text-left whitespace-nowrap">
+            {/* {categoriesList?.map((category) => (
               <li key={category.path}>
                 <Link href={`/category${category.path}`}>{category.name}</Link>
               </li>
-            ))}
+            ))} */}
+            <li className="mb-4">Shop by Price</li>
+            <li>€0.00 - €396.00</li>
+            <li>€396.00 - €577.00</li>
+            <li>€577.00 - €758.00</li>
+            <li>€758.00 - €939.00</li>
+            <li>€939.00 - €1,120.00</li>
+            <li>Reset</li>
           </ul>
         </div>
-        <div className="flex-3 w-full mx-10">
+        <div className="flex-3 w-full laptop:mx-10">
           {category?.products?.edges && category?.products?.edges.length > 0 ? (
-            <div className="grid gap-4 grid-cols-3">
+            <div
+              className="grid gap-4"
+              style={{
+                gridTemplateColumns: 'repeat(auto-fit, minmax(186px, 1fr))',
+              }}
+            >
               {category?.products?.edges.map((product) => (
                 <div key={product.node.sku} className="m-1">
                   <ProductItem product={product.node} />
