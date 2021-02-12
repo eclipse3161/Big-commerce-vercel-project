@@ -21,7 +21,9 @@ const ProductDetails: FC = ({ product, highlights }) => {
   const addItem = useAddItem()
   const [quantity, setQuantity] = useState(1)
   const [loading, setLoading] = useState(false)
-  const { openSidebar } = useUI()
+  // const [colorMessage, setColorMessage] = useState('')
+  // const [sizeMessage, setSizeMessage] = useState('')
+  const { openSidebar, openModal } = useUI()
 
   const { price } = usePrice({
     amount: product.prices?.price?.value,
@@ -38,15 +40,25 @@ const ProductDetails: FC = ({ product, highlights }) => {
   const variant =
     getCurrentVariant(product, choices) || product.variants?.edges?.[0]
 
+  console.log('choices', choices)
+
   const addToCart = async () => {
-    setLoading(true)
+    // if (choices.size === null) setSizeMessage('Please select a size')
+    // else setSizeMessage('')
+    // if (choices.color === null) setColorMessage('Please select a color')
+    // else setColorMessage('')
+
+    if (quantity !== null && choices.color !== null) setLoading(true)
     try {
-      await addItem({
-        productId: product.entityId,
-        variantId: product.variants.edges?.[0]?.node.entityId!,
-      })
-      openSidebar()
-      setLoading(false)
+      if (quantity !== null && choices.color !== null) {
+        await addItem({
+          productId: product.entityId,
+          variantId: product.variants.edges?.[0]?.node.entityId!,
+        })
+        openSidebar()
+        openMode
+        setLoading(false)
+      }
     } catch (err) {
       setLoading(false)
     }

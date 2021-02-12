@@ -1,0 +1,23 @@
+.root {
+  @apply h-full flex flex-col;
+}
+
+.root.empty {
+  @apply bg-secondary text-secondary;
+}
+
+.root.success {
+  @apply bg-green text-white;
+}
+
+.root.error {
+  @apply bg-red text-white;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.checkout {
+  background-color: green;
+}

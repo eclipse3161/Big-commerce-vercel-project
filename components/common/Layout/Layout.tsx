@@ -73,9 +73,9 @@ const Layout: FC<Props> = ({ children, pageProps }) => {
           <Navbar />
           <NavSearch categories={categories} />
         </div>
-        
+
         <NavMobile categories={categories} />
-        
+
         <main className="fit">{childrenWithExtraProp}</main>
         <Footer pages={pageProps.pages} />
 

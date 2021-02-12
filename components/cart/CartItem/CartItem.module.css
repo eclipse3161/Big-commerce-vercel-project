@@ -16,3 +16,8 @@
   left: 30% !important;
   top: 30% !important;
 }
+
+.gridItem {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}

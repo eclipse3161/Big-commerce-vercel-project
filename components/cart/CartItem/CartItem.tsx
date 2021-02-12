@@ -11,15 +11,18 @@ import s from './CartItem.module.css'
 const CartItem = ({
   item,
   currencyCode,
+  index,
 }: {
   item: any
   currencyCode: string
+  index: number
 }) => {
   const { price } = usePrice({
     amount: item.extended_sale_price,
     baseAmount: item.extended_list_price,
     currencyCode,
   })
+
   const updateItem = useUpdateItem(item)
   const removeItem = useRemoveItem()
   const [quantity, setQuantity] = useState(item.quantity)
@@ -61,6 +64,8 @@ const CartItem = ({
     }
   }
 
+  console.log('item', item)
+
   useEffect(() => {
     // Reset the quantity state if the item quantity changes
     if (item.quantity !== Number(quantity)) {
@@ -70,54 +75,72 @@ const CartItem = ({
 
   return (
     <li
-      className={cn('flex flex-row space-x-8 py-8', {
-        'opacity-75 pointer-events-none': removing,
-      })}
+      className={cn(
+        'flex flex-row space-x-8 py-8',
+        {
+          'opacity-75 pointer-events-none': removing,
+        },
+        s.gridItem
+      )}
     >
-      <div className="w-16 h-16 bg-violet relative overflow-hidden">
-        <Image
-          className={s.productImage}
-          src={item.image_url}
-          width={150}
-          height={150}
-          alt="Product Image"
-          // The cart item image is already optimized and very small in size
-          unoptimized
-        />
-      </div>
-      <div className="flex-1 flex flex-col text-base">
-        {/** TODO: Replace this. No `path` found at Cart */}
-        <Link href={`/product/${item.url.split('/')[3]}`}>
-          <span className="font-bold mb-5 text-lg cursor-pointer">
-            {item.name}
-          </span>
-        </Link>
-
-        <div className="flex items-center">
-          <button type="button" onClick={() => increaseQuantity(-1)}>
-            <Minus width={18} height={18} />
-          </button>
-          <label>
-            <input
-              type="number"
-              max={99}
-              min={0}
-              className={s.quantity}
-              value={quantity}
-              onChange={handleQuantity}
-              onBlur={handleBlur}
-            />
-          </label>
-          <button type="button" onClick={() => increaseQuantity(1)}>
-            <Plus width={18} height={18} />
-          </button>
+      <div>
+        {index === 0 && <div className="mb-4">Item</div>}
+        <div className="flex justify-between relative">
+          <Image
+            className={s.productImage}
+            src={item.image_url}
+            width={150}
+            height={150}
+            alt="Product Image"
+            // The cart item image is already optimized and very small in size
+            unoptimized
+          />
+          <Link href={`/product/${item.url.split('/')[3]}`}>
+            <span className="ml-4 cursor-pointer">{item.name}</span>
+          </Link>
         </div>
       </div>
-      <div className="flex flex-col justify-between space-y-2 text-base">
-        <span>{price}</span>
-        <button className="flex justify-end" onClick={handleRemove}>
-          <Trash />
-        </button>
+
+      <div>
+        {index === 0 && <div className="mb-4">Price</div>}
+        <div>{`$${item.sale_price}`}</div>
+      </div>
+
+      <div>
+        {index === 0 && <div className="mb-4">Quantity</div>}
+        <div className="flex-1 flex flex-col text-base ">
+          {/** TODO: Replace this. No `path` found at Cart */}
+
+          <div className="flex items-center">
+            <button type="button" onClick={() => increaseQuantity(-1)}>
+              <Minus width={18} height={18} />
+            </button>
+            <label>
+              <input
+                type="number"
+                max={99}
+                min={0}
+                className={s.quantity}
+                value={quantity}
+                onChange={handleQuantity}
+                onBlur={handleBlur}
+              />
+            </label>
+            <button type="button" onClick={() => increaseQuantity(1)}>
+              <Plus width={18} height={18} />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="text-right">
+        {index === 0 && <div className="mb-4">Total</div>}
+        <div className="flex justify-end ">
+          <span className="mr-4">{price}</span>
+          <button className="flex justify-end" onClick={handleRemove}>
+            <Trash />
+          </button>
+        </div>
       </div>
     </li>
   )
