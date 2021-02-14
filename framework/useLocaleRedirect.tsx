@@ -22,6 +22,7 @@ export const useLocaleRedirect = async () => {
 
   const getCode = async () => {
     const code = await getCountryCode()
+    // @ts-ignore
     setCountryCode(code)
   }
 
