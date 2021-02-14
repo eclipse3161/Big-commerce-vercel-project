@@ -6,10 +6,10 @@ module.exports = bundleAnalyzer({
   images: {
     domains: ['cdn11.bigcommerce.com'],
   },
-  // i18n: {
-  //   locales: ['en-US', 'es'],
-  //   defaultLocale: 'en-US',
-  // },
+  i18n: {
+    locales: ['en-US', 'fr', 'es', 'pt', 'it', 'de'],
+    defaultLocale: 'en-US',
+  },
   rewrites() {
     return [
       {

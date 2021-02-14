@@ -45,6 +45,15 @@ export const getProductQuery = /* GraphQL */ `
                       }
                     }
                   }
+                  localeMeta: metafields(namespace: $locale, keys: ["name", "description"])
+                    @include(if: $hasLocale) {
+                    edges {
+                      node {
+                        key
+                        value
+                      }
+                    }
+                  }
                 }
               }
             }

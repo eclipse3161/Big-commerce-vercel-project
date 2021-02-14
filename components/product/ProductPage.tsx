@@ -16,6 +16,8 @@ const ProductPage: FC = ({ product }) => {
   const [showDetails, setShowDetails] = useState<Boolean>(false)
   const { activeProduct } = useUI()
 
+  console.log("PRODUCT: ", product);
+
   const { data: videos } = useProductVideo({
     productId: product?.entityId,
   })

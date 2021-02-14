@@ -40,7 +40,8 @@ module.exports = {
      },
     backgroundColor: (theme) => ({
       ...theme('colors'),
-      silver: "#e5e5e5"
+      silver: "#e5e5e5",
+      lightgray: 'var(--text-light-gray)'
     }),
     borerColor: (theme) => ({
       primary: '#012E58',

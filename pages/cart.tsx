@@ -41,9 +41,7 @@ export default function Cart() {
   const success = null
 
   return (
-    <Container>
-      <CartView />
-    </Container>
+    <CartView />
     // <div className="grid lg:grid-cols-12">
     //   <div className="lg:col-span-8">
     //     {isEmpty ? (

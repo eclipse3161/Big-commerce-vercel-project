@@ -13,6 +13,7 @@ import getAllPages from '@framework/api/operations/get-all-pages'
 import Slider from '@components/Slider/Slider'
 import FeaturedProducts from '@components/homepage/FeaturedProducts/FeaturedProducts'
 import NewProducts from '@components/homepage/NewProducts/NewProducts'
+import { useLocaleRedirect } from 'framework/useLocaleRedirect'
 
 export async function getStaticProps({
   preview,
@@ -87,6 +88,8 @@ export default function Home({
   newestProducts,
   ...props
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+
+  useLocaleRedirect();
 
   // console.log("FEATURED: ", featured);
   // console.log("BEST SELLING: ", bestSelling);

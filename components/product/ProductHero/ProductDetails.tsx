@@ -51,12 +51,12 @@ const ProductDetails: FC = ({ product, highlights }) => {
     if (quantity !== null && choices.color !== null) setLoading(true)
     try {
       if (quantity !== null && choices.color !== null) {
+        console.log("Adding: ", product.variants, product.variants.edges?.[0]?.node.entityId!)
         await addItem({
           productId: product.entityId,
           variantId: product.variants.edges?.[0]?.node.entityId!,
         })
         openSidebar()
-        openMode
         setLoading(false)
       }
     } catch (err) {

@@ -17,6 +17,7 @@ import getAllProductPaths from '@framework/api/operations/get-all-product-paths'
 import getAllCategoryPaths from '@framework/api/operations/get-all-category-paths'
 import getSiteInfo from '@framework/api/operations/get-site-info'
 import ProductPage from '@components/product/ProductPage'
+import { useLocaleRedirect } from 'framework/useLocaleRedirect'
 
 export async function getStaticProps({
   params,
@@ -66,6 +67,7 @@ export default function Slug({
   categories,
   ...props
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  useLocaleRedirect()
   const router = useRouter()
 
   // console.log('Cat and stufF: ', categories, props)

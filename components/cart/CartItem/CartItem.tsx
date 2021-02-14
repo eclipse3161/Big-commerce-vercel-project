@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react'
 import cn from 'classnames'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -12,10 +12,12 @@ const CartItem = ({
   item,
   currencyCode,
   index,
+  setLoading,
 }: {
   item: any
   currencyCode: string
   index: number
+  setLoading: Dispatch<SetStateAction<boolean>>
 }) => {
   const { price } = usePrice({
     amount: item.extended_sale_price,
@@ -28,7 +30,10 @@ const CartItem = ({
   const [quantity, setQuantity] = useState(item.quantity)
   const [removing, setRemoving] = useState(false)
   const updateQuantity = async (val: number) => {
+    console.log("Loading true")
+    setLoading(true);
     await updateItem({ quantity: val })
+    console.log("Loading false")
   }
   const handleQuantity = (e: ChangeEvent<HTMLInputElement>) => {
     const val = Number(e.target.value)
@@ -48,19 +53,19 @@ const CartItem = ({
     const val = Number(quantity) + n
 
     if (Number.isInteger(val) && val >= 0) {
-      setQuantity(val)
       updateQuantity(val)
     }
   }
   const handleRemove = async () => {
-    setRemoving(true)
+    setLoading(true)
 
     try {
       // If this action succeeds then there's no need to do `setRemoving(true)`
       // because the component will be removed from the view
       await removeItem({ id: item.id })
+      setLoading(false)
     } catch (error) {
-      setRemoving(false)
+      setLoading(false)
     }
   }
 
@@ -70,6 +75,7 @@ const CartItem = ({
     // Reset the quantity state if the item quantity changes
     if (item.quantity !== Number(quantity)) {
       setQuantity(item.quantity)
+      setLoading(false)
     }
   }, [item.quantity])
 
@@ -84,7 +90,7 @@ const CartItem = ({
       )}
     >
       <div>
-        {index === 0 && <div className="mb-4">Item</div>}
+        {index === 0 && <div className="mb-4 font-bold">Item</div>}
         <div className="flex justify-between relative">
           <Image
             className={s.productImage}
@@ -102,12 +108,12 @@ const CartItem = ({
       </div>
 
       <div>
-        {index === 0 && <div className="mb-4">Price</div>}
+        {index === 0 && <div className="mb-4 font-bold">Price</div>}
         <div>{`$${item.sale_price}`}</div>
       </div>
 
       <div>
-        {index === 0 && <div className="mb-4">Quantity</div>}
+        {index === 0 && <div className="mb-4 font-bold">Quantity</div>}
         <div className="flex-1 flex flex-col text-base ">
           {/** TODO: Replace this. No `path` found at Cart */}
 
@@ -134,7 +140,7 @@ const CartItem = ({
       </div>
 
       <div className="text-right">
-        {index === 0 && <div className="mb-4">Total</div>}
+        {index === 0 && <div className="mb-4 font-bold">Total</div>}
         <div className="flex justify-end ">
           <span className="mr-4">{price}</span>
           <button className="flex justify-end" onClick={handleRemove}>

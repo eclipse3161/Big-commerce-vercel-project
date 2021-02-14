@@ -1,11 +1,10 @@
-import React, { useState, useEffect, FC } from 'react'
+// @ts-nocheck
+import React, { useState, FC } from 'react'
 import Link from 'next/link'
 import cn from 'classnames'
 import s from './NavMobile.module.css'
 import ViewCart from '../ViewCart'
 import { Container } from '@components/ui'
-import MenuIcon from '@components/icons/Menu'
-import { categoryTreeItemFragment } from '@framework/api/fragments/category-tree'
 
 interface DropdownProps {
   open: Boolean
@@ -20,10 +19,10 @@ const Dropdown: FC<DropdownProps> = ({ categories, open, toggleDropdown }) => {
   console.log('categories: ', categories)
   console.log('opened:', categoriesOpened)
 
-  // useEffect(() => {
-  //   const co: Array<any> = categories.map((cat: any) => cat.entityId)
-  //   setCategoriesOpened(co)
-  // }, [categories])
+  const toggleDropdownAndClose = () => {
+    setCategoriesOpened([]);
+    toggleDropdown();
+  }
 
   const toggleCategory = (category: any) => {
     let newCO = [...categoriesOpened]
@@ -54,7 +53,7 @@ const Dropdown: FC<DropdownProps> = ({ categories, open, toggleDropdown }) => {
     } else if (item.path) {
       return (
         <Link href={`/category${item.path}`}>
-          <span onClick={toggleDropdown} className={s.navLink}>
+          <span onClick={toggleDropdownAndClose} className={s.navLink}>
             {item.name}
           </span>
         </Link>
