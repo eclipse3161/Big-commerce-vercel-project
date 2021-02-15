@@ -1,6 +1,11 @@
 import React, { FC, useMemo } from 'react'
 import { ThemeProvider } from 'next-themes'
 
+type LocaleData = {
+  currency_code: String
+  country_code: String
+}
+
 export interface State {
   displaySidebar: boolean
   displayDropdown: boolean
@@ -8,6 +13,7 @@ export interface State {
   displayToast: boolean
   modalView: string
   toastText: string
+  localeData: LocaleData
 }
 
 const initialState = {
@@ -17,10 +23,18 @@ const initialState = {
   modalView: 'LOGIN_VIEW',
   displayToast: false,
   toastText: '',
-  activeProduct: null
+  activeProduct: null,
+  localeData: {
+    currency_code: 'USD',
+    country_code: '',
+  },
 }
 
 type Action =
+  | {
+      type: 'SET_LOCALE_DATA'
+      localeData: LocaleData
+    }
   | {
       type: 'OPEN_SIDEBAR'
     }
@@ -54,9 +68,9 @@ type Action =
       view: MODAL_VIEWS
     }
   | {
-    type: 'SET_ACTIVE_PRODUCT'
-    product: any
-  }
+      type: 'SET_ACTIVE_PRODUCT'
+      product: any
+    }
 
 type MODAL_VIEWS = 'SIGNUP_VIEW' | 'LOGIN_VIEW' | 'FORGOT_VIEW'
 type ToastText = string
@@ -67,10 +81,16 @@ UIContext.displayName = 'UIContext'
 
 function uiReducer(state: State, action: Action) {
   switch (action.type) {
+    case 'SET_LOCALE_DATA': {
+      return {
+        ...state,
+        localeData: action.localeData,
+      }
+    }
     case 'SET_ACTIVE_PRODUCT': {
       return {
         ...state,
-        activeProduct: action.product
+        activeProduct: action.product,
       }
     }
     case 'OPEN_SIDEBAR': {
@@ -107,7 +127,7 @@ function uiReducer(state: State, action: Action) {
       return {
         ...state,
         displayModal: false,
-        activeProduct: null
+        activeProduct: null,
       }
     }
     case 'OPEN_TOAST': {
@@ -161,7 +181,11 @@ export const UIProvider: FC = (props) => {
   const setModalView = (view: MODAL_VIEWS) =>
     dispatch({ type: 'SET_MODAL_VIEW', view })
 
-  const setActiveProduct = (product: any) => dispatch({ type: 'SET_ACTIVE_PRODUCT', product })
+  const setActiveProduct = (product: any) =>
+    dispatch({ type: 'SET_ACTIVE_PRODUCT', product })
+
+  const setLocaleData = (localeData: LocaleData) =>
+    dispatch({ type: 'SET_LOCALE_DATA', localeData })
 
   const value = useMemo(
     () => ({
@@ -177,7 +201,8 @@ export const UIProvider: FC = (props) => {
       setModalView,
       openToast,
       closeToast,
-      setActiveProduct
+      setActiveProduct,
+      setLocaleData,
     }),
     [state]
   )
