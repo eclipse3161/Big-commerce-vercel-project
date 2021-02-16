@@ -7,6 +7,8 @@ type LocaleData = {
 }
 
 export interface State {
+  displayModalCart: boolean
+  displayModalDropdown: boolean
   displaySidebar: boolean
   displayDropdown: boolean
   displayModal: boolean
@@ -17,6 +19,8 @@ export interface State {
 }
 
 const initialState = {
+  displayModalCart: false,
+  displayModalDropdown: false,
   displaySidebar: false,
   displayDropdown: false,
   displayModal: false,
@@ -39,7 +43,19 @@ type Action =
       type: 'OPEN_SIDEBAR'
     }
   | {
+      type: 'OPEN_MODAL_CART'
+    }
+  | {
+      type: 'OPEN_MODAL_DROPDOWN'
+    }
+  | {
       type: 'CLOSE_SIDEBAR'
+    }
+  | {
+      type: 'CLOSE_MODAL_CART'
+    }
+  | {
+      type: 'CLOSE_MODAL_DROPDOWN'
     }
   | {
       type: 'OPEN_TOAST'
@@ -93,6 +109,18 @@ function uiReducer(state: State, action: Action) {
         activeProduct: action.product,
       }
     }
+    case 'OPEN_MODAL_CART': {
+      return {
+        ...state,
+        displayModalCart: true,
+      }
+    }
+    case 'OPEN_MODAL_DROPDOWN': {
+      return {
+        ...state,
+        displayModalDropdown: true,
+      }
+    }
     case 'OPEN_SIDEBAR': {
       return {
         ...state,
@@ -103,6 +131,18 @@ function uiReducer(state: State, action: Action) {
       return {
         ...state,
         displaySidebar: false,
+      }
+    }
+    case 'CLOSE_MODAL_CART': {
+      return {
+        ...state,
+        displayModalCart: false,
+      }
+    }
+    case 'CLOSE_MODAL_DROPDOWN': {
+      return {
+        ...state,
+        displayModalDropdown: false,
       }
     }
     case 'OPEN_DROPDOWN': {
@@ -161,7 +201,11 @@ export const UIProvider: FC = (props) => {
   const [state, dispatch] = React.useReducer(uiReducer, initialState)
 
   const openSidebar = () => dispatch({ type: 'OPEN_SIDEBAR' })
+  const openModalCart = () => dispatch({ type: 'OPEN_MODAL_CART' })
+  const openModalDropdown = () => dispatch({ type: 'OPEN_MODAL_DROPDOWN' })
+  const closeModalCart = () => dispatch({ type: 'CLOSE_MODAL_CART' })
   const closeSidebar = () => dispatch({ type: 'CLOSE_SIDEBAR' })
+  const closeModalDropdown = () => dispatch({ type: 'CLOSE_MODAL_DROPDOWN' })
   const toggleSidebar = () =>
     state.displaySidebar
       ? dispatch({ type: 'CLOSE_SIDEBAR' })
@@ -191,7 +235,11 @@ export const UIProvider: FC = (props) => {
     () => ({
       ...state,
       openSidebar,
+      openModalCart,
+      openModalDropdown,
+      closeModalDropdown,
       closeSidebar,
+      closeModalCart,
       toggleSidebar,
       closeSidebarIfPresent,
       openDropdown,

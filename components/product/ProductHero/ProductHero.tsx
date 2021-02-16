@@ -6,6 +6,7 @@ import cn from 'classnames'
 import s from './ProductHero.module.css'
 import ProductDetails from './ProductDetails'
 import { ProductNode } from '@framework/api/operations/get-product'
+import Slider from '@components/Slider/Slider'
 
 const ProductHero: FC = ({ product, highlights }) => {
   const [backgroundPosition, setbackgroundPosition] = useState('0% 0%')
@@ -29,9 +30,9 @@ const ProductHero: FC = ({ product, highlights }) => {
 
   return (
     <div className={cn(s.root, 'flex-col-reverse laptop:flex-row')}>
-      <div className={cn(s.left, "w-full laptop:w-5/12")}>
+      <div className={cn(s.left, 'w-full laptop:w-5/12')}>
         <figure
-          className={cn(s.figure, "hidden laptop:block")}
+          className={cn(s.figure, 'hidden laptop:block')}
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
           onMouseMove={(e) => handleMouseMove(e)}
@@ -49,13 +50,14 @@ const ProductHero: FC = ({ product, highlights }) => {
           />
         </figure>
         <img
-            className={cn(s.img, 'block laptop:hidden w-full laptop:w-9/12')}
-            src={defaultImage?.urlOriginal}
-            alt={defaultImage?.altText || 'Product'}
-          />
+          className={cn(s.img, 'block laptop:hidden w-full laptop:w-9/12')}
+          src={defaultImage?.urlOriginal}
+          alt={defaultImage?.altText || 'Product'}
+        />
 
         <div className={s.paymentLeft}>
           <div className="flex justify-between w-full">
+            {/* <Slider images={product.images.edges} /> */}
             {product?.images?.edges.map((edge) => (
               <div
                 className={s.product}

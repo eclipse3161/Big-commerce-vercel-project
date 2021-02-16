@@ -23,7 +23,7 @@ const ProductDetails: FC = ({ product, highlights }) => {
   const [loading, setLoading] = useState(false)
   // const [colorMessage, setColorMessage] = useState('')
   // const [sizeMessage, setSizeMessage] = useState('')
-  const { openSidebar, openModal } = useUI()
+  const { openSidebar, openModal, openModalCart } = useUI()
 
   const { price } = usePrice({
     amount: product.prices?.price?.value,
@@ -51,12 +51,17 @@ const ProductDetails: FC = ({ product, highlights }) => {
     if (quantity !== null && choices.color !== null) setLoading(true)
     try {
       if (quantity !== null && choices.color !== null) {
-        console.log("Adding: ", product.variants, product.variants.edges?.[0]?.node.entityId!)
+        console.log(
+          'Adding: ',
+          product.variants,
+          product.variants.edges?.[0]?.node.entityId!
+        )
         await addItem({
           productId: product.entityId,
           variantId: product.variants.edges?.[0]?.node.entityId!,
         })
-        openSidebar()
+        openModalCart()
+        //openSidebar()
         setLoading(false)
       }
     } catch (err) {

@@ -6,7 +6,13 @@ import usePrice from '@framework/use-price'
 import { Layout } from '@components/common'
 import { Button, Container } from '@components/ui'
 import { Bag, Cross, Check } from '@components/icons'
-import { CartItem, CartSidebarView, CartView } from '@components/cart'
+import {
+  CartDropdown,
+  CartItem,
+  CartModalView,
+  CartSidebarView,
+  CartView,
+} from '@components/cart'
 import { Text } from '@components/ui'
 
 export async function getStaticProps({
@@ -41,7 +47,9 @@ export default function Cart() {
   const success = null
 
   return (
+    // <CartDropdown />
     <CartView />
+    // <CartModalView />
     // <div className="grid lg:grid-cols-12">
     //   <div className="lg:col-span-8">
     //     {isEmpty ? (

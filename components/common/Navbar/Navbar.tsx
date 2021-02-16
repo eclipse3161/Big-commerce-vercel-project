@@ -8,9 +8,20 @@ import throttle from 'lodash.throttle'
 import UserIcon from '../../icons/User'
 import PlusIcon from '../../icons/Plus'
 import PhoneIcon from '../../icons/Phone'
+import { useUI } from '@components/ui/context'
+import { CartDropdown } from '@components/cart'
 
-const Navbar: FC = () => {
+interface Props {
+  localeData: object
+}
+
+const Navbar: FC<Props> = ({ localeData }) => {
   const [hasScrolled, setHasScrolled] = useState(false)
+  const {
+    openModalDropdown,
+    closeModalDropdown,
+    displayModalDropdown,
+  } = useUI()
 
   useEffect(() => {
     const handleScroll = throttle(() => {
@@ -62,7 +73,9 @@ const Navbar: FC = () => {
               </Link>
               <Link href="#">
                 <div className={s.navItem}>
-                  <a className={s.link}>All Prices In: EURO</a>
+                  <a className={s.link}>
+                    All Prices In: {localeData.currency_code}
+                  </a>
                 </div>
               </Link>
             </nav>
@@ -72,8 +85,15 @@ const Navbar: FC = () => {
             <Searchbar />
           </div> */}
 
-          <div className="flex justify-end flex-1 space-x-8">
+          <div className=" flex justify-end flex-1 space-x-8">
             <ViewCart />
+
+            {true && (
+              <CartDropdown
+                onClose={closeModalDropdown}
+                open={displayModalDropdown}
+              />
+            )}
           </div>
         </div>
 

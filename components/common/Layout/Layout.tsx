@@ -7,7 +7,7 @@ import { useUI } from '@components/ui/context'
 import { Navbar, Footer } from '@components/common'
 import { useAcceptCookies } from '@lib/hooks/useAcceptCookies'
 import { Sidebar, Button, Modal, LoadingDots } from '@components/ui'
-import { CartSidebarView } from '@components/cart'
+import { CartDropdown, CartModalView, CartSidebarView } from '@components/cart'
 
 import { CommerceProvider } from '@framework'
 import type { Page } from '@framework/api/operations/get-all-pages'
@@ -51,11 +51,17 @@ interface Props {
 
 const Layout: FC<Props> = ({ children, pageProps }) => {
   const {
+    openModalDropdown,
+    closeModalDropdown,
+    displayModalDropdown,
     displaySidebar,
+    displayModalCart,
     displayModal,
     closeSidebar,
+    closeModalCart,
     closeModal,
     modalView,
+    localeData,
   } = useUI()
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
   const { locale = 'en-US' } = useRouter()
@@ -69,8 +75,12 @@ const Layout: FC<Props> = ({ children, pageProps }) => {
   return (
     <CommerceProvider locale={locale}>
       <div className={cn(s.root)}>
-        <div className="mobile:hidden laptop:block">
-          <Navbar />
+        <div
+          style={{ position: 'relative' }}
+          className="mobile:hidden laptop:block"
+        >
+          <Navbar localeData={localeData} />
+
           <NavSearch categories={categories} />
         </div>
 
@@ -82,6 +92,10 @@ const Layout: FC<Props> = ({ children, pageProps }) => {
         <Sidebar open={displaySidebar} onClose={closeSidebar}>
           <CartSidebarView />
         </Sidebar>
+
+        <Modal open={displayModalCart} onClose={closeModalCart}>
+          <CartModalView />
+        </Modal>
 
         <Modal open={displayModal} onClose={closeModal}>
           {modalView === 'LOGIN_VIEW' && <LoginView />}

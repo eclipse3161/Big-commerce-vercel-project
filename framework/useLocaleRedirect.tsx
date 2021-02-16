@@ -19,7 +19,7 @@ export const getCountryCode = async () => {
             const currency_code =
               data?.results?.[0]?.annotations?.currency?.iso_code
             const country_code = data?.results?.[0]?.components?.country_code?.toLowerCase()
-            // console.log('Country data: ', { currency_code, country_code })
+            console.log('Country data: ', { currency_code, country_code })
             resolve({ currency_code, country_code })
           })
       }
