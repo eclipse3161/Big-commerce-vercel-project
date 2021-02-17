@@ -88,12 +88,7 @@ const Navbar: FC<Props> = ({ localeData }) => {
           <div className=" flex justify-end flex-1 space-x-8">
             <ViewCart />
 
-            {true && (
-              <CartDropdown
-                onClose={closeModalDropdown}
-                open={displayModalDropdown}
-              />
-            )}
+            <CartDropdown />
           </div>
         </div>
 

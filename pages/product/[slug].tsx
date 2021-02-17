@@ -18,6 +18,7 @@ import getAllCategoryPaths from '@framework/api/operations/get-all-category-path
 import getSiteInfo from '@framework/api/operations/get-site-info'
 import ProductPage from '@components/product/ProductPage'
 import { useLocaleRedirect } from 'framework/useLocaleRedirect'
+import getCurrencyCode from '@framework/getCurrencyCode'
 
 export async function getStaticProps({
   params,
@@ -25,10 +26,11 @@ export async function getStaticProps({
   preview,
 }: GetStaticPropsContext<{ slug: string }>) {
   const config = getConfig({ locale })
+  const currencyCode = getCurrencyCode(locale)
 
   const { pages } = await getAllPages({ config, preview })
   const { product } = await getProduct({
-    variables: { slug: params!.slug },
+    variables: { slug: params!.slug, currencyCode },
     config,
     preview,
   })

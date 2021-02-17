@@ -18,6 +18,7 @@ export const getAllProductsQuery = /* GraphQL */ `
     $featuredProducts: Boolean = false
     $bestSellingProducts: Boolean = false
     $newestProducts: Boolean = false
+    $currencyCode: currencyCode = USD
   ) {
     site {
       products(first: $first, entityIds: $entityIds) @include(if: $products) {
@@ -97,6 +98,7 @@ async function getAllProducts({
   config = getConfig(config)
 
   const locale = vars.locale || config.locale
+  console.log("CURRRRRRRRRRRRR: ", vars.currencyCode)
   const variables: GetAllProductsQueryVariables = {
     ...vars,
     locale,

@@ -47,7 +47,7 @@ export const rootProductFragment = `
       entityId
     }
     description
-    prices {
+    prices(currencyCode: $currencyCode) {
       ...productPrices
     }
     availabilityV2 {

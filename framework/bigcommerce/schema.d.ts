@@ -1869,6 +1869,7 @@ export type GetAllProductsQueryVariables = Exact<{
   featuredProducts?: Maybe<Scalars['Boolean']>
   bestSellingProducts?: Maybe<Scalars['Boolean']>
   newestProducts?: Maybe<Scalars['Boolean']>
+  currencyCode?: any
 }>
 
 export type GetAllProductsQuery = { __typename?: 'Query' } & {

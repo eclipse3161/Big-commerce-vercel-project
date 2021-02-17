@@ -21,6 +21,7 @@ const ProductDetails: FC = ({ product, highlights }) => {
   const addItem = useAddItem()
   const [quantity, setQuantity] = useState(1)
   const [loading, setLoading] = useState(false)
+  const { localeData } = useUI()
   // const [colorMessage, setColorMessage] = useState('')
   // const [sizeMessage, setSizeMessage] = useState('')
   const { openSidebar, openModal, openModalCart } = useUI()
@@ -28,7 +29,7 @@ const ProductDetails: FC = ({ product, highlights }) => {
   const { price } = usePrice({
     amount: product.prices?.price?.value,
     baseAmount: product.prices?.retailPrice?.value,
-    currencyCode: product.prices?.price?.currencyCode!,
+    currencyCode: product.prices?.price?.currencyCode,
   })
   const [choices, setChoices] = useState<SelectedOptions>({
     size: null,
@@ -40,25 +41,25 @@ const ProductDetails: FC = ({ product, highlights }) => {
   const variant =
     getCurrentVariant(product, choices) || product.variants?.edges?.[0]
 
-  console.log('choices', choices)
-
   const addToCart = async () => {
     // if (choices.size === null) setSizeMessage('Please select a size')
     // else setSizeMessage('')
     // if (choices.color === null) setColorMessage('Please select a color')
     // else setColorMessage('')
 
-    if (quantity !== null && choices.color !== null) setLoading(true)
     try {
-      if (quantity !== null && choices.color !== null) {
+      setLoading(true)
+      if (quantity !== null) {
         console.log(
           'Adding: ',
-          product.variants,
-          product.variants.edges?.[0]?.node.entityId!
+          product.entityId,
+          product.variants.edges?.[0]?.node.entityId!,
+          quantity
         )
         await addItem({
           productId: product.entityId,
           variantId: product.variants.edges?.[0]?.node.entityId!,
+          quantity,
         })
         openModalCart()
         //openSidebar()
@@ -82,11 +83,7 @@ const ProductDetails: FC = ({ product, highlights }) => {
   return (
     <div>
       <h1 className="text-3xl font-body text-gray">{product.name}</h1>
-      <div className="text-red text-xl">
-        {price}
-        {` `}
-        {product.prices?.price.currencyCode}
-      </div>
+      <div className="text-red text-xl">{price}</div>
       <div className="mb-1">
         <span className="font-black text-sm">SKU:</span>{' '}
         <span className="text-gray font-thin">{product.sku}</span>

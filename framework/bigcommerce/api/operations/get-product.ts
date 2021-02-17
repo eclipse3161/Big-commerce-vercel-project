@@ -8,6 +8,7 @@ export const getProductQuery = /* GraphQL */ `
     $hasLocale: Boolean = false
     $locale: String = "null"
     $path: String!
+    $currencyCode: currencyCode = USD
   ) {
     site {
       route(path: $path) {
@@ -25,7 +26,7 @@ export const getProductQuery = /* GraphQL */ `
                     altText
                     isDefault
                   }
-                  prices {
+                  prices(currencyCode: $currencyCode) {
                     ...productPrices
                   }
                   inventory {

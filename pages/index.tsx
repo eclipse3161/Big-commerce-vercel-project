@@ -13,31 +13,55 @@ import getAllPages from '@framework/api/operations/get-all-pages'
 import Slider from '@components/Slider/Slider'
 import FeaturedProducts from '@components/homepage/FeaturedProducts/FeaturedProducts'
 import NewProducts from '@components/homepage/NewProducts/NewProducts'
-import { useLocaleRedirect } from 'framework/useLocaleRedirect'
+import { getCountryCode, useLocaleRedirect } from 'framework/useLocaleRedirect'
+import { useUI } from '@components/ui/context'
+import getCurrencyCode from '@framework/getCurrencyCode'
+import { CurrencyCode } from '@framework/schema'
 
 export async function getStaticProps({
   preview,
   locale,
 }: GetStaticPropsContext) {
+  // export async function getServerSideProps({ preview, locale }) {
   const config = getConfig({ locale })
+  const currencyCode = getCurrencyCode(locale)
+  // await getCountryCode()
 
+  // console.log('LOCALE DATA API: ', { currency_code })
+  console.log('FINAL DATA CHECK: ', { locale, currencyCode })
+
+  // const currencyCode: CurrencyCode = getCurrencyCode(currency_code)
+
+  // console.log("Got currnency code: ", currencyCode)
   // Get Featured Products
   const { products: featuredProducts } = await getAllProducts({
-    variables: { field: 'featuredProducts', first: 6 },
+    variables: {
+      field: 'featuredProducts',
+      first: 6,
+      currencyCode,
+    },
     config,
     preview,
   })
 
   // Get Best Selling Products
   const { products: bestSellingProducts } = await getAllProducts({
-    variables: { field: 'bestSellingProducts', first: 6 },
+    variables: {
+      field: 'bestSellingProducts',
+      first: 6,
+      currencyCode,
+    },
     config,
     preview,
   })
 
   // Get Best Newest Products
   const { products: newestProducts } = await getAllProducts({
-    variables: { field: 'newestProducts', first: 12 },
+    variables: {
+      field: 'newestProducts',
+      first: 12,
+      currencyCode,
+    },
     config,
     preview,
   })
@@ -78,6 +102,13 @@ export async function getStaticProps({
   }
 }
 
+// export async function getStaticProps({
+//   preview,
+//   locale,
+// }: GetStaticPropsContext) {
+
+// }
+
 const nonNullable = (v: any) => v
 
 export default function Home({
@@ -88,16 +119,15 @@ export default function Home({
   newestProducts,
   ...props
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  useLocaleRedirect()
 
-  useLocaleRedirect();
-
-  // console.log("FEATURED: ", featured);
-  // console.log("BEST SELLING: ", bestSelling);
+  // console.log('FEATURED: ', featured)
+  // console.log('BEST SELLING: ', bestSelling)
   // console.log("BRANDS: ", brands);
   // console.log("CATEGORIES: ", categories);
   // console.log("NEWEST PRODUCTS: ", newestProducts);
   /* @ts-ignore */
-  props.setCategories(categories);
+  props.setCategories(categories)
 
   return (
     <div>

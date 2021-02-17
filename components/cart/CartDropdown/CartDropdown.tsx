@@ -5,6 +5,7 @@ import LoadingOverlay from 'react-loading-overlay'
 import getAllPages from '@framework/api/operations/get-all-pages'
 import useCart from '@framework/cart/use-cart'
 import usePrice from '@framework/use-price'
+import Image from 'next/image'
 import { Layout } from '@components/common'
 import { Button } from '@components/ui'
 import { Bag, Cross, Check } from '@components/icons'
@@ -14,17 +15,54 @@ import { Text, Container } from '@components/ui'
 import Link from 'next/link'
 import { useUI } from '@components/ui/context'
 
-interface Props {
-  open: boolean
-  onClose: () => void
+function CartProductItem({ item }) {
+  const { localeData } = useUI();
+
+  const { price } = usePrice({
+    amount: item.extended_sale_price,
+    baseAmount: item.extended_list_price,
+    currencyCode: localeData.currency_code,
+  })
+
+  return (
+    <>
+      <div>
+        <Image
+          src={item.image_url}
+          width={100}
+          height={100}
+          alt={item.name}
+          // The cart item image is already optimized and very small in size
+          unoptimized
+        />
+      </div>
+
+      <div className="ml-4">
+        {/* <span>{item.name}</span> */}
+
+        <h6>
+          <a href={item.url} alt={item.name}>
+            {item.name}
+          </a>
+        </h6>
+
+        <span className="font-bold">
+          {item.quantity > 1 && `${item.quantity} × `}
+          <span>{price}</span>
+        </span>
+      </div>
+    </>
+  )
 }
 
-export default function CartDropdown({ open = false, onClose }) {
+export default function CartDropdown() {
   const {
     openModalDropdown,
     closeModalDropdown,
     displayModalDropdown,
+    localeData
   } = useUI()
+
   const [loading, setLoading] = useState(false)
   const [showCoupon, setShowCoupon] = useState(false)
   const [coupon, setCoupon] = useState('')
@@ -33,13 +71,13 @@ export default function CartDropdown({ open = false, onClose }) {
   const { price: subTotal } = usePrice(
     data && {
       amount: data.base_amount,
-      currencyCode: data.currency.code,
+      currencyCode: localeData.currency_code,
     }
   )
   const { price: total } = usePrice(
     data && {
       amount: data.cart_amount,
-      currencyCode: data.currency.code,
+      currencyCode: localeData.currency_code,
     }
   )
 
@@ -54,81 +92,62 @@ export default function CartDropdown({ open = false, onClose }) {
     console.log('Coupon: ', coupon)
   }
 
+  console.log('Items: ', items)
+
   return (
-    <>
-      <LoadingOverlay
-        active={loading}
-        spinner
-        styles={{
-          overlay: (base: any) => ({
-            ...base,
-            background: '#ffffff',
-            opacity: 0.4,
-          }),
-          spinner: (base: any) => ({
-            ...base,
-            width: '100px',
-            '& svg circle': {
-              stroke: '#333333',
-            },
-          }),
-        }}
-      >
-        <div className={s.dropdownContainer}>
-          <button
-            style={{ alignSelf: 'flex-end', outline: 'none' }}
-            onClick={() => closeModalDropdown()}
-          >
-            X
-          </button>
-          <ul>
-            <li className={s.flexContainer}>
-              <div>
-                <img
-                  src="https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/100x100/attribute_rule_images/4489_source_1604349170.jpg"
-                  alt="Oppo A5 2020 Dual SIM 64GB + 3GB RAM"
-                  title="Oppo A5 2020 Dual SIM 64GB + 3GB RAM"
-                  data-sizes="auto"
-                  data-srcset="https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/80w/attribute_rule_images/4489_source_1604349170.jpg 80w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/160w/attribute_rule_images/4489_source_1604349170.jpg 160w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/320w/attribute_rule_images/4489_source_1604349170.jpg 320w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/640w/attribute_rule_images/4489_source_1604349170.jpg 640w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/960w/attribute_rule_images/4489_source_1604349170.jpg 960w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/1280w/attribute_rule_images/4489_source_1604349170.jpg 1280w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/1920w/attribute_rule_images/4489_source_1604349170.jpg 1920w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/2560w/attribute_rule_images/4489_source_1604349170.jpg 2560w"
-                  sizes="70px"
-                />
+    displayModalDropdown && (
+      <>
+        <LoadingOverlay
+          active={loading}
+          spinner
+          styles={{
+            overlay: (base: any) => ({
+              ...base,
+              background: '#ffffff',
+              opacity: 0.4,
+            }),
+            spinner: (base: any) => ({
+              ...base,
+              width: '100px',
+              '& svg circle': {
+                stroke: '#333333',
+              },
+            }),
+          }}
+        >
+          <div className={s.dropdownContainer}>
+            <button
+              style={{ alignSelf: 'flex-end', outline: 'none' }}
+              onClick={() => closeModalDropdown()}
+            >
+              X
+            </button>
+            <ul>
+              {items?.length > 0 &&
+                items.map((item) => (
+                  <li className={s.flexContainer}>
+                    <CartProductItem item={item} />
+                  </li>
+                ))}
+
+              <hr />
+            </ul>
+            <div style={{ marginTop: '1rem' }} className={s.flexContainer}>
+              <div className={s.checkOutBtn}>
+                <a href="/checkout">Check out now</a>
               </div>
 
-              <div>
-                <span>Oppo</span>
-
-                <h6>
-                  <a
-                    href="http://phone4u.de/oppo-a5-2020-uk-model-dual-sim-mirror-black-64gb-3gb-ram/"
-                    alt=""
-                  >
-                    Oppo A5 2020 Dual SIM 64GB + 3GB RAM
-                  </a>
-                </h6>
-
-                <span>
-                  2 ×<span>€215.00</span>
-                </span>
+              <div className={s.viewCartBtn}>
+                <Link href="/cart">View Cart</Link>
               </div>
-            </li>
-
-            <hr />
-          </ul>
-          <div style={{ marginTop: '1rem' }} className={s.flexContainer}>
-            <div className={s.checkOutBtn}>
-              <a href="/checkout">Check out now</a>
             </div>
-
-            <div className={s.viewCartBtn}>
-              <a href="/cart.php">View Cart</a>
+            <div>
+              <style type="text/css"></style>
+              <div></div>
             </div>
           </div>
-          <div>
-            <style type="text/css"></style>
-            <div></div>
-          </div>
-        </div>
-      </LoadingOverlay>
-    </>
+        </LoadingOverlay>
+      </>
+    )
   )
 }

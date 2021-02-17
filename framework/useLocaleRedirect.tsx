@@ -1,40 +1,36 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useUI } from '@components/ui/context'
+import getCurrencyCode from '@framework/getCurrencyCode'
+
+// export const getCurrencyCode = async () => {
+//   return new Promise((resolve, reject) => {
+
+//   })
+// }
 
 export const getCountryCode = async () => {
   return new Promise((resolve, reject) => {
     try {
-      function showPosition(position) {
-        const { latitude, longitude } = position?.coords
-        // const latitude = '51.1657'
-        // const longitude = '10.4515'
-        console.log('Latitude: ' + latitude, 'Longitude: ' + longitude)
-
-        fetch(
-          `https://api.opencagedata.com/geocode/v1/json?key=2ec5f5c72e754727b2539adc4ca336c3&q=${latitude},${longitude}`
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            const currency_code =
-              data?.results?.[0]?.annotations?.currency?.iso_code
-            const country_code = data?.results?.[0]?.components?.country_code?.toLowerCase()
-            console.log('Country data: ', { currency_code, country_code })
-            resolve({ currency_code, country_code })
-          })
-      }
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition)
-      } else {
-        console.log('Geolocation is not supported by this browser.')
-      }
-
-      // fetch('https://geolocation-db.com/json/')
-      //   .then((res) => res.json())
-      //   .then((data) => {
-      //     console.log('Country data: ', data)
-      //     resolve(data?.country_code.toLowerCase())
-      //   })
+      fetch(
+        `http://api.ipstack.com/check?access_key=390fb80e45191ba62aee31e021dc7b8c`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log('RES: ', data)
+          const country_code = data?.country_code
+          resolve({ country_code })
+          // if(data?.country_code && )
+          // let currency_code = 'USD'
+          // if (data?.location?.is_eu) {
+          //   currency_code = 'EUR'
+          // }
+          // const currency_code =
+          //   data?.results?.[0]?.annotations?.currency?.iso_code
+          // const country_code = data?.results?.[0]?.components?.country_code?.toLowerCase()
+          // console.log('Country data: ', { currency_code, country_code })
+          // resolve({ currency_code, country_code })
+        })
     } catch (error) {
       console.log(error)
       return 'en'
@@ -51,9 +47,13 @@ export const useLocaleRedirect = async () => {
   } = useUI()
 
   const getCode = async () => {
-    const { currency_code, country_code } = await getCountryCode()
+    const { country_code } = await getCountryCode()
+    // await getCountryCode()
+
+    // const currencyCode = getCurrencyCode(router.locale)
+    // let newCurrency = getCurrencyCode(currency_code)
     // @ts-ignore
-    setLocaleData({ currency_code, country_code })
+    setLocaleData({ country_code, currency_code })
     // setCountryCode(code)
   }
 
@@ -62,16 +62,37 @@ export const useLocaleRedirect = async () => {
   }, [])
 
   useEffect(() => {
-    console.log('Currency: ', currency_code)
-    console.log('Country: ', country_code)
-  }, [currency_code, country_code])
+    // console.log('Currency: ', currency_code)
+    // console.log('Country: ', country_code)
+    // console.log('Locale currencies: ', router.locales)
+  }, [country_code])
 
   useEffect(() => {
     if (country_code?.length > 0) {
-      let newCode = country_code === 'us' ? 'en-US' : country_code
-      if (router?.locale !== newCode && router?.locales?.includes(newCode)) {
+      let newCode =
+        country_code === 'us' ? 'en-US' : country_code?.toLowerCase()
+      newCode = newCode === 'mx' ? 'es' : newCode
+
+      let selectedLocaleArr = router?.locales?.filter((loc) =>
+        loc.toLowerCase().includes(newCode)
+      ) || ["en-US"]
+      const selectedLocale =
+        selectedLocaleArr?.length > 0 ? selectedLocaleArr[0] : 'en-US'
+
+      console.log('SelectedLocale: ', selectedLocale)
+
+      const currencyCode = getCurrencyCode(selectedLocale)
+      if (router?.locale !== selectedLocale || currencyCode !== currency_code) {
+        console.log('SETTING LOCALE TO: ', selectedLocale)
         router.replace(router.asPath, '', {
-          locale: newCode,
+          locale: selectedLocale,
+        })
+        console.log('CurrencyState: ', currency_code)
+        console.log('NEw currency: ', currencyCode)
+
+        setLocaleData({
+          country_code: selectedLocale,
+          currency_code: currencyCode,
         })
       }
     }
