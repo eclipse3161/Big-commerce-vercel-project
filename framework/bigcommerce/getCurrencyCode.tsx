@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { CurrencyCode } from './schema.d'
 
 export default function getCurrencyCode(locale) {
@@ -36,7 +37,6 @@ export default function getCurrencyCode(locale) {
 
   let newCurrStr = 'USD'
   let localeUpper = locale?.toUpperCase()
-  console.log('Locale upper: ', localeUpper)
 
   if (localeUpper === 'EN-GB') {
     newCurrStr = 'GBP'
@@ -56,7 +56,6 @@ export default function getCurrencyCode(locale) {
   // newCurrency = CurrencyCode[cCode]
   // newCurrency = currency_code
   newCurrency = Object(CurrencyCode)[cCode]
-  console.log('Returning new currency: ', newCurrency, str)
 
   return newCurrency
 }

@@ -18,7 +18,7 @@ export default function CartModalView() {
   const [showCoupon, setShowCoupon] = useState(false)
   const [coupon, setCoupon] = useState('')
   const { data, isEmpty } = useCart()
-  console.log('Cart: ', data)
+  // console.log('Cart: ', data)
 
   const { price: total } = usePrice(
     data && {

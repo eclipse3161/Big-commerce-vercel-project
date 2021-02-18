@@ -98,7 +98,6 @@ async function getAllProducts({
   config = getConfig(config)
 
   const locale = vars.locale || config.locale
-  console.log("CURRRRRRRRRRRRR: ", vars.currencyCode)
   const variables: GetAllProductsQueryVariables = {
     ...vars,
     locale,

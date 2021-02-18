@@ -7,7 +7,7 @@
 }
 
 .figure {
-  height: 500px;
+  height: 600px;
   overflow: hidden;
   background-repeat: no-repeat;
 }
@@ -26,8 +26,10 @@
 }
 
 .left {
-  /* width: 46%; */
-  overflow: hidden;
+  @screen tablet {
+    width: 46%;
+  }
+  /* overflow: hidden; */
   padding-top: 2rem;
   display: flex;
   /* justify-content: center; */
@@ -36,22 +38,38 @@
 }
 
 .paymentLeft {
-  margin-top: 5rem;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
+  width: 90%;
 }
 
 .paymentRight {
   margin-top: 4rem;
 }
 
+.slides {
+  height: fit-content;
+  margin-left: 1rem;
+}
+
 .product {
   margin-right: 1rem;
   /* width: 90%; */
   border: 1px solid #e5e5e5;
-  /* padding: 4px; */
+  padding: 0.75rem 0.3rem;
   box-sizing: content-box;
   cursor: pointer;
+  text-align: -webkit-center;
+  height: 50px;
+}
+
+.product:hover {
+  border: 1px solid #333333;
+}
+
+.productNode {
+  height: 80px;
 }
 
 .social {
@@ -94,4 +112,56 @@
 
 .colorBtn:focus {
   outline: 0 !important;
+}
+
+.leftControl,
+.rightControl {
+  @apply absolute top-0 -translate-x-1/2 z-20 w-8 h-8 flex items-center justify-center bg-hover-1 rounded-full;
+}
+
+.leftControl:hover,
+.rightControl:hover {
+  @apply bg-hover-2;
+}
+
+.leftControl:hover,
+.rightControl:hover {
+  @apply outline-none shadow-outline-blue;
+}
+
+.leftControl {
+  @apply bg-cover;
+  left: -2rem;
+  background-image: url('public/cursor-left.png');
+
+  @screen md {
+    left: -2rem;
+  }
+}
+
+.rightControl {
+  @apply bg-cover;
+  right: -2rem;
+  background-image: url('public/cursor-right.png');
+
+  @screen md {
+    right: -2rem;
+  }
+}
+
+.control {
+  @apply opacity-0 transition duration-150;
+  top: 20px;
+}
+
+.sliderRoot {
+  height: 80px;
+}
+
+.sliderRoot:hover .control {
+  @apply opacity-100;
+}
+
+.sliderImage {
+  height: 100%;
 }

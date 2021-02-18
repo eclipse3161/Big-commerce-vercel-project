@@ -69,7 +69,7 @@ const CartItem = ({
     }
   }
 
-  console.log('item', item)
+  // console.log('item', item)
 
   useEffect(() => {
     // Reset the quantity state if the item quantity changes

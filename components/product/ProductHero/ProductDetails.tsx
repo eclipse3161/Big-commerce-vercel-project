@@ -50,12 +50,12 @@ const ProductDetails: FC = ({ product, highlights }) => {
     try {
       setLoading(true)
       if (quantity !== null) {
-        console.log(
-          'Adding: ',
-          product.entityId,
-          product.variants.edges?.[0]?.node.entityId!,
-          quantity
-        )
+        // console.log(
+        //   'Adding: ',
+        //   product.entityId,
+        //   product.variants.edges?.[0]?.node.entityId!,
+        //   quantity
+        // )
         await addItem({
           productId: product.entityId,
           variantId: product.variants.edges?.[0]?.node.entityId!,

@@ -18,6 +18,8 @@ import getSiteInfo from '@framework/api/operations/get-site-info'
 import getAllCategoryPaths from '@framework/api/operations/get-all-category-paths'
 import { Container } from '@components/ui'
 import SearchView from '@components/product/SearchView.tsx/SearchView'
+import getCurrencyCode from '@framework/getCurrencyCode'
+import { useLocaleRedirect } from 'framework/useLocaleRedirect'
 
 export async function getStaticProps({
   params,
@@ -25,9 +27,10 @@ export async function getStaticProps({
   preview,
 }: GetStaticPropsContext<{ slug: string }>) {
   const config = getConfig({ locale })
+  const currencyCode = getCurrencyCode(locale)
 
   const { category } = await getAllProductsByCategory({
-    variables: { slug: params!.slug },
+    variables: { slug: params!.slug, currencyCode },
     config,
   })
 
@@ -48,23 +51,19 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   const { categories } = await getAllCategoryPaths()
   //   const { categories, brands } = await getSiteInfo()
 
-  // return {
-  //   paths: locales
-  //     ? locales.reduce<string[]>((arr, locale) => {
-  //         // Add a category path for every locale
-  //         categories.forEach((category: any) => {
-  //           arr.push(`/${locale}/category${category.path}`)
-  //         })
-  //         return arr
-  //       }, [])
-  //     : categories.map((category: any) => `/category${category.path}`),
-  //   fallback: 'blocking',
-  // }
-
   return {
-    paths: categories.map((category: any) => `/category${category.path}`),
+    paths: locales
+      ? locales.reduce<string[]>((arr, locale) => {
+          // Add a category path for every locale
+          categories.forEach((category: any) => {
+            arr.push(`/${locale}/category${category.path}`)
+          })
+          return arr
+        }, [])
+      : categories.map((category: any) => `/category${category.path}`),
     fallback: 'blocking',
   }
+
 }
 
 export default function Slug({
@@ -73,6 +72,7 @@ export default function Slug({
   ...props
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter()
+  useLocaleRedirect()
 
   /* @ts-ignore */
   props.setCategories(categories)

@@ -28,7 +28,7 @@ export async function getStaticProps({
   // await getCountryCode()
 
   // console.log('LOCALE DATA API: ', { currency_code })
-  console.log('FINAL DATA CHECK: ', { locale, currencyCode })
+  // console.log('FINAL DATA CHECK: ', { locale, currencyCode })
 
   // const currencyCode: CurrencyCode = getCurrencyCode(currency_code)
 

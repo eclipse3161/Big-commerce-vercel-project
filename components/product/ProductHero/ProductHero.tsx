@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { FC, MouseEvent, useEffect, useState } from 'react'
+import { useKeenSlider } from 'keen-slider/react'
 import Link from 'next/link'
 import { Container } from '@components/ui'
 import cn from 'classnames'
@@ -12,6 +13,40 @@ const ProductHero: FC = ({ product, highlights }) => {
   const [backgroundPosition, setbackgroundPosition] = useState('0% 0%')
   const [defaultImage, setDefaultImage] = useState('')
   const [hover, setHover] = useState(false)
+
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [isMounted, setIsMounted] = useState(false)
+
+  const slidesPerView = 5
+
+  const [ref, slider] = useKeenSlider<HTMLDivElement>({
+    loop: false,
+    slidesPerView,
+    mounted: () => setIsMounted(true),
+    slideChanged(s) {
+      setCurrentSlide(s.details().relativeSlide)
+    },
+  })
+
+  // Stop the history navigation gesture on touch devices
+  useEffect(() => {
+    const preventNavigation = (event: TouchEvent) => {
+      // Center point of the touch area
+      const touchXPosition = event.touches[0].pageX
+      // Size of the touch area
+      const touchXRadius = event.touches[0].radiusX || 0
+
+      // We set a threshold (10px) on both sizes of the screen,
+      // if the touch area overlaps with the screen edges
+      // it's likely to trigger the navigation. We prevent the
+      // touchstart event in that case.
+      if (
+        touchXPosition - touchXRadius < 10 ||
+        touchXPosition + touchXRadius > window.innerWidth - 10
+      )
+        event.preventDefault()
+    }
+  }, [])
 
   const handleMouseMove = (e: MouseEvent) => {
     const node = e.target as HTMLElement
@@ -56,8 +91,7 @@ const ProductHero: FC = ({ product, highlights }) => {
         />
 
         <div className={s.paymentLeft}>
-          <div className="flex justify-between w-full">
-            {/* <Slider images={product.images.edges} /> */}
+          {/* <div className="flex justify-between w-full">
             {product?.images?.edges.map((edge) => (
               <div
                 className={s.product}
@@ -70,6 +104,49 @@ const ProductHero: FC = ({ product, highlights }) => {
                 />
               </div>
             ))}
+          </div> */}
+
+          <div
+            className={cn(
+              'flex justify-between w-full relative w-full h-full bg-white',
+              s.sliderRoot
+            )}
+          >
+            <button
+              className={cn(s.leftControl, s.control)}
+              onClick={slider?.prev}
+              aria-label="Previous Product Image"
+            />
+            <div
+              ref={ref}
+              className={cn(
+                'keen-slider transition-opacity duration-150',
+                s.slides
+              )}
+              style={{ opacity: isMounted ? 1 : 0 }}
+            >
+              {product?.images?.edges.map((edge) => (
+                <div
+                  className={cn('keen-slider__slide', s.productNode)}
+                  key={edge?.node?.urlOriginal}
+                  onClick={() => setDefaultImage(edge?.node)}
+                >
+                  <div className={s.product}>
+                    <img
+                      src={edge?.node?.urlOriginal}
+                      alt={edge?.node?.altText || 'Product'}
+                      className={s.sliderImage}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <button
+              className={cn(s.rightControl, s.control)}
+              onClick={slider?.next}
+              aria-label="Next Product Image"
+            />
           </div>
 
           {/* <div className={s.social}>

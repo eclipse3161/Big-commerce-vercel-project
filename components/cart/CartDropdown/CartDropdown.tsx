@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useEffect, useRef, useState } from 'react'
 import type { GetStaticPropsContext } from 'next'
 import { getConfig } from '@framework/api'
@@ -67,7 +68,7 @@ export default function CartDropdown() {
   const [showCoupon, setShowCoupon] = useState(false)
   const [coupon, setCoupon] = useState('')
   const { data, isEmpty } = useCart()
-  console.log('Cart: ', data)
+  // console.log('Cart: ', data)
   const { price: subTotal } = usePrice(
     data && {
       amount: data.base_amount,
@@ -92,7 +93,7 @@ export default function CartDropdown() {
     console.log('Coupon: ', coupon)
   }
 
-  console.log('Items: ', items)
+  // console.log('Items: ', items)
 
   return (
     displayModalDropdown && (

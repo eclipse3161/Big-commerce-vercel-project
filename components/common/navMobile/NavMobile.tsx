@@ -16,8 +16,8 @@ const Dropdown: FC<DropdownProps> = ({ categories, open, toggleDropdown }) => {
   const [search, setSearch] = useState<string>('')
   const [categoriesOpened, setCategoriesOpened] = useState<Array<any>>([])
 
-  console.log('categories: ', categories)
-  console.log('opened:', categoriesOpened)
+  // console.log('categories: ', categories)
+  // console.log('opened:', categoriesOpened)
 
   const toggleDropdownAndClose = () => {
     setCategoriesOpened([]);
@@ -67,7 +67,7 @@ const Dropdown: FC<DropdownProps> = ({ categories, open, toggleDropdown }) => {
   }
 
   const getCategoryItem = (category: any) => {
-    console.log('got: ', category)
+    // console.log('got: ', category)
     return (
       <div key={category.entityId}>
         {getLinkOrButton(category)}

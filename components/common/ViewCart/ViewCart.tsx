@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC, useEffect, useMemo, useState } from 'react'
 import cn from 'classnames'
 import s from './ViewCart.module.css'
@@ -30,7 +31,7 @@ const ViewCart: FC<Props> = ({ className }: Props) => {
     router.prefetch('/search')
   }, [])
 
-  console.log('Top items: ', items)
+  // console.log('Top items: ', items)
 
   return (
     <div

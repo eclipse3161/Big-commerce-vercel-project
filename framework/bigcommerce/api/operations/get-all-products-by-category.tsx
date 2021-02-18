@@ -13,7 +13,7 @@ export const getAllProductsByCategoryQuery = /* GraphQL */ `
     $path: String!
     $locale: String = "null"
     $hasLocale: Boolean = false
-    $currencyCode: CurrencyCode
+    $currencyCode: currencyCode = USD
     ) {
     site {
       route(path: $path) {

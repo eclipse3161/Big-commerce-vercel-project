@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useUI } from '@components/ui/context'
@@ -12,13 +13,12 @@ import getCurrencyCode from '@framework/getCurrencyCode'
 export const getCountryCode = async () => {
   return new Promise((resolve, reject) => {
     try {
-      fetch(
-        `http://api.ipstack.com/check?access_key=390fb80e45191ba62aee31e021dc7b8c`
-      )
+      fetch(`https://geolocation-db.com/json/`)
         .then((res) => res.json())
         .then((data) => {
           // console.log('RES: ', data)
           const country_code = data?.country_code
+          console.log("Country code: ", data)
           resolve({ country_code })
           // if(data?.country_code && )
           // let currency_code = 'USD'
@@ -73,15 +73,20 @@ export const useLocaleRedirect = async () => {
         country_code === 'us' ? 'en-US' : country_code?.toLowerCase()
       newCode = newCode === 'mx' ? 'es' : newCode
 
+      console.log("Country code: ", country_code)
+      console.log("locales: ", router?.locales);
+      console.log("newCode: ", newCode)
       let selectedLocaleArr = router?.locales?.filter((loc) =>
         loc.toLowerCase().includes(newCode)
-      ) || ["en-US"]
+      ) || ['en-US']
       const selectedLocale =
         selectedLocaleArr?.length > 0 ? selectedLocaleArr[0] : 'en-US'
 
       console.log('SelectedLocale: ', selectedLocale)
 
       const currencyCode = getCurrencyCode(selectedLocale)
+      console.log("CURR: ", currencyCode);
+      console.log("Rotuer locale: ", router?.locale);
       if (router?.locale !== selectedLocale || currencyCode !== currency_code) {
         console.log('SETTING LOCALE TO: ', selectedLocale)
         router.replace(router.asPath, '', {
