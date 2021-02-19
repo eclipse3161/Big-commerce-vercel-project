@@ -88,6 +88,7 @@ export const rootProductFragment = `
           __typename
           entityId
           displayName
+          isRequired
           ...multipleChoiceOption
         }
       }

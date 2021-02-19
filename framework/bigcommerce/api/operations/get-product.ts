@@ -42,6 +42,7 @@ export const getProductQuery = /* GraphQL */ `
                         __typename
                         entityId
                         displayName
+                        isRequired
                         ...multipleChoiceOption
                       }
                     }

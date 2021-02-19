@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { FC, useState } from 'react'
+import { FC, useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button, Text } from '@components/ui'
 import cn from 'classnames'
@@ -16,6 +16,7 @@ import {
   getProductOptions,
   SelectedOptions,
 } from '../helpers'
+import useProductOptions from '@framework/products/use-product-options'
 
 const ProductDetails: FC = ({ product, highlights }) => {
   const addItem = useAddItem()
@@ -31,10 +32,15 @@ const ProductDetails: FC = ({ product, highlights }) => {
     baseAmount: product.prices?.retailPrice?.value,
     currencyCode: product.prices?.price?.currencyCode,
   })
-  const [choices, setChoices] = useState<SelectedOptions>({
-    size: null,
-    color: null,
+  const [choices, setChoices] = useState<SelectedOptions>({})
+
+  const { data: productOptions } = useProductOptions({
+    productId: product?.entityId,
   })
+
+  // useEffect(() => {
+  //   console.log('Product options: ', productOptions)
+  // }, [productOptions])
 
   const options = getProductOptions(product)
 
@@ -80,6 +86,105 @@ const ProductDetails: FC = ({ product, highlights }) => {
     }
   }
 
+  const getRadioButtonOptions = (opt) => {
+    return (
+      <div className="flex flex-wrap mt-2 flex-col">
+        {opt.option_values.map((v: any, i: number) => {
+          const active = (choices as any)[opt.id]
+
+          return (
+            <div key={v.id}>
+              <input
+                type="radio"
+                name={v.label}
+                value={v.id}
+                checked={v.id === active}
+                onChange={() => {
+                  setChoices((choices) => {
+                    return {
+                      ...choices,
+                      [opt.id]: v.id,
+                    }
+                  })
+                }}
+              />{' '}
+              <label for={v.label}>{v.label}</label>
+              <br />
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+
+  const getSwatchOptions = (opt) => {
+    return (
+      <div className="flex flex-wrap mt-2">
+        {opt.option_values.map((v: any, i: number) => {
+          const active = (choices as any)[opt.id]
+
+          return (
+            <div
+              key={opt.id}
+              className={cn(
+                'w-9 h-9 border-t border-b border-l border-r text-center mr-1 flex justify-center',
+                cn(v.id === active ? 'border-black' : 'border-lightgray')
+              )}
+            >
+              <button
+                className={cn(`w-11/12 h-11/12 m-auto`, s.colorBtn)}
+                style={{
+                  backgroundColor:
+                    v.value_data?.colors?.length > 0
+                      ? v.value_data?.colors[0]
+                      : 'transparent',
+                }}
+                onClick={() => {
+                  setChoices((choices) => {
+                    return {
+                      ...choices,
+                      [opt.id]: v.id,
+                    }
+                  })
+                }}
+              />
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+
+  const getOptionValues = (option) => {
+    switch (option?.type) {
+      case 'radio_buttons':
+        return getRadioButtonOptions(option)
+      case 'swatch':
+        return getSwatchOptions(option)
+      default:
+        return null
+    }
+  }
+
+  const getProductOption = (option) => {
+    const mOpt = options?.find((mOpt) => mOpt.entityId === option.id)
+    let required = false
+    if (mOpt?.isRequired) required = true
+
+    const optionValues = getOptionValues(option)
+
+    return (
+      !!optionValues && (
+        <div key={option.id}>
+          <div className="mt-2 font-body text-lightgray text-sm">
+            {option.display_name}:{required && ' Required'}
+          </div>
+          {optionValues}
+        </div>
+      )
+    )
+  }
+
   return (
     <div>
       <h1 className="text-3xl font-body text-gray">{product.name}</h1>
@@ -104,65 +209,11 @@ const ProductDetails: FC = ({ product, highlights }) => {
         })}
       </div>
       <hr className="mb-3" />
-      {options?.map((opt: any) => (
-        <div key={opt.displayName}>
-          <div className="mt-2 font-body text-lightgray text-sm">
-            {opt.displayName}: Required
-          </div>
+      {productOptions?.length > 0 &&
+        productOptions.map((option) => {
+          return getProductOption(option)
+        })}
 
-          <div className="flex flex-wrap mt-2">
-            {opt.values.map((v: any, i: number) => {
-              const active = (choices as any)[opt.displayName]
-
-              return v.hexColors ? (
-                <div
-                  key={`${v.entityId}-${i}`}
-                  className={cn(
-                    'w-9 h-9 border-2 text-center mr-1',
-                    cn(v.label === active ? 'border-black' : 'border-lightgray')
-                  )}
-                >
-                  <button
-                    className={cn(`w-5/6 h-5/6 align-text-top`, s.colorBtn)}
-                    style={{
-                      backgroundColor: v.hexColors ? v.hexColors[0] : '',
-                    }}
-                    onClick={() => {
-                      setChoices((choices) => {
-                        return {
-                          ...choices,
-                          [opt.displayName]: v.label,
-                        }
-                      })
-                    }}
-                  />
-                </div>
-              ) : (
-                <div
-                  key={`${v.entityId}-${i}`}
-                  className={cn(
-                    'border-2 text-center px-2 py-1 mr-4 cursor-pointer',
-                    cn(
-                      v.label === active ? 'border-black' : 'border-lightgray'
-                    ),
-                    s.optionsLabel
-                  )}
-                  onClick={() => {
-                    setChoices((choices) => {
-                      return {
-                        ...choices,
-                        [opt.displayName]: v.label,
-                      }
-                    })
-                  }}
-                >
-                  <h1>{v.label}</h1>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      ))}
       <div className="mt-4 font-body text-lightgray text-sm">Quantity:</div>
       <div className={s.counter}>
         <div

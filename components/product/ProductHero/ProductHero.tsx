@@ -17,7 +17,7 @@ const ProductHero: FC = ({ product, highlights }) => {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isMounted, setIsMounted] = useState(false)
 
-  const slidesPerView = 5
+  const slidesPerView = 4
 
   const [ref, slider] = useKeenSlider<HTMLDivElement>({
     loop: false,
@@ -112,11 +112,13 @@ const ProductHero: FC = ({ product, highlights }) => {
               s.sliderRoot
             )}
           >
-            <button
-              className={cn(s.leftControl, s.control)}
-              onClick={slider?.prev}
-              aria-label="Previous Product Image"
-            />
+            {product?.images?.edges?.length > slidesPerView && (
+              <button
+                className={cn(s.leftControl, s.control)}
+                onClick={slider?.prev}
+                aria-label="Previous Product Image"
+              />
+            )}
             <div
               ref={ref}
               className={cn(
@@ -131,22 +133,24 @@ const ProductHero: FC = ({ product, highlights }) => {
                   key={edge?.node?.urlOriginal}
                   onClick={() => setDefaultImage(edge?.node)}
                 >
-                  <div className={s.product}>
+                  <span className={s.product}>
                     <img
                       src={edge?.node?.urlOriginal}
                       alt={edge?.node?.altText || 'Product'}
                       className={s.sliderImage}
                     />
-                  </div>
+                  </span>
                 </div>
               ))}
             </div>
 
-            <button
-              className={cn(s.rightControl, s.control)}
-              onClick={slider?.next}
-              aria-label="Next Product Image"
-            />
+            {product?.images?.edges?.length > slidesPerView && (
+              <button
+                className={cn(s.rightControl, s.control)}
+                onClick={slider?.next}
+                aria-label="Next Product Image"
+              />
+            )}
           </div>
 
           {/* <div className={s.social}>

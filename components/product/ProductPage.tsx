@@ -22,6 +22,7 @@ const ProductPage: FC = ({ product }) => {
     productId: product?.entityId,
   })
 
+
   useEffect(() => {
     const tempDsc: Array<any> = []
     const tempSpecs: Array<any> = []
