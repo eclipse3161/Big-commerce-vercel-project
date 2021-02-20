@@ -133,7 +133,15 @@ const ProductHero: FC = ({ product, highlights }) => {
                   key={edge?.node?.urlOriginal}
                   onClick={() => setDefaultImage(edge?.node)}
                 >
-                  <span className={s.product}>
+                  <span
+                    className={s.product}
+                    style={{
+                      border:
+                        edge?.node?.urlOriginal === defaultImage?.urlOriginal
+                          ? '1px solid black'
+                          : '1px solid #e5e5e5',
+                    }}
+                  >
                     <img
                       src={edge?.node?.urlOriginal}
                       alt={edge?.node?.altText || 'Product'}

@@ -127,12 +127,13 @@ const ProductDetails: FC = ({ product, highlights }) => {
             <div
               key={opt.id}
               className={cn(
-                'w-9 h-9 border-t border-b border-l border-r text-center mr-1 flex justify-center',
-                cn(v.id === active ? 'border-black' : 'border-lightgray')
+                'w-9 h-9 text-center mr-1 flex justify-center',
+                cn(v.id === active ? 'border-black' : 'border-lightgray'),
+                s.colorBtnRoot
               )}
             >
               <button
-                className={cn(`w-11/12 h-11/12 m-auto`, s.colorBtn)}
+                className={s.colorBtn}
                 style={{
                   backgroundColor:
                     v.value_data?.colors?.length > 0
