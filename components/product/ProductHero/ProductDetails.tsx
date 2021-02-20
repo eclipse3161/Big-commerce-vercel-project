@@ -27,7 +27,7 @@ const ProductDetails: FC = ({ product, highlights }) => {
   // const [sizeMessage, setSizeMessage] = useState('')
   const { openSidebar, openModal, openModalCart } = useUI()
 
-  const { price } = usePrice({
+  const { price, basePrice, discount } = usePrice({
     amount: product.prices?.price?.value,
     baseAmount: product.prices?.retailPrice?.value,
     currencyCode: product.prices?.price?.currencyCode,
@@ -189,7 +189,20 @@ const ProductDetails: FC = ({ product, highlights }) => {
   return (
     <div>
       <h1 className="text-3xl font-body text-gray">{product.name}</h1>
-      <div className="text-red text-xl">{price}</div>
+      {discount ? (
+        <>
+          <div>
+            <span className="text-2xl line-through">{basePrice}</span>
+            <span className="text-red ml-1 font-bold">{price}</span>
+          </div>
+          <div className="text-black text-sm font-bold mb-1">
+            (You save {discount})
+          </div>
+        </>
+      ) : (
+        <span className="text-red mb-1 font-bold">{price}</span>
+      )}
+
       <div className="mb-1">
         <span className="font-black text-sm">SKU:</span>{' '}
         <span className="text-gray font-thin">{product.sku}</span>
@@ -214,7 +227,6 @@ const ProductDetails: FC = ({ product, highlights }) => {
         productOptions.map((option) => {
           return getProductOption(option)
         })}
-
       <div className="mt-4 font-body text-lightgray text-sm">Quantity:</div>
       <div className={s.counter}>
         <div

@@ -12,10 +12,10 @@ interface ProductItemProps {
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   const [hover, setHover] = useState(false)
   const { openModal, setModalView, setActiveProduct } = useUI()
-  const { price } = usePrice({
+  const { price, basePrice, discount } = usePrice({
     amount: product.prices?.price?.value,
     baseAmount: product.prices?.retailPrice?.value,
-    currencyCode: product.prices?.price?.currencyCode!,
+    currencyCode: product.prices?.price?.currencyCode,
   })
 
   const openProductPreview = (e: React.MouseEvent<HTMLElement>) => {
@@ -61,7 +61,13 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
       <h2 className="text-sm text-center tracking-wide text-gray-500">
         {product.name}
       </h2>
-      <h2 className="text-sm text-center text-red font-bold">{price}</h2>
+      <h2 className="text-sm text-center">
+        {/* {discount ? <><span>{basePrice}</span>
+        <span>{price}</span><> : <span></span>} */}
+
+        {discount && <span className="line-through">{basePrice}</span>}
+        <span className="text-red font-bold ml-1">{price}</span>
+      </h2>
     </div>
   )
 }
