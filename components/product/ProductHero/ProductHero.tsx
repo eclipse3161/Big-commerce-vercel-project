@@ -13,6 +13,8 @@ const ProductHero: FC = ({ product, highlights }) => {
   const [backgroundPosition, setbackgroundPosition] = useState('0% 0%')
   const [defaultImage, setDefaultImage] = useState('')
   const [hover, setHover] = useState(false)
+  const [chosenVariant, setChosenVariant] = useState(null)
+  const [productImages, setProductImages] = useState([])
 
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isMounted, setIsMounted] = useState(false)
@@ -24,6 +26,7 @@ const ProductHero: FC = ({ product, highlights }) => {
     slidesPerView,
     mounted: () => setIsMounted(true),
     slideChanged(s) {
+      console.log('Changed initally')
       setCurrentSlide(s.details().relativeSlide)
     },
   })
@@ -60,8 +63,29 @@ const ProductHero: FC = ({ product, highlights }) => {
   useEffect(() => {}, [backgroundPosition])
 
   useEffect(() => {
-    setDefaultImage(product?.images?.edges[0]?.node)
+    if (product?.images?.edges[0]?.node)
+      setDefaultImage(product?.images?.edges[0]?.node)
   }, [product])
+
+  useEffect(() => {
+    if (chosenVariant?.node?.defaultImage)
+      setDefaultImage(chosenVariant?.node?.defaultImage)
+  }, [chosenVariant])
+
+  useEffect(() => {
+    if (product?.images) {
+      // slider?.refresh({
+      //   loop: false,
+      //   slidesPerView,
+      //   mounted: () => setIsMounted(true),
+      //   slideChanged(s) {
+      //     console.log("Changed secondly")
+      //     setCurrentSlide(s.details().relativeSlide)
+      //   },
+      // })
+      slider?.resize()
+    }
+  }, [product?.images])
 
   return (
     <div className={cn(s.root, 'flex-col-reverse laptop:flex-row')}>
@@ -176,7 +200,12 @@ const ProductHero: FC = ({ product, highlights }) => {
       </div>
 
       <div className="w-full laptop:w-2/4">
-        <ProductDetails product={product} highlights={highlights} />
+        <ProductDetails
+          product={product}
+          highlights={highlights}
+          chosenVariant={chosenVariant}
+          setChosenVariant={setChosenVariant}
+        />
       </div>
     </div>
   )

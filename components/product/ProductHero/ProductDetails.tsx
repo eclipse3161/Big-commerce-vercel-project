@@ -18,7 +18,12 @@ import {
 } from '../helpers'
 import useProductOptions from '@framework/products/use-product-options'
 
-const ProductDetails: FC = ({ product, highlights }) => {
+const ProductDetails: FC = ({
+  product,
+  highlights,
+  chosenVariant,
+  setChosenVariant,
+}) => {
   const addItem = useAddItem()
   const [quantity, setQuantity] = useState(1)
   const [loading, setLoading] = useState(false)
@@ -38,14 +43,25 @@ const ProductDetails: FC = ({ product, highlights }) => {
     productId: product?.entityId,
   })
 
+  useEffect(() => {
+    setQuantity(1)
+    setChoices({})
+    setChosenVariant(null)
+  }, [product])
+
+  useEffect(() => {
+    setChosenVariant(getCurrentVariant(product, choices))
+  }, [choices])
+
   // useEffect(() => {
   //   console.log('Product options: ', productOptions)
   // }, [productOptions])
 
   const options = getProductOptions(product)
 
-  const variant =
-    getCurrentVariant(product, choices) || product.variants?.edges?.[0]
+  // const variant = getCurrentVariant(product, choices)
+  console.log('Chosen variant: ', chosenVariant)
+  console.log('Chosen choices: ', choices)
 
   const addToCart = async () => {
     // if (choices.size === null) setSizeMessage('Please select a size')
@@ -56,18 +72,21 @@ const ProductDetails: FC = ({ product, highlights }) => {
     try {
       setLoading(true)
       if (quantity !== null) {
-        // console.log(
-        //   'Adding: ',
-        //   product.entityId,
-        //   product.variants.edges?.[0]?.node.entityId!,
-        //   quantity
-        // )
-        await addItem({
+        console.log('Adding: ', {
           productId: product.entityId,
-          variantId: product.variants.edges?.[0]?.node.entityId!,
+          variantId: chosenVariant
+            ? chosenVariant.node.entityId
+            : product.variants.edges?.[0]?.node.entityId!,
           quantity,
         })
-        openModalCart()
+        await addItem({
+          productId: product.entityId,
+          variantId: chosenVariant
+            ? chosenVariant.node.entityId
+            : product.variants.edges?.[0]?.node.entityId!,
+          quantity,
+        })
+        openModalCart(product, chosenVariant, quantity, choices)
         //openSidebar()
         setLoading(false)
       }
@@ -108,7 +127,7 @@ const ProductDetails: FC = ({ product, highlights }) => {
                   })
                 }}
               />{' '}
-              <label for={v.label}>{v.label}</label>
+              <label htmlFor={v.label}>{v.label}</label>
               <br />
             </div>
           )
@@ -125,7 +144,7 @@ const ProductDetails: FC = ({ product, highlights }) => {
 
           return (
             <div
-              key={opt.id}
+              key={v.entityId}
               className={cn(
                 'w-9 h-9 text-center mr-1 flex justify-center',
                 cn(v.id === active ? 'border-black' : 'border-lightgray'),
@@ -205,7 +224,9 @@ const ProductDetails: FC = ({ product, highlights }) => {
 
       <div className="mb-1">
         <span className="font-black text-sm">SKU:</span>{' '}
-        <span className="text-gray font-thin">{product.sku}</span>
+        <span className="text-gray font-thin">
+          {chosenVariant?.node?.sku || product?.sku}
+        </span>
       </div>
       <div className="mb-1">
         <span className="font-bold text-gray text-sm">Condition:</span> New
@@ -214,14 +235,20 @@ const ProductDetails: FC = ({ product, highlights }) => {
         <span className="font-bold text-gray text-sm">Availability: </span>{' '}
         {product.availabilityV2?.status}
       </div>
-      <div className="mb-2">
-        <span className="font-bold text-gray text-sm">PRODUCT HIGHLIGHTS</span>
-      </div>
-      <div className="break-words w-full max-w-xl">
-        {highlights?.map((item, idx) => {
-          return <div key={idx}>{item.value}</div>
-        })}
-      </div>
+      {highlights?.length > 0 && (
+        <>
+          <div className="mb-2">
+            <span className="font-bold text-gray text-sm">
+              PRODUCT HIGHLIGHTS
+            </span>
+          </div>
+          <div className="break-words w-full max-w-xl">
+            {highlights?.map((item, idx) => {
+              return <div key={idx}>{item.value}</div>
+            })}
+          </div>
+        </>
+      )}
       <hr className="mb-3" />
       {productOptions?.length > 0 &&
         productOptions.map((option) => {
@@ -253,7 +280,7 @@ const ProductDetails: FC = ({ product, highlights }) => {
             s.addBtn,
             'w-full mb-2 tablet:w-1/2 laptop:w-44 tablet:mb-0'
           )}
-          disabled={!variant}
+          disabled={!chosenVariant}
           onClick={addToCart}
           aria-label="Add to Cart"
         >
@@ -265,7 +292,9 @@ const ProductDetails: FC = ({ product, highlights }) => {
             'w-full ml-0 laptop:w-44 tablet:w-1/2 tablet:ml-4'
           )}
           productId={product.entityId}
-          variant={product.variants?.edges?.[0]!}
+          variant={
+            chosenVariant ? chosenVariant : product.variants?.edges?.[0]!
+          }
         />
       </div>
     </div>

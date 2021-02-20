@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { GetStaticPropsContext } from 'next'
 import { getConfig } from '@framework/api'
 import LoadingOverlay from 'react-loading-overlay'
@@ -12,39 +12,92 @@ import { CartItem } from '@components/cart'
 import s from './CartModalView.module.css'
 import { Text, Container } from '@components/ui'
 import Link from 'next/link'
+import { useUI } from '@components/ui/context'
+import { setUncaughtExceptionCaptureCallback } from 'process'
 
 export default function CartModalView() {
   const [loading, setLoading] = useState(false)
   const [showCoupon, setShowCoupon] = useState(false)
   const [coupon, setCoupon] = useState('')
   const { data, isEmpty } = useCart()
-  // console.log('Cart: ', data)
+  const [cartItem, setCartItem] = useState({})
+  const [total, setTotal] = useState(0)
 
-  const { price: total } = usePrice(
-    data && {
-      amount: data.cart_amount,
-      currencyCode: data.currency.code,
-    }
-  )
+  const {
+    cartPopupData: {
+      product: cartProduct,
+      variantId: cartVariant,
+      quantity,
+      choices,
+    },
+    closeModalCart,
+  } = useUI()
 
   const items = data?.line_items.physical_items ?? []
 
-  const { price: itemPrice } = usePrice(
-    data && {
-      amount: items[0].extended_list_price,
-      currencyCode: data.currency.code,
-    }
-  )
+  const { price: cartItemPrice } = usePrice({
+    amount: cartItem?.list_price,
+    currencyCode: cartProduct.prices?.price?.currencyCode,
+  })
 
   const { price: subTotal } = usePrice(
     data && {
-      amount: items[0].extended_list_price * items[0].quantity,
+      amount: total,
       currencyCode: data.currency.code,
     }
   )
 
-  console.log('items', items)
-  console.log('itemPrice', itemPrice)
+  useEffect(() => {
+    let totalTemp = 0
+    items?.forEach(
+      (i) => (totalTemp = Number(i.quantity * i.list_price) + totalTemp)
+    )
+    setTotal(totalTemp)
+  }, [items])
+
+  console.log('Cart data: ', data)
+  console.log('Choices: ', choices)
+
+  useEffect(() => {
+    if (data) {
+      const items = data?.line_items.physical_items ?? []
+      if (items && cartProduct && cartVariant) {
+        let cartItemFound = items.find(
+          (item) => cartVariant?.node?.sku === item?.sku
+        )
+
+        if (cartItemFound) setCartItem(cartItemFound)
+      }
+    }
+  }, [data, cartProduct, cartVariant])
+
+  // fix this
+  // useEffect(() => {
+  //   let choicesTemp = {};
+  //   if(cartVariant){
+  //     cartVariant?.node?.productOptions?.edges.forEach(op => {
+
+  //     })
+  //   }
+  // }, [choices])
+
+  // useEffect(() => {
+  //   if (cartProduct) {
+  //     let variant = { ...displayVariant }
+  //     if (cartVariant) {
+  //       variant = cartProduct?.variant?.edges?.find(
+  //         (p) => p.node.entityId === cartVariant
+  //       )
+  //     } else {
+  //       variant = cartProduct?.variant?.edges?.[0]
+  //     }
+  //     if (variant) setDisplayVariant(variant?.node)
+
+  //     console.log('cartProduct', cartProduct)
+  //     console.log('cartVariant', cartVariant)
+  //     console.log('displayVariant', displayVariant)
+  //   }
+  // }, [cartProduct, cartVariant])
 
   const error = null
   const success = null
@@ -76,8 +129,7 @@ export default function CartModalView() {
         <div className={s.columnFlex}>
           <div>
             <h1 className={s.title}>
-              Ok, {items[0].quantity} items were added to your cart. What's
-              next?
+              Ok, {quantity} items were added to your cart. What's next?
             </h1>
           </div>
           <div>
@@ -88,9 +140,9 @@ export default function CartModalView() {
                   <figure>
                     <div>
                       <img
-                        src={items[0].image_url}
-                        alt="Oppo A5 2020 Dual SIM 64GB + 3GB RAM"
-                        title="Oppo A5 2020 Dual SIM 64GB + 3GB RAM"
+                        src={cartItem?.image_url}
+                        alt={cartItem?.name}
+                        title={cartItem?.name}
                         data-sizes="auto"
                         //srcset="https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/80w/attribute_rule_images/4489_source_1604349170.jpg 80w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/160w/attribute_rule_images/4489_source_1604349170.jpg 160w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/320w/attribute_rule_images/4489_source_1604349170.jpg 320w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/640w/attribute_rule_images/4489_source_1604349170.jpg 640w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/960w/attribute_rule_images/4489_source_1604349170.jpg 960w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/1280w/attribute_rule_images/4489_source_1604349170.jpg 1280w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/1920w/attribute_rule_images/4489_source_1604349170.jpg 1920w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/2560w/attribute_rule_images/4489_source_1604349170.jpg 2560w"
                         //data-srcset="https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/80w/attribute_rule_images/4489_source_1604349170.jpg 80w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/160w/attribute_rule_images/4489_source_1604349170.jpg 160w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/320w/attribute_rule_images/4489_source_1604349170.jpg 320w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/640w/attribute_rule_images/4489_source_1604349170.jpg 640w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/960w/attribute_rule_images/4489_source_1604349170.jpg 960w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/1280w/attribute_rule_images/4489_source_1604349170.jpg 1280w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/1920w/attribute_rule_images/4489_source_1604349170.jpg 1920w, https://cdn11.bigcommerce.com/s-toyeabc219/images/stencil/2560w/attribute_rule_images/4489_source_1604349170.jpg 2560w"
@@ -102,20 +154,20 @@ export default function CartModalView() {
 
                 <section className={s.middleSection}>
                   <div>
-                    <h4 className={s.itemTitle}>{items[0].name}</h4>
+                    <h4 className={s.itemTitle}>{cartItem?.name}</h4>
 
-                    <div className={s.brand}>Oppo</div>
+                    {/* <div className={s.brand}>Oppo</div> */}
 
                     <div className={s.rate}>
-                      {items[0].quantity} × {itemPrice}
+                      {cartItem?.quantity} × {cartItemPrice}
                     </div>
 
-                    <dl>
+                    {/* <dl>
                       <dt>
                         <strong style={{ marginRight: '0.7rem' }}>Color</strong>{' '}
                         White
                       </dt>
-                    </dl>
+                    </dl> */}
                   </div>
                 </section>
 
@@ -135,12 +187,15 @@ export default function CartModalView() {
                   <p className="mt-4 mb-8">
                     Your cart contains {items[0].quantity} items
                   </p>
-                  <div className={s.proceedCheckout}>
-                    <a href="#">Continue Shopping</a>
+                  <div
+                    className={s.proceedCheckout}
+                    onClick={() => closeModalCart()}
+                  >
+                    Continue Shopping
                   </div>
 
-                  <div className={s.viewCart}>
-                    <a href="/cart.php">View or edit your cart</a>
+                  <div className={s.viewCart} onClick={() => closeModalCart()}>
+                    <Link href="/cart">View or edit your cart</Link>
                   </div>
                 </section>
               </div>

@@ -32,6 +32,7 @@ const initialState = {
     currency_code: 'USD',
     country_code: '',
   },
+  cartPopupData: null,
 }
 
 type Action =
@@ -44,6 +45,7 @@ type Action =
     }
   | {
       type: 'OPEN_MODAL_CART'
+      productInfo: any
     }
   | {
       type: 'OPEN_MODAL_DROPDOWN'
@@ -113,6 +115,12 @@ function uiReducer(state: State, action: Action) {
       return {
         ...state,
         displayModalCart: true,
+        cartPopupData: {
+          product: action.productInfo.product,
+          variantId: action.productInfo.variantId,
+          quantity: action.productInfo.quantity,
+          choices: action.productInfo.choices,
+        },
       }
     }
     case 'OPEN_MODAL_DROPDOWN': {
@@ -201,7 +209,16 @@ export const UIProvider: FC = (props) => {
   const [state, dispatch] = React.useReducer(uiReducer, initialState)
 
   const openSidebar = () => dispatch({ type: 'OPEN_SIDEBAR' })
-  const openModalCart = () => dispatch({ type: 'OPEN_MODAL_CART' })
+  const openModalCart = (
+    product: any,
+    variantId: any,
+    quantity: any,
+    choices: any
+  ) =>
+    dispatch({
+      type: 'OPEN_MODAL_CART',
+      productInfo: { product, variantId, quantity, choices },
+    })
   const openModalDropdown = () => dispatch({ type: 'OPEN_MODAL_DROPDOWN' })
   const closeModalCart = () => dispatch({ type: 'CLOSE_MODAL_CART' })
   const closeSidebar = () => dispatch({ type: 'CLOSE_SIDEBAR' })

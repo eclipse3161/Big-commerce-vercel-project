@@ -6,7 +6,7 @@ export type SelectedOptions = {
 }
 
 export type ProductOption = {
-  displayName: string
+  entityId: number
   values: any
 }
 
@@ -37,10 +37,10 @@ export function getCurrentVariant(product: ProductNode, opts: SelectedOptions) {
       node?.productOptions?.edges?.find((edge) => {
         if (
           edge?.node.__typename === 'MultipleChoiceOption' &&
-          edge.node.displayName.toLowerCase() === key
+          edge.node.entityId == key
         ) {
           return edge.node.values.edges?.find(
-            (valueEdge) => valueEdge?.node.label === value
+            (valueEdge) => valueEdge?.node.entityId === value
           )
         }
       })

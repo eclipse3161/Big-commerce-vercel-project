@@ -56,6 +56,7 @@ const Layout: FC<Props> = ({ children, pageProps }) => {
     displayModalDropdown,
     displaySidebar,
     displayModalCart,
+    cartPopupData,
     displayModal,
     closeSidebar,
     closeModalCart,
@@ -93,7 +94,7 @@ const Layout: FC<Props> = ({ children, pageProps }) => {
           <CartSidebarView />
         </Sidebar>
 
-        <Modal open={displayModalCart} onClose={closeModalCart}>
+        <Modal open={displayModalCart && cartPopupData} onClose={closeModalCart}>
           <CartModalView />
         </Modal>
 
