@@ -1,3 +1,4 @@
+// @ts-nocheck
 import cn from 'classnames'
 import { useEffect, useState } from 'react'
 import { useUI } from '@components/ui/context'
@@ -65,7 +66,9 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
         {/* {discount ? <><span>{basePrice}</span>
         <span>{price}</span><> : <span></span>} */}
 
-        {discount && <span className="line-through">{basePrice}</span>}
+        {discount && (
+          <span style={{ textDecoration: 'line-through' }}>{basePrice}</span>
+        )}
         <span className="text-red font-bold ml-1">{price}</span>
       </h2>
     </div>

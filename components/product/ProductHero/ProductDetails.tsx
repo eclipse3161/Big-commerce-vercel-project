@@ -17,6 +17,7 @@ import {
   SelectedOptions,
 } from '../helpers'
 import useProductOptions from '@framework/products/use-product-options'
+import ProductImage from './ProductImage'
 
 const ProductDetails: FC = ({
   product,
@@ -138,7 +139,7 @@ const ProductDetails: FC = ({
 
   const getSwatchOptions = (opt) => {
     return (
-      <div className="flex flex-wrap mt-2">
+      <div className="flex flex-wrap mt-2 justify-center laptop:justify-start">
         {opt.option_values.map((v: any, i: number) => {
           const active = (choices as any)[opt.id]
 
@@ -196,7 +197,7 @@ const ProductDetails: FC = ({
     return (
       !!optionValues && (
         <div key={option.id}>
-          <div className="mt-2 font-body text-lightgray text-sm">
+          <div className="mt-2 font-body text-lightgray text-sm text-center laptop:text-left">
             {option.display_name}:{required && ' Required'}
           </div>
           {optionValues}
@@ -211,7 +212,12 @@ const ProductDetails: FC = ({
       {discount ? (
         <>
           <div>
-            <span className="text-2xl line-through">{basePrice}</span>
+            <span
+              className="text-2xl"
+              style={{ textDecoration: 'line-through' }}
+            >
+              {basePrice}
+            </span>
             <span className="text-red ml-1 font-bold">{price}</span>
           </div>
           <div className="text-black text-sm font-bold mb-1">
@@ -250,11 +256,20 @@ const ProductDetails: FC = ({
         </>
       )}
       <hr className="mb-3" />
+      {/*  */}
+
+      <div className="block laptop:hidden">
+        <ProductImage chosenVariant={chosenVariant} product={product} />
+      </div>
+
+      {/*  */}
       {productOptions?.length > 0 &&
         productOptions.map((option) => {
           return getProductOption(option)
         })}
-      <div className="mt-4 font-body text-lightgray text-sm">Quantity:</div>
+      <div className="mt-4 font-body text-lightgray text-sm text-center laptop:text-left">
+        Quantity:
+      </div>
       <div className={s.counter}>
         <div
           className="w-7 h-6 text-gray-400 border-gray-400 border-2 inline-block rounded border-opacity-25 cursor-pointer"

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { ProductNode } from '@framework/api/operations/get-product'
 
 export type SelectedOptions = {

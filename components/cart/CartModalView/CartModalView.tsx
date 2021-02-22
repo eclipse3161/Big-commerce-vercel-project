@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect } from 'react'
 import type { GetStaticPropsContext } from 'next'
 import { getConfig } from '@framework/api'
