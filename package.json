@@ -68,6 +68,7 @@
     "react-loading-overlay": "^1.0.1",
     "react-merge-refs": "^1.1.0",
     "react-modal": "^3.12.1",
+    "react-select": "^4.1.0",
     "react-ticker": "^1.2.2",
     "swr": "^0.3.11",
     "tailwindcss": "^1.9"

@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from 'react'
+import { FC, ReactEventHandler, useEffect, useMemo, useState } from 'react'
 import cn from 'classnames'
 import s from './Searchbar.module.css'
 import { useRouter } from 'next/router'
@@ -10,10 +10,27 @@ interface Props {
 
 const Searchbar: FC<Props> = ({ className, id = 'search' }) => {
   const router = useRouter()
+  const [searchText, setSearchText] = useState(router.query.q)
 
   useEffect(() => {
     router.prefetch('/search')
   }, [])
+
+  const handleSearch = () => {
+    if (searchText && searchText?.length > 0)
+      router.push(
+        {
+          pathname: `/search`,
+          query: searchText ? { q: searchText } : {},
+        },
+        undefined,
+        { shallow: true }
+      )
+  }
+
+  const handleChange = (e: any) => {
+    setSearchText(e.target.value)
+  }
 
   return useMemo(
     () => (
@@ -30,25 +47,19 @@ const Searchbar: FC<Props> = ({ className, id = 'search' }) => {
           id={id}
           className={s.input}
           //placeholder="Search for products..."
-          defaultValue={router.query.q}
+          value={searchText}
+          onChange={handleChange}
           onKeyUp={(e) => {
             e.preventDefault()
 
             if (e.key === 'Enter') {
-              const q = e.currentTarget.value
+              // const q = e.currentTarget.value
 
-              router.push(
-                {
-                  pathname: `/search`,
-                  query: q ? { q } : {},
-                },
-                undefined,
-                { shallow: true }
-              )
+              handleSearch()
             }
           }}
         />
-        <div className={s.iconContainer}>
+        <div className={s.iconContainer} onClick={() => handleSearch()}>
           <svg className={s.icon} fill="currentColor" viewBox="0 0 20 20">
             <path
               fillRule="evenodd"
@@ -59,7 +70,7 @@ const Searchbar: FC<Props> = ({ className, id = 'search' }) => {
         </div>
       </div>
     ),
-    []
+    [searchText]
   )
 }
 
